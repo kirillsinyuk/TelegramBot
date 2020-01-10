@@ -1,22 +1,35 @@
 import bot.Bot;
-import com.sun.istack.internal.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.ApiContextInitializer;
-import org.telegram.telegrambots.TelegramBotsApi;
-import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
-
-import java.util.logging.Level;
+import org.telegram.telegrambots.bots.DefaultBotOptions;
+import org.telegram.telegrambots.meta.ApiContext;
+import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
 public class Main {
 
-    private static final Logger LOG = Logger.getLogger(Main.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Bot.class);
+
+    private static final String PROXY_HOST = "xx.xx.xxx.xxx";
+    private static final int PROXY_PORT = 9999;
+
 
     public static void main(String[] args) {
         ApiContextInitializer.init();
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
         try {
-            telegramBotsApi.registerBot(Bot.getInstance());
+
+            LOG.info("Configuring bot options...");
+            DefaultBotOptions botOptions = ApiContext.getInstance(DefaultBotOptions.class);
+
+            botOptions.setProxyHost(PROXY_HOST);
+            botOptions.setProxyPort(PROXY_PORT);
+            botOptions.setProxyType(DefaultBotOptions.ProxyType.SOCKS4);
+
+            telegramBotsApi.registerBot(Bot.getInstance(botOptions));
         } catch (TelegramApiRequestException e) {
-            LOG.log(Level.SEVERE, "Ошибка регистрации бота:", e.fillInStackTrace());
+            LOG.error( "Ошибка регистрации бота:", e.fillInStackTrace());
         }
     }
 }
