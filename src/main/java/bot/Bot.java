@@ -1,16 +1,15 @@
 package bot;
 
-import com.sun.istack.internal.logging.Logger;
-import org.telegram.telegrambots.api.methods.send.SendMessage;
-import org.telegram.telegrambots.api.objects.Update;
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.exceptions.TelegramApiException;
 
-import java.util.logging.Level;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.telegram.telegrambots.bots.DefaultBotOptions;
+import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.objects.Update;
 
 public class Bot extends TelegramLongPollingBot {
 
-    private static final Logger LOG = Logger.getLogger(Bot.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Bot.class);
 
     // имя бота, которое мы указали при создании аккаунта у BotFather
     // и токен, который получили в результате
@@ -18,11 +17,17 @@ public class Bot extends TelegramLongPollingBot {
     private static final String BOT_TOKEN = "991064577:AAHtI9JsNg8mgR5IRNiveJMLxN9JpZMw4v8";
     private static Bot bot;
 
-    public static Bot getInstance() {
+    public static Bot getInstance(DefaultBotOptions botOptions) {
         if (bot == null) {
-            bot = new Bot();
+            bot = new Bot(botOptions);
         }
         return bot;
+    }
+
+    private Bot(DefaultBotOptions botOptions) {
+        super(botOptions);
+
+        LOG.info("Initializing Planner Bot...");
     }
     /**
      * Метод для приема сообщений.
@@ -31,23 +36,6 @@ public class Bot extends TelegramLongPollingBot {
      */
     public void onUpdateReceived(Update update) {
 
-    }
-
-    /**
-     * Метод для настройки сообщения и его отправки.
-     * @param chatId id чата
-     * @param s Строка, которую необходимот отправить в качестве сообщения.
-     */
-    public synchronized void sendMsg(String chatId, String s) {
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.enableMarkdown(true);
-        sendMessage.setChatId(chatId);
-        sendMessage.setText(s);
-        try {
-            sendMessage(sendMessage);
-        } catch (TelegramApiException e) {
-            LOG.log(Level.SEVERE, "Exception: ", e.toString());
-        }
     }
 
     /**
