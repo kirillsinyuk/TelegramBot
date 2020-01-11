@@ -11,8 +11,8 @@ public class Main {
 
     private static final Logger LOG = LoggerFactory.getLogger(Bot.class);
 
-    private static final String PROXY_HOST = "xx.xx.xxx.xxx";
-    private static final int PROXY_PORT = 9999;
+    private static final String PROXY_HOST = "181.101.22.239";
+    private static final int PROXY_PORT =1080;
 
 
     public static void main(String[] args) {
