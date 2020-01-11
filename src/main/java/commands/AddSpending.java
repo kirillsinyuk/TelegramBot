@@ -9,25 +9,24 @@ import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import service.BotService;
 
-public class HelpCommand extends PlannerBaseCommand {
+public class AddSpending extends PlannerBaseCommand {
 
-    private final ICommandRegistry commandRegistry;
     private static final Logger LOG = LoggerFactory.getLogger(HelpCommand.class);
+    private final BotService botService;
 
-    public HelpCommand(ICommandRegistry commandRegistry, BotService botService) {
-        super("help", "list all known commands\n", botService);
-        this.commandRegistry = commandRegistry;
+    public AddSpending(ICommandRegistry commandRegistry, BotService botService) {
+        super("add", "attributes:\n <category> <price> ", botService);
+        this.botService = botService;
     }
-
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
-
         LOG.info("User {}, id: {} is trying to execute '{}'.", user.getUserName(), user.getId(), getCommandIdentifier());
 
         StringBuilder helpMessageBuilder = new StringBuilder();
 
-        helpMessageBuilder.append("<b>Available commands:</b>\n");
-        commandRegistry.getRegisteredCommands().forEach(cmd -> helpMessageBuilder.append(cmd.toString()));
+        if(botService.hasAccessToCommands(user.getId())){
+            //add purchase to DB
+        }
 
         SendMessage helpMessage = new SendMessage();
         helpMessage.setChatId(chat.getId().toString());
