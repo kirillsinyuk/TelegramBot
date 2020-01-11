@@ -1,13 +1,14 @@
 package bot;
 
 
+import commands.HelpCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-public class Bot extends TelegramLongPollingBot {
+public class Bot extends TelegramLongPollingCommandBot {
 
     private static final Logger LOG = LoggerFactory.getLogger(Bot.class);
 
@@ -28,15 +29,11 @@ public class Bot extends TelegramLongPollingBot {
         super(botOptions);
 
         LOG.info("Initializing Planner Bot...");
-    }
-    /**
-     * Метод для приема сообщений.
-     *
-     * @param update Содержит сообщение от пользователя.
-     */
-    public void onUpdateReceived(Update update) {
+        register(new HelpCommand(this));
+        LOG.info("/help command initializing...");
 
     }
+
 
     /**
      * Метод возвращает имя бота, указанное при регистрации.
@@ -45,6 +42,7 @@ public class Bot extends TelegramLongPollingBot {
     public String getBotUsername() {
         return BOT_NAME;
     }
+
 
     /**
      * Метод возвращает token бота для связи с сервером Telegram
@@ -55,5 +53,9 @@ public class Bot extends TelegramLongPollingBot {
         return BOT_TOKEN;
     }
 
+    @Override
+    public void processNonCommandUpdate(Update update) {
+
+    }
 
 }

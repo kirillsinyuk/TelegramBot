@@ -9,10 +9,10 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
 public class Main {
 
-    private static final Logger LOG = LoggerFactory.getLogger(Bot.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Main.class);
 
-    private static final String PROXY_HOST = "181.101.22.239";
-    private static final int PROXY_PORT =1080;
+    private static final String PROXY_HOST = "198.27.75.152";
+    private static final int PROXY_PORT = 1080;
 
 
     public static void main(String[] args) {
@@ -25,9 +25,10 @@ public class Main {
 
             botOptions.setProxyHost(PROXY_HOST);
             botOptions.setProxyPort(PROXY_PORT);
-            botOptions.setProxyType(DefaultBotOptions.ProxyType.SOCKS4);
+            botOptions.setProxyType(DefaultBotOptions.ProxyType.SOCKS5);
 
             telegramBotsApi.registerBot(Bot.getInstance(botOptions));
+            LOG.info( "Регистрация прошла успешно!");
         } catch (TelegramApiRequestException e) {
             LOG.error( "Ошибка регистрации бота:", e.fillInStackTrace());
         }
