@@ -1,14 +1,17 @@
 package bot;
 
 
-import commands.AddSpending;
+import commands.AddSpendingCommand;
+import commands.DeleteCommand;
 import commands.HelpCommand;
 import commands.StartCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import service.BotService;
 
 public class Bot extends TelegramLongPollingCommandBot {
@@ -35,12 +38,33 @@ public class Bot extends TelegramLongPollingCommandBot {
         botService = new BotService();
 
         LOG.info("Initializing Planner Bot...");
-        register(new HelpCommand(this, botService));
+        HelpCommand helpCommand = new HelpCommand(this, botService);
+        register(helpCommand);
         LOG.info("/help command initializing...");
         register(new StartCommand(botService));
         LOG.info("/start command initializing...");
-        register(new AddSpending(botService));
+        register(new AddSpendingCommand(botService));
         LOG.info("/add command initializing...");
+        register(new DeleteCommand(botService));
+        LOG.info("/delete command initializing...");
+
+        LOG.info("Registering default action'...");
+        registerDefaultAction(((absSender, message) -> {
+
+            LOG.warn("User {} is trying to execute unknown command '{}'.", message.getFrom().getId(), message.getText());
+
+            SendMessage text = new SendMessage();
+            text.setChatId(message.getChatId());
+            text.setText(message.getText() + " command not found!");
+
+            try {
+                absSender.execute(text);
+            } catch (TelegramApiException e) {
+                LOG.error("Error while replying unknown command to user {}.", message.getFrom(), e);
+            }
+
+            helpCommand.execute(absSender, message.getFrom(), message.getChat(), new String[] {});
+        }));
 
     }
 
@@ -63,6 +87,10 @@ public class Bot extends TelegramLongPollingCommandBot {
         return BOT_TOKEN;
     }
 
+    /**
+     * Обработчик сообщений, не являющихся командами
+     * @param update
+     */
     @Override
     public void processNonCommandUpdate(Update update) {
 

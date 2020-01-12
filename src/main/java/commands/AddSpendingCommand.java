@@ -8,12 +8,12 @@ import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import service.BotService;
 
-public class AddSpending extends PlannerBaseCommand {
+public class AddSpendingCommand extends PlannerBaseCommand {
 
     private static final Logger LOG = LoggerFactory.getLogger(HelpCommand.class);
     private final BotService botService;
 
-    public AddSpending(BotService botService) {
+    public AddSpendingCommand(BotService botService) {
         super("add", "attributes:\n <category> <price> ", botService);
         this.botService = botService;
     }
