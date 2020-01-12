@@ -8,7 +8,7 @@ public class BotService {
     private List<Integer> accessUserList;
 
     public BotService(){
-        accessUserList = Arrays.asList(728739455);
+        accessUserList = Arrays.asList(728739455, 268641929);
     }
 
     public boolean hasAccessToCommands(int a) {
