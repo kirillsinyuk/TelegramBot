@@ -1,6 +1,7 @@
 package bot;
 
 
+import commands.AddSpending;
 import commands.HelpCommand;
 import commands.StartCommand;
 import org.slf4j.Logger;
@@ -38,6 +39,8 @@ public class Bot extends TelegramLongPollingCommandBot {
         LOG.info("/help command initializing...");
         register(new StartCommand(botService));
         LOG.info("/start command initializing...");
+        register(new AddSpending(botService));
+        LOG.info("/add command initializing...");
 
     }
 
