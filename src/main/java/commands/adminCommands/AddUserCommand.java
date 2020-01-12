@@ -10,6 +10,7 @@ import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import service.BotService;
+import service.util.ParseUtil;
 
 public class AddUserCommand extends PlannerBaseCommand {
 
@@ -17,7 +18,7 @@ public class AddUserCommand extends PlannerBaseCommand {
     private final BotService botService;
 
     public AddUserCommand(BotService botService) {
-        super("addUser", "attributes:\n <id> <hasAdminAccess> ", botService);
+        super("userAdd", "attributes:\n &lt;id&gt; &lt;hasAdminAccess&gt; ", botService);
         this.botService = botService;
     }
     @Override
@@ -27,22 +28,22 @@ public class AddUserCommand extends PlannerBaseCommand {
         StringBuilder addMessage = new StringBuilder();
 
         if(botService.hasAdminAccess(user.getId())){
-            String[] id;
+            Integer id;
             switch (arguments.length) {
-                case 2:
-                    id = arguments[0].split("\\b^[0-9]+\\b$");
-                    if (id.length == 1) {
-                        botService.addUser(new BotUser(Integer.parseInt(id[0]), null, (arguments[1].equals("true"))));
-                    }
-                    break;
                 case 1:
-                    id = arguments[0].split("\\b^[0-9]+\\b$");
-                    if (id.length == 1) {
-                        botService.addUser(new BotUser(Integer.parseInt(id[0]), null, false));
+                    id = ParseUtil.getIntFromString(arguments[0]);
+                    if (id != null) {
+                        botService.addUser(new BotUser(id, null, false));
+                        break;
                     }
-                    break;
+                case 2:
+                    id = ParseUtil.getIntFromString(arguments[0]);
+                    if (id != null) {
+                        botService.addUser(new BotUser(id, null, (arguments[1].equals("true"))));
+                        break;
+                    }
                 default:
-                    addMessage.append("You need to use this format: '/add <id> <hasAdminAccess>'");
+                    addMessage.append("You need to use this format:\n /add &lt;id&gt; &lt;hasAdminAccess&gt;");
             }
         }
 

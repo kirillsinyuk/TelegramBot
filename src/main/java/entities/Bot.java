@@ -1,6 +1,7 @@
 package entities;
 
 
+import commands.adminCommands.AddUserCommand;
 import commands.commonCommands.AddSpendingCommand;
 import commands.commonCommands.DeleteCommand;
 import commands.commonCommands.HelpCommand;
@@ -47,6 +48,8 @@ public class Bot extends TelegramLongPollingCommandBot {
         LOG.info("/add command initializing...");
         register(new DeleteCommand(botService));
         LOG.info("/delete command initializing...");
+        register(new AddUserCommand(botService));
+        LOG.info("/addUser command initializing...");
 
         LOG.info("Registering default action'...");
         registerDefaultAction(((absSender, message) -> {

@@ -15,7 +15,7 @@ public class DeleteCommand extends PlannerBaseCommand {
     private final BotService botService;
 
     public DeleteCommand(BotService botService) {
-        super("delete", "attributes:\n <category> <price> ", botService);
+        super("delete", "attributes:\n &lt;category&gt; &lt;price&gt; ", botService);
         this.botService = botService;
     }
     @Override
@@ -25,8 +25,12 @@ public class DeleteCommand extends PlannerBaseCommand {
         StringBuilder addMessage = new StringBuilder();
 
         if(botService.hasAccessToCommands(user.getId())){
-            addMessage.append(String.format("Purchase %s with price %s successfully deleted.", arguments[1], arguments[2]));
-            //add purchase to DB
+            if (arguments.length < 2) {
+                addMessage.append("You need to use this format:\n /add &lt;category&gt; &lt;price&gt;");
+            } else {
+                addMessage.append(String.format("Purchase %s with price %s successfully deleted.", arguments[0], arguments[1]));
+                //add purchase to DB
+            }
         }
 
         SendMessage helpMessage = new SendMessage();

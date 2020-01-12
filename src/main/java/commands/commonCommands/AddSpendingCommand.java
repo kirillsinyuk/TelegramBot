@@ -15,7 +15,7 @@ public class AddSpendingCommand extends PlannerBaseCommand {
     private final BotService botService;
 
     public AddSpendingCommand(BotService botService) {
-        super("add", "attributes:\n <category> <price> ", botService);
+        super("add", "attributes:\n &lt;category&gt; &lt;price&gt;", botService);
         this.botService = botService;
     }
     @Override
@@ -26,7 +26,7 @@ public class AddSpendingCommand extends PlannerBaseCommand {
 
         if(botService.hasAccessToCommands(user.getId())){
             if (arguments.length < 2) {
-                addMessage.append("You need to use this format: '/add <category> <price>'");
+                addMessage.append("You need to use this format:\n /add &lt;category&gt; &lt;price&gt;");
             } else {
                 addMessage.append(String.format("Purchase %s with price %s successfully added.", arguments[0], arguments[1]));
                 //add purchase to DB
@@ -35,7 +35,6 @@ public class AddSpendingCommand extends PlannerBaseCommand {
 
         SendMessage helpMessage = new SendMessage();
         helpMessage.setChatId(chat.getId().toString());
-        helpMessage.enableHtml(true);
         helpMessage.setText(addMessage.toString());
 
         execute(absSender, helpMessage, chat, user);
