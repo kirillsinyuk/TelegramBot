@@ -1,5 +1,6 @@
 package commands;
 
+import entities.BotUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
@@ -23,8 +24,11 @@ public abstract class PlannerBaseCommand extends BotCommand {
     void execute(AbsSender sender, SendMessage message, Chat chat, User user) {
         try {
             if (!botService.hasAccessToCommands(user.getId())) {
-                LOG.warn("User {} has no access.", user.getId());
+                LOG.warn("BotUser {} has no access.", user.getId());
                 message.setText("Access denied for you. Try to connect @KirillSinyuk for more info.");
+            } else {
+                BotUser currentUser = botService.getUserById(user.getId());
+                currentUser.setChat(chat);
             }
             sender.execute(message);
         } catch (TelegramApiException e) {

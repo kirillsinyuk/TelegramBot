@@ -1,21 +1,32 @@
 package service;
 
+import entities.BotUser;
+
 import java.util.Arrays;
 import java.util.List;
 
 public class BotService {
 
-    private List<Integer> accessUserList;
+    private List<BotUser> accessBotUserList;
+    private BotUser botAdminUser = new BotUser(728739455, null, true);
 
     public BotService(){
-        accessUserList = Arrays.asList(728739455, 268641929);
+        accessBotUserList = Arrays.asList(botAdminUser);
     }
 
-    public boolean hasAccessToCommands(int a) {
-        return accessUserList.contains(a);
+    public boolean hasAccessToCommands(int id) {
+        return getUserById(id) != null;
     }
 
-    public void addUser(int id){
-        accessUserList.add(id);
+    public void addUser(BotUser botUser){
+        accessBotUserList.add(botUser);
+    }
+
+    public BotUser getUserById(int id){
+        return accessBotUserList.stream().filter(x -> x.getId() == id).findFirst().orElse(null);
+    }
+
+    public BotUser getAdminUser(){
+        return botAdminUser;
     }
 }

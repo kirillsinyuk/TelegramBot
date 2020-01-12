@@ -1,4 +1,4 @@
-import bot.Bot;
+import entities.Bot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.ApiContextInitializer;
@@ -20,7 +20,7 @@ public class Main {
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
         try {
 
-            LOG.info("Configuring bot options...");
+            LOG.info("Configuring entities options...");
             DefaultBotOptions botOptions = ApiContext.getInstance(DefaultBotOptions.class);
 
             botOptions.setProxyHost(PROXY_HOST);

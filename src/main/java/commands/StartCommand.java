@@ -14,7 +14,7 @@ public class StartCommand extends PlannerBaseCommand {
     private final BotService botService;
 
     public StartCommand(BotService botService) {
-        super("start", "new user connected to bot", botService);
+        super("start", "new user connected to entities", botService);
         this.botService = botService;
     }
 
@@ -26,8 +26,8 @@ public class StartCommand extends PlannerBaseCommand {
         SendMessage message = new SendMessage();
         message.setChatId(chat.getId().toString());
 
-        LOG.info("User {}, id: {} is trying to execute '{}'.", user.getUserName(), user.getId(), getCommandIdentifier());
-        sb.append("Hi, ").append(user.getUserName()).append("! You've been added to bot users' list!\n")
+        LOG.info("BotUser {}, id: {}, chat: {} is trying to execute '{}'.", user.getUserName(), user.getId(), chat.getId(), getCommandIdentifier());
+        sb.append("Hi, ").append(user.getUserName()).append("! You've been added to entities users' list!\n")
                 .append("Please enter '/help' for more information.");
 
         message.setText(sb.toString());
