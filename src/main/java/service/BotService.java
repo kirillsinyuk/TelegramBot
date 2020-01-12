@@ -2,7 +2,7 @@ package service;
 
 import entities.BotUser;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BotService {
@@ -11,7 +11,9 @@ public class BotService {
     private BotUser botAdminUser = new BotUser(728739455, null, true);
 
     public BotService(){
-        accessBotUserList = Arrays.asList(botAdminUser);
+        accessBotUserList = new ArrayList<>();
+        accessBotUserList.add(botAdminUser);
+
     }
 
     public boolean hasAccessToCommands(int id) {
