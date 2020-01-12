@@ -1,10 +1,10 @@
 package entities;
 
 
-import commands.AddSpendingCommand;
-import commands.DeleteCommand;
-import commands.HelpCommand;
-import commands.StartCommand;
+import commands.commonCommands.AddSpendingCommand;
+import commands.commonCommands.DeleteCommand;
+import commands.commonCommands.HelpCommand;
+import commands.commonCommands.StartCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.bots.DefaultBotOptions;

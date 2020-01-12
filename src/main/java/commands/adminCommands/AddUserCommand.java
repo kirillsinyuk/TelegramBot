@@ -1,5 +1,8 @@
-package commands;
+package commands.adminCommands;
 
+import commands.commonCommands.HelpCommand;
+import commands.PlannerBaseCommand;
+import entities.BotUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -14,7 +17,7 @@ public class AddUserCommand extends PlannerBaseCommand {
     private final BotService botService;
 
     public AddUserCommand(BotService botService) {
-        super("add", "attributes:\n <category> <price> ", botService);
+        super("addUser", "attributes:\n <id> <hasAdminAccess> ", botService);
         this.botService = botService;
     }
     @Override
@@ -23,12 +26,23 @@ public class AddUserCommand extends PlannerBaseCommand {
 
         StringBuilder addMessage = new StringBuilder();
 
-        if(botService.hasAccessToCommands(user.getId())){
-            if (arguments.length < 2) {
-                addMessage.append("You need to use this format: '/add <category> <price>'");
-            } else {
-                addMessage.append(String.format("Purchase %s with price %s successfully added.", arguments[0], arguments[1]));
-                //add purchase to DB
+        if(botService.hasAdminAccess(user.getId())){
+            String[] id;
+            switch (arguments.length) {
+                case 2:
+                    id = arguments[0].split("\\b^[0-9]+\\b$");
+                    if (id.length == 1) {
+                        botService.addUser(new BotUser(Integer.parseInt(id[0]), null, (arguments[1].equals("true"))));
+                    }
+                    break;
+                case 1:
+                    id = arguments[0].split("\\b^[0-9]+\\b$");
+                    if (id.length == 1) {
+                        botService.addUser(new BotUser(Integer.parseInt(id[0]), null, false));
+                    }
+                    break;
+                default:
+                    addMessage.append("You need to use this format: '/add <id> <hasAdminAccess>'");
             }
         }
 
