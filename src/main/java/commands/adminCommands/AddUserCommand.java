@@ -31,15 +31,11 @@ public class AddUserCommand extends PlannerBaseCommand {
             Integer id;
             switch (arguments.length) {
                 case 1:
-                    id = ParseUtil.getIntFromString(arguments[0]);
-                    if (id != null) {
-                        botService.addUser(new BotUser(id, null, false));
-                        break;
-                    }
                 case 2:
                     id = ParseUtil.getIntFromString(arguments[0]);
                     if (id != null) {
-                        botService.addUser(new BotUser(id, null, (arguments[1].equals("true"))));
+                        botService.addUser(new BotUser(id, null, arguments.length == 2 && arguments[1].equals("true")));
+                        addMessage.append(String.format("User %s successfully added", arguments[0]));
                         break;
                     }
                 default:
