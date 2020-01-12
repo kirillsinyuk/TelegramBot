@@ -18,6 +18,10 @@ public class BotService {
         return getUserById(id) != null;
     }
 
+    public boolean hasAdminAccess(int id) {
+        return hasAccessToCommands(id) && getUserById(id).hasAdminAccess();
+    }
+
     public void addUser(BotUser botUser){
         accessBotUserList.add(botUser);
     }

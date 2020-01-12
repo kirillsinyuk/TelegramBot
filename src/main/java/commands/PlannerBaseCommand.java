@@ -16,12 +16,12 @@ public abstract class PlannerBaseCommand extends BotCommand {
     final Logger LOG = LoggerFactory.getLogger(PlannerBaseCommand.class);
     private final BotService botService;
 
-    PlannerBaseCommand(String commandIdentifier, String description, BotService botService) {
+    public PlannerBaseCommand(String commandIdentifier, String description, BotService botService) {
         super(commandIdentifier, description);
         this.botService = botService;
     }
 
-    void execute(AbsSender sender, SendMessage message, Chat chat, User user) {
+    public void execute(AbsSender sender, SendMessage message, Chat chat, User user) {
         try {
             if (!botService.hasAccessToCommands(user.getId())) {
                 LOG.warn("BotUser {} has no access.", user.getId());
