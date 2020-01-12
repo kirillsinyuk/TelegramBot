@@ -4,6 +4,7 @@ package entities;
 import commands.adminCommands.AddUserCommand;
 import commands.commonCommands.AddSpendingCommand;
 import commands.commonCommands.DeleteCommand;
+import commands.commonCommands.GetAllPurchasesCommand;
 import commands.commonCommands.HelpCommand;
 import commands.commonCommands.StartCommand;
 import org.slf4j.Logger;
@@ -11,9 +12,13 @@ import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import service.BotService;
+
+import java.util.stream.Stream;
 
 public class Bot extends TelegramLongPollingCommandBot {
 
@@ -50,6 +55,8 @@ public class Bot extends TelegramLongPollingCommandBot {
         LOG.info("/delete command initializing...");
         register(new AddUserCommand(botService));
         LOG.info("/addUser command initializing...");
+        register(new GetAllPurchasesCommand(botService));
+        LOG.info("/getstats command initializing...");
 
         LOG.info("Registering default action'...");
         registerDefaultAction(((absSender, message) -> {
@@ -96,7 +103,44 @@ public class Bot extends TelegramLongPollingCommandBot {
      */
     @Override
     public void processNonCommandUpdate(Update update) {
+        LOG.info("Processing non-command update...");
 
+        if (!update.hasMessage()) {
+            LOG.error("Update doesn't have a body!");
+            throw new IllegalStateException("Update doesn't have a body!");
+        }
+
+        Message msg = update.getMessage();
+        User user = msg.getFrom();
+
+        LOG.info("User {} id: {} is trying to send non command message", user.getUserName(), user.getId());
+
+        //TODO проверка на возможность откравки сообщения
+
+        String clearMessage = msg.getText();
+        String messageForUsers = String.format("%s:\n%s", user.getUserName(), clearMessage);
+
+        SendMessage answer = new SendMessage();
+
+       // отправка сообщения всем остальным пользователям бота
+        answer.setText(messageForUsers);
+        botService.getAccessBotUserList().stream()
+                .filter(a -> !a.equals(botService.getUserById(user.getId())))
+                .filter(a -> a.getChat() == null)
+                .forEach(a -> {
+                    answer.setChatId(a.getChat().getId());
+                    sendMessageToUser(answer, botService.getUserById(a.getId()).getTlgUser(), user);
+                });
+    }
+
+    private void sendMessageToUser(SendMessage message, User receiver, User sender) {
+        try {
+            LOG.info("Trying to send message from {} to {}", sender.getUserName(), receiver.getUserName());
+            execute(message);
+            LOG.info("Sended!");
+        } catch (TelegramApiException e) {
+            LOG.error("Trying to send message from {} to {}. Stacktrace:\n {}", sender.getUserName(), receiver.getUserName(), e);
+        }
     }
 
 }

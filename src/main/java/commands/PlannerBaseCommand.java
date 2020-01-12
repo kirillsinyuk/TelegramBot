@@ -28,6 +28,7 @@ public abstract class PlannerBaseCommand extends BotCommand {
                 message.setText("Access denied for you. Try to connect @KirillSinyuk for more info.");
             } else {
                 BotUser currentUser = botService.getUserById(user.getId());
+                currentUser.setTlgUser(user);
                 currentUser.setChat(chat);
             }
             sender.execute(message);
