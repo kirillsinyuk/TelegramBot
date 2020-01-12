@@ -1,4 +1,4 @@
-package bot;
+package entities;
 
 
 import commands.AddSpendingCommand;
@@ -51,7 +51,7 @@ public class Bot extends TelegramLongPollingCommandBot {
         LOG.info("Registering default action'...");
         registerDefaultAction(((absSender, message) -> {
 
-            LOG.warn("User {} is trying to execute unknown command '{}'.", message.getFrom().getId(), message.getText());
+            LOG.warn("BotUser {} is trying to execute unknown command '{}'.", message.getFrom().getId(), message.getText());
 
             SendMessage text = new SendMessage();
             text.setChatId(message.getChatId());

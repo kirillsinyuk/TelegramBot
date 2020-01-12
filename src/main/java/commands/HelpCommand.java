@@ -22,7 +22,7 @@ public class HelpCommand extends PlannerBaseCommand {
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
 
-        LOG.info("User {}, id: {} is trying to execute '{}'.", user.getUserName(), user.getId(), getCommandIdentifier());
+        LOG.info("BotUser {}, id: {}, chat: {} is trying to execute '{}'.", user.getUserName(), user.getId(), chat.getId(), getCommandIdentifier());
 
         StringBuilder helpMessageBuilder = new StringBuilder();
 
