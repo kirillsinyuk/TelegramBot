@@ -8,13 +8,13 @@ import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import service.BotService;
 
-public class AddSpending extends PlannerBaseCommand {
+public class GetAllPurchases extends PlannerBaseCommand {
 
     private static final Logger LOG = LoggerFactory.getLogger(HelpCommand.class);
     private final BotService botService;
 
-    public AddSpending(BotService botService) {
-        super("add", "attributes:\n <category> <price> ", botService);
+    public GetAllPurchases(BotService botService) {
+        super("get", "attributes:\n <after> <before> ", botService);
         this.botService = botService;
     }
     @Override
@@ -24,12 +24,8 @@ public class AddSpending extends PlannerBaseCommand {
         StringBuilder addMessage = new StringBuilder();
 
         if(botService.hasAccessToCommands(user.getId())){
-            if (arguments.length < 2) {
-                addMessage.append("You need to use this format: '/add <category> <price>'");
-            } else {
-                addMessage.append(String.format("Purchase %s with price %s successfully added.", arguments[0], arguments[1]));
-                //add purchase to DB
-            }
+            addMessage.append("All purchases %s with price %s successfully get.");
+            //add purchases from DB
         }
 
         SendMessage helpMessage = new SendMessage();
