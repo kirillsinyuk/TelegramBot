@@ -15,7 +15,7 @@ public class GetAllPurchasesCommand extends PlannerBaseCommand {
     private final BotService botService;
 
     public GetAllPurchasesCommand(BotService botService) {
-        super("get", "attributes:\n <after> <before> ", botService);
+        super("getstats", "attributes:\n &lt;after&gt; &lt;before&gt; ", botService);
         this.botService = botService;
     }
     @Override

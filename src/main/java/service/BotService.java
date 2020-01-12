@@ -35,4 +35,8 @@ public class BotService {
     public BotUser getAdminUser(){
         return botAdminUser;
     }
+
+    public List<BotUser> getAccessBotUserList() {
+        return accessBotUserList;
+    }
 }

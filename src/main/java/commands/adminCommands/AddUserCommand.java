@@ -18,7 +18,7 @@ public class AddUserCommand extends PlannerBaseCommand {
     private final BotService botService;
 
     public AddUserCommand(BotService botService) {
-        super("userAdd", "attributes:\n &lt;id&gt; &lt;hasAdminAccess&gt; ", botService);
+        super("user_add", "attributes:\n &lt;id&gt; &lt;hasAdminAccess&gt; ", botService);
         this.botService = botService;
     }
     @Override
@@ -39,7 +39,7 @@ public class AddUserCommand extends PlannerBaseCommand {
                         break;
                     }
                 default:
-                    addMessage.append("You need to use this format:\n /add &lt;id&gt; &lt;hasAdminAccess&gt;");
+                    addMessage.append("You need to use this format:\n /user_add &lt;id&gt; &lt;hasAdminAccess&gt;");
             }
         }
 

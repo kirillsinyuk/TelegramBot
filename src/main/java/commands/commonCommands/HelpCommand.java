@@ -16,7 +16,7 @@ public class HelpCommand extends PlannerBaseCommand {
     private static final Logger LOG = LoggerFactory.getLogger(HelpCommand.class);
 
     public HelpCommand(ICommandRegistry commandRegistry, BotService botService) {
-        super("help", "list all known commands\n", botService);
+        super("help", "list all known commands", botService);
         this.commandRegistry = commandRegistry;
     }
 
@@ -28,7 +28,9 @@ public class HelpCommand extends PlannerBaseCommand {
         StringBuilder helpMessageBuilder = new StringBuilder();
 
         helpMessageBuilder.append("<b>Available commands:</b>\n");
-        commandRegistry.getRegisteredCommands().forEach(cmd -> helpMessageBuilder.append(cmd.toString()));
+        //TODO разделение для администратора и пользователя
+        commandRegistry.getRegisteredCommands()
+                .forEach(cmd -> helpMessageBuilder.append(cmd.toString()).append("\n"));
 
         SendMessage helpMessage = new SendMessage();
         helpMessage.setChatId(chat.getId().toString());
