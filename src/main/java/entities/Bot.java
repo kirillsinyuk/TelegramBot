@@ -18,8 +18,6 @@ import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import service.BotService;
 
-import java.util.stream.Stream;
-
 public class Bot extends TelegramLongPollingCommandBot {
 
     private static final Logger LOG = LoggerFactory.getLogger(Bot.class);
@@ -115,7 +113,7 @@ public class Bot extends TelegramLongPollingCommandBot {
 
         LOG.info("User {} id: {} is trying to send non command message", user.getUserName(), user.getId());
 
-        //TODO проверка на возможность откравки сообщения
+        //TODO проверка на право возможности откравки сообщения
 
         String clearMessage = msg.getText();
         String messageForUsers = String.format("%s:\n%s", user.getUserName(), clearMessage);
@@ -135,11 +133,10 @@ public class Bot extends TelegramLongPollingCommandBot {
 
     private void sendMessageToUser(SendMessage message, User receiver, User sender) {
         try {
-            LOG.info("Trying to send message from {} to {}", sender.getUserName(), receiver.getUserName());
             execute(message);
-            LOG.info("Sended!");
+            LOG.info("Sended message from {} to {}", sender.getUserName(), receiver.getUserName());
         } catch (TelegramApiException e) {
-            LOG.error("Trying to send message from {} to {}. Stacktrace:\n {}", sender.getUserName(), receiver.getUserName(), e);
+            LOG.error("An error has occurred while trying to send message from {} to {}. Stacktrace:\n {}", sender.getUserName(), receiver.getUserName(), e);
         }
     }
 
