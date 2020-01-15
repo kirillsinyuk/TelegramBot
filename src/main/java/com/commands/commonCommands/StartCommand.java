@@ -1,13 +1,13 @@
-package commands.commonCommands;
+package com.commands.commonCommands;
 
-import commands.PlannerBaseCommand;
+import com.commands.PlannerBaseCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
-import service.BotService;
+import com.commands.service.BotService;
 
 public class StartCommand extends PlannerBaseCommand {
 
@@ -15,7 +15,7 @@ public class StartCommand extends PlannerBaseCommand {
     private final BotService botService;
 
     public StartCommand(BotService botService) {
-        super("start", "new user connected to entities", botService);
+        super("start", "new user connected to com.model", botService);
         this.botService = botService;
     }
 
@@ -28,7 +28,7 @@ public class StartCommand extends PlannerBaseCommand {
         message.setChatId(chat.getId().toString());
 
         LOG.info("BotUser {}, id: {}, chat: {} is trying to execute '{}'.", user.getUserName(), user.getId(), chat.getId(), getCommandIdentifier());
-        sb.append("Hi, ").append(user.getUserName()).append("! You've been added to entities users' list!\n")
+        sb.append("Hi, ").append(user.getUserName()).append("! You've been added to com.model users' list!\n")
                 .append("Please enter '/help' for more information.");
 
         message.setText(sb.toString());

@@ -1,6 +1,6 @@
-package service;
+package com.commands.service;
 
-import entities.BotUser;
+import com.model.entities.BotUser;
 
 import java.util.ArrayList;
 import java.util.List;

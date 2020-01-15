@@ -1,21 +1,21 @@
-package commands.commonCommands;
+package com.commands.commonCommands;
 
-import commands.PlannerBaseCommand;
+import com.commands.PlannerBaseCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
-import service.BotService;
+import com.commands.service.BotService;
 
-public class AddSpendingCommand extends PlannerBaseCommand {
+public class GetAllPurchasesCommand extends PlannerBaseCommand {
 
     private static final Logger LOG = LoggerFactory.getLogger(HelpCommand.class);
     private final BotService botService;
 
-    public AddSpendingCommand(BotService botService) {
-        super("add", "attributes:\n &lt;category&gt; &lt;price&gt;", botService);
+    public GetAllPurchasesCommand(BotService botService) {
+        super("getstats", "attributes:\n &lt;after&gt; &lt;before&gt; ", botService);
         this.botService = botService;
     }
     @Override
@@ -25,16 +25,13 @@ public class AddSpendingCommand extends PlannerBaseCommand {
         StringBuilder addMessage = new StringBuilder();
 
         if(botService.hasAccessToCommands(user.getId())){
-            if (arguments.length < 2) {
-                addMessage.append("You need to use this format:\n /add &lt;category&gt; &lt;price&gt;");
-            } else {
-                addMessage.append(String.format("Purchase %s with price %s successfully added.", arguments[0], arguments[1]));
-                //add purchase to DB
-            }
+            addMessage.append("All purchases %s with price %s successfully get.");
+            //add purchases from DB
         }
 
         SendMessage helpMessage = new SendMessage();
         helpMessage.setChatId(chat.getId().toString());
+        helpMessage.enableHtml(true);
         helpMessage.setText(addMessage.toString());
 
         execute(absSender, helpMessage, chat, user);

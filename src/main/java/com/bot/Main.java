@@ -1,12 +1,19 @@
-import entities.Bot;
+package com.bot;
+
+import com.model.Bot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ImportResource;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.meta.ApiContext;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
+@SpringBootApplication
+@ImportResource(locations = "{classpath:context.xml}")
 public class Main {
 
     private static final Logger LOG = LoggerFactory.getLogger(Main.class);
@@ -16,11 +23,12 @@ public class Main {
 
 
     public static void main(String[] args) {
+        SpringApplication.run(Main.class, args);
         ApiContextInitializer.init();
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
         try {
 
-            LOG.info("Configuring entities options...");
+            LOG.info("Configuring com.model options...");
             DefaultBotOptions botOptions = ApiContext.getInstance(DefaultBotOptions.class);
 
             botOptions.setProxyHost(PROXY_HOST);
