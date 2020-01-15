@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="budgetPlanner" />
         <module name="SKTelegramBot" />
+        <module name="TelegramBot" />
       </profile>
     </annotationProcessing>
   </component>
