@@ -1,4 +1,4 @@
-package com.model.entities;
+package com.bot.model.entities;
 
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;

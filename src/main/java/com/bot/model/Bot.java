@@ -1,12 +1,12 @@
-package com.model;
+package com.bot.model;
 
 
-import com.commands.adminCommands.AddUserCommand;
-import com.commands.commonCommands.AddSpendingCommand;
-import com.commands.commonCommands.DeleteCommand;
-import com.commands.commonCommands.GetAllPurchasesCommand;
-import com.commands.commonCommands.HelpCommand;
-import com.commands.commonCommands.StartCommand;
+import com.bot.commands.adminCommands.AddUserCommand;
+import com.bot.commands.commonCommands.AddSpendingCommand;
+import com.bot.commands.commonCommands.DeleteCommand;
+import com.bot.commands.commonCommands.GetAllPurchasesCommand;
+import com.bot.commands.commonCommands.HelpCommand;
+import com.bot.commands.commonCommands.StartCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
@@ -16,7 +16,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import com.commands.service.BotService;
+import com.bot.commands.service.BotService;
 
 public class Bot extends TelegramLongPollingCommandBot {
 

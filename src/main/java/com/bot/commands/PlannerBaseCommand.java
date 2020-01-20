@@ -1,6 +1,6 @@
-package com.commands;
+package com.bot.commands;
 
-import com.model.entities.BotUser;
+import com.bot.model.entities.BotUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import com.commands.service.BotService;
+import com.bot.commands.service.BotService;
 
 public abstract class PlannerBaseCommand extends BotCommand {
 
