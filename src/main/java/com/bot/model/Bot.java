@@ -29,14 +29,8 @@ public class Bot extends TelegramLongPollingCommandBot {
     private static Bot bot;
     private final BotService botService;
 
-    public static Bot getInstance(DefaultBotOptions botOptions) {
-        if (bot == null) {
-            bot = new Bot(botOptions);
-        }
-        return bot;
-    }
 
-    private Bot(DefaultBotOptions botOptions) {
+    public Bot(DefaultBotOptions botOptions) {
         super(botOptions);
 
         botService = new BotService();
