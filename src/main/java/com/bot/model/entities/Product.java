@@ -1,4 +1,4 @@
-package com.model.entities;
+package com.bot.model.entities;
 
 
 import lombok.Data;

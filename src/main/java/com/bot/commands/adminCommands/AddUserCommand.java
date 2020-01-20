@@ -1,16 +1,16 @@
-package com.commands.adminCommands;
+package com.bot.commands.adminCommands;
 
-import com.commands.commonCommands.HelpCommand;
-import com.commands.PlannerBaseCommand;
-import com.model.entities.BotUser;
+import com.bot.commands.commonCommands.HelpCommand;
+import com.bot.commands.PlannerBaseCommand;
+import com.bot.model.entities.BotUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
-import com.commands.service.BotService;
-import com.commands.service.util.ParseUtil;
+import com.bot.commands.service.BotService;
+import com.bot.commands.service.util.ParseUtil;
 
 public class AddUserCommand extends PlannerBaseCommand {
 
