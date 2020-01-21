@@ -1,19 +1,20 @@
 package com.bot.commands.service;
 
 import com.bot.model.entities.BotUser;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class BotService {
 
     private List<BotUser> accessBotUserList;
     private BotUser botAdminUser = new BotUser(728739455, null, true);
 
-    public BotService(){
+    public BotService() {
         accessBotUserList = new ArrayList<>();
         accessBotUserList.add(botAdminUser);
-
     }
 
     public boolean hasAccessToCommands(int id) {

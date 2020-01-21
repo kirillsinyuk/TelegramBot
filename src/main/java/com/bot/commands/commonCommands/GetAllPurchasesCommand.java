@@ -3,6 +3,7 @@ package com.bot.commands.commonCommands;
 import com.bot.commands.PlannerBaseCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
@@ -11,13 +12,15 @@ import com.bot.commands.service.BotService;
 
 public class GetAllPurchasesCommand extends PlannerBaseCommand {
 
-    private static final Logger LOG = LoggerFactory.getLogger(HelpCommand.class);
-    private final BotService botService;
+    @Autowired
+    private Logger LOG;
+    @Autowired
+    private BotService botService;
 
-    public GetAllPurchasesCommand(BotService botService) {
-        super("getstats", "attributes:\n &lt;after&gt; &lt;before&gt; ", botService);
-        this.botService = botService;
+    public GetAllPurchasesCommand() {
+        super("getstats", "attributes:\n &lt;after&gt; &lt;before&gt; ");
     }
+
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
         LOG.info("BotUser {}, id: {}, chat: {} is trying to execute '{}'.", user.getUserName(), user.getId(), chat.getId(), getCommandIdentifier());
