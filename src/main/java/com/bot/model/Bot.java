@@ -8,7 +8,7 @@ import com.bot.commands.commonCommands.GetAllPurchasesCommand;
 import com.bot.commands.commonCommands.HelpCommand;
 import com.bot.commands.commonCommands.StartCommand;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -20,13 +20,13 @@ import com.bot.commands.service.BotService;
 
 public class Bot extends TelegramLongPollingCommandBot {
 
-    private static final Logger LOG = LoggerFactory.getLogger(Bot.class);
+    @Autowired
+    private static Logger LOG;
 
     // имя бота, которое мы указали при создании аккаунта у BotFather
     // и токен, который получили в результате
     private static final String BOT_NAME = "budget_planner_bot";
     private static final String BOT_TOKEN = "991064577:AAHtI9JsNg8mgR5IRNiveJMLxN9JpZMw4v8";
-    private static Bot bot;
     private final BotService botService;
 
 
@@ -35,22 +35,22 @@ public class Bot extends TelegramLongPollingCommandBot {
 
         botService = new BotService();
 
-        LOG.info("Initializing Planner Bot...");
-        HelpCommand helpCommand = new HelpCommand(this, botService);
+        // Initializing Planner Bot...
+        HelpCommand helpCommand = new HelpCommand(this);
         register(helpCommand);
-        LOG.info("/help command initializing...");
-        register(new StartCommand(botService));
-        LOG.info("/start command initializing...");
-        register(new AddSpendingCommand(botService));
-        LOG.info("/add command initializing...");
-        register(new DeleteCommand(botService));
-        LOG.info("/delete command initializing...");
-        register(new AddUserCommand(botService));
-        LOG.info("/addUser command initializing...");
-        register(new GetAllPurchasesCommand(botService));
-        LOG.info("/getstats command initializing...");
+        // /help command initializing...
+        register(new StartCommand());
+        // /start command initializing...
+        register(new AddSpendingCommand());
+        // /add command initializing...
+        register(new DeleteCommand());
+        // /delete command initializing...
+        register(new AddUserCommand());
+        // /addUser command initializing...
+        register(new GetAllPurchasesCommand());
+        // /getstats command initializing...
 
-        LOG.info("Registering default action'...");
+        // Registering default action'...
         registerDefaultAction(((absSender, message) -> {
 
             LOG.warn("BotUser {} is trying to execute unknown command '{}'.", message.getFrom().getId(), message.getText());
