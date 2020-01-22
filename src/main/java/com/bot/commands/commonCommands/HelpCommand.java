@@ -3,17 +3,17 @@ package com.bot.commands.commonCommands;
 import com.bot.commands.PlannerBaseCommand;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.ICommandRegistry;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 
+@Component
 public class HelpCommand extends PlannerBaseCommand {
 
     private final ICommandRegistry commandRegistry;
-    @Autowired
-    private Logger LOG;
 
     public HelpCommand(ICommandRegistry commandRegistry) {
         super("help", "list all known com.bot.commands");

@@ -7,6 +7,7 @@ import com.bot.commands.commonCommands.DeleteCommand;
 import com.bot.commands.commonCommands.GetAllPurchasesCommand;
 import com.bot.commands.commonCommands.HelpCommand;
 import com.bot.commands.commonCommands.StartCommand;
+import com.bot.service.BotService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
@@ -16,24 +17,22 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import com.bot.commands.service.BotService;
 
 public class Bot extends TelegramLongPollingCommandBot {
 
     @Autowired
     private static Logger LOG;
+    @Autowired
+    private BotService botService;
 
     // имя бота, которое мы указали при создании аккаунта у BotFather
     // и токен, который получили в результате
     private static final String BOT_NAME = "budget_planner_bot";
     private static final String BOT_TOKEN = "991064577:AAHtI9JsNg8mgR5IRNiveJMLxN9JpZMw4v8";
-    private final BotService botService;
 
 
     public Bot(DefaultBotOptions botOptions) {
         super(botOptions);
-
-        botService = new BotService();
 
         // Initializing Planner Bot...
         HelpCommand helpCommand = new HelpCommand(this);

@@ -1,23 +1,22 @@
 package com.bot.commands.commonCommands;
 
 import com.bot.commands.PlannerBaseCommand;
-import org.slf4j.Logger;
+import com.bot.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
-import com.bot.commands.service.BotService;
 
+@Component
 public class AddSpendingCommand extends PlannerBaseCommand {
 
     @Autowired
-    private Logger LOG;
-    @Autowired
-    private BotService botService;
+    private ProductService productService;
 
     public AddSpendingCommand() {
-        super("add", "attributes:\n &lt;category&gt; &lt;price&gt;");
+        super("add", "attributes:\n &lt;category&gt; &lt;price&gt; &lt;description&gt;");
     }
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
@@ -27,10 +26,10 @@ public class AddSpendingCommand extends PlannerBaseCommand {
 
         if(botService.hasAccessToCommands(user.getId())){
             if (arguments.length < 2) {
-                addMessage.append("You need to use this format:\n /add &lt;category&gt; &lt;price&gt;");
+                addMessage.append("You need to use this format:\n /add &lt;category&gt; &lt;price&gt; &lt;description&gt;");
             } else {
                 addMessage.append(String.format("Purchase %s with price %s successfully added.", arguments[0], arguments[1]));
-                //add purchase to DB
+                productService.createAndSaveProduct(arguments);
             }
         }
 

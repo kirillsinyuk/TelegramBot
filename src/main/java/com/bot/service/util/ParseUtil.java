@@ -1,4 +1,4 @@
-package com.bot.commands.service.util;
+package com.bot.service.util;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -3,15 +3,14 @@ package com.bot.commands.commonCommands;
 import com.bot.commands.PlannerBaseCommand;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 
+@Component
 public class StartCommand extends PlannerBaseCommand {
-
-    @Autowired
-    private Logger LOG;
 
     public StartCommand() {
         super("start", "new user connected to com.bot.model");
