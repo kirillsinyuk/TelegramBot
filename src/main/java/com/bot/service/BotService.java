@@ -1,4 +1,4 @@
-package com.bot.commands.service;
+package com.bot.service;
 
 import com.bot.model.entities.BotUser;
 import org.springframework.stereotype.Service;

@@ -4,18 +4,15 @@ import com.bot.commands.PlannerBaseCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
-import com.bot.commands.service.BotService;
+import com.bot.service.BotService;
 
+@Component
 public class DeleteCommand extends PlannerBaseCommand {
-
-    @Autowired
-    private Logger LOG;
-    @Autowired
-    private BotService botService;
 
     public DeleteCommand() {
         super("delete", "attributes:\n &lt;category&gt; &lt;price&gt; ");

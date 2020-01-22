@@ -1,6 +1,6 @@
-package com.bot.commands.context;
+package com.bot.context;
 
-import com.bot.commands.service.BotService;
+import com.bot.service.BotService;
 import com.bot.model.Bot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +16,8 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 public class Context {
 
     @Bean
-    public Logger getLogger(){
-        return LoggerFactory.getLogger("Logger");
+    public Logger logger() {
+        return LoggerFactory.getLogger("appLogger");
     }
 
     @Bean
