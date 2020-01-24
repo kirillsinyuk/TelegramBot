@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 @Entity
 @Data
@@ -27,5 +28,13 @@ public class Product {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "spended_by")
+    private String spendedBy;
 
+    @Override
+    public String toString() {
+        return description == null ?
+          String.join(" - ", Arrays.asList(data.toString(), spendedBy, category, price + "\n"))
+                : String.join(" - ", Arrays.asList(data.toString(), spendedBy, category, description, price + "\n"));
+    }
 }

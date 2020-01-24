@@ -30,15 +30,15 @@ public class AppContextConfiguration {
         return telegramBotsApi;
     }
 
-    @Bean
-    public DataSource getDataSource() {
-        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-        dataSourceBuilder.driverClassName("com.mysql.cj.jdbc.Driver");
-        dataSourceBuilder.url("jdbc:mysql://localhost:3306/budget_planner?serverTimezone=UTC");
-        dataSourceBuilder.username("test_dev");
-        dataSourceBuilder.password("longpassword");
-        return dataSourceBuilder.build();
-    }
+//    @Bean
+//    public DataSource getDataSource() {
+//        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
+//        dataSourceBuilder.driverClassName("com.mysql.cj.jdbc.Driver");
+//        dataSourceBuilder.url("jdbc:mysql://localhost:3306/budget_planner?serverTimezone=UTC");
+//        dataSourceBuilder.username("test_dev");
+//        dataSourceBuilder.password("longpassword");
+//        return dataSourceBuilder.build();
+//    }
 
     @Bean
     public Logger logger() {

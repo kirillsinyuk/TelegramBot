@@ -19,6 +19,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import javax.annotation.PostConstruct;
+
 @Component
 public class Bot extends TelegramLongPollingCommandBot {
 
@@ -105,6 +107,7 @@ public class Bot extends TelegramLongPollingCommandBot {
                 });
     }
 
+    @PostConstruct
     public void registerCommands() {
         LOG.info("Initializing Planner Bot...");
         register(helpCommand);
