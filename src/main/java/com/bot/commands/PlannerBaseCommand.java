@@ -12,7 +12,6 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import com.bot.service.BotService;
 
-@Component
 public abstract class PlannerBaseCommand extends BotCommand {
 
     @Autowired

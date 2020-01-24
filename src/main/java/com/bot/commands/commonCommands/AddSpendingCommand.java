@@ -29,8 +29,8 @@ public class AddSpendingCommand extends PlannerBaseCommand {
             if (arguments.length < 2) {
                 addMessage.append("You need to use this format:\n /add &lt;category&gt; &lt;price&gt; &lt;description&gt;");
             } else {
+                productService.createAndSaveProduct(arguments, user.getUserName());
                 addMessage.append(String.format("Purchase %s with price %s successfully added.", arguments[0], arguments[1]));
-                productService.createAndSaveProduct(arguments);
             }
         }
 

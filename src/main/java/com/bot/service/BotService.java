@@ -11,6 +11,7 @@ public class BotService {
 
     private List<BotUser> accessBotUserList;
     private BotUser botAdminUser = new BotUser(728739455, null, true);
+    private BotUser botCommonUser = new BotUser(268641929, null, true);
 
     public BotService() {
         accessBotUserList = new ArrayList<>();
@@ -26,6 +27,7 @@ public class BotService {
     }
 
     public void addUser(BotUser botUser){
+        accessBotUserList.add(botUser);
         accessBotUserList.add(botUser);
     }
 

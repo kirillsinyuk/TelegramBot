@@ -39,8 +39,4 @@ public class BotUser {
     public void setChat(Chat chat) {
         this.chat = chat;
     }
-
-    public void setHasAdminAccess(boolean hasAdminAccess) {
-        this.hasAdminAccess = hasAdminAccess;
-    }
 }
