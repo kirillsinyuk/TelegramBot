@@ -10,6 +10,7 @@ import com.bot.commands.commonCommands.StartCommand;
 import com.bot.service.BotService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -18,12 +19,25 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+@Component
 public class Bot extends TelegramLongPollingCommandBot {
 
     @Autowired
-    private static Logger LOG;
+    private AddSpendingCommand addSpendingCommand;
+    @Autowired
+    private DeleteCommand deleteCommand;
+    @Autowired
+    private StartCommand startCommand;
+    @Autowired
+    private HelpCommand helpCommand;
+    @Autowired
+    private AddUserCommand addUserCommand;
+    @Autowired
+    private GetAllPurchasesCommand getAllPurchasesCommand;
     @Autowired
     private BotService botService;
+    @Autowired
+    private Logger LOG;
 
     // имя бота, которое мы указали при создании аккаунта у BotFather
     // и токен, который получили в результате
@@ -33,40 +47,7 @@ public class Bot extends TelegramLongPollingCommandBot {
 
     public Bot(DefaultBotOptions botOptions) {
         super(botOptions);
-
-        // Initializing Planner Bot...
-        HelpCommand helpCommand = new HelpCommand(this);
-        register(helpCommand);
-        // /help command initializing...
-        register(new StartCommand());
-        // /start command initializing...
-        register(new AddSpendingCommand());
-        // /add command initializing...
-        register(new DeleteCommand());
-        // /delete command initializing...
-        register(new AddUserCommand());
-        // /addUser command initializing...
-        register(new GetAllPurchasesCommand());
-        // /getstats command initializing...
-
-        // Registering default action'...
-        registerDefaultAction(((absSender, message) -> {
-
-            LOG.warn("BotUser {} is trying to execute unknown command '{}'.", message.getFrom().getId(), message.getText());
-
-            SendMessage text = new SendMessage();
-            text.setChatId(message.getChatId());
-            text.setText(message.getText() + " command not found!");
-
-            try {
-                absSender.execute(text);
-            } catch (TelegramApiException e) {
-                LOG.error("Error while replying unknown command to user {}.", message.getFrom(), e);
-            }
-
-            helpCommand.execute(absSender, message.getFrom(), message.getChat(), new String[] {});
-        }));
-
+        //registerCommands();
     }
 
 
@@ -122,6 +103,41 @@ public class Bot extends TelegramLongPollingCommandBot {
                     answer.setChatId(a.getChat().getId());
                     sendMessageToUser(answer, botService.getUserById(a.getId()).getTlgUser(), user);
                 });
+    }
+
+    public void registerCommands() {
+        LOG.info("Initializing Planner Bot...");
+        register(helpCommand);
+        LOG.info("/help command initialized.");
+        register(startCommand);
+        LOG.info("/start command initialized.");
+        register(addSpendingCommand);
+        LOG.info("/add command initialized.");
+        register(deleteCommand);
+        LOG.info("/delete command initialized.");
+        register(addUserCommand);
+        LOG.info("/addUser command initialized.");
+        register(getAllPurchasesCommand);
+        LOG.info("/getStats command initialized.");
+
+        // Registering default action'...
+        registerDefaultAction(((absSender, message) -> {
+
+            LOG.warn("BotUser {} is trying to execute unknown command '{}'.", message.getFrom().getId(), message.getText());
+
+            SendMessage text = new SendMessage();
+            text.setChatId(message.getChatId());
+            text.setText(message.getText() + " command not found!");
+
+            try {
+                absSender.execute(text);
+            } catch (TelegramApiException e) {
+                LOG.error("Error while replying unknown command to user {}.", message.getFrom(), e);
+            }
+
+            helpCommand.execute(absSender, message.getFrom(), message.getChat(), new String[] {});
+        }));
+        LOG.info("Unknown action command initialized.");
     }
 
     private void sendMessageToUser(SendMessage message, User receiver, User sender) {

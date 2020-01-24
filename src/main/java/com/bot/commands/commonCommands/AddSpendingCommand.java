@@ -18,6 +18,7 @@ public class AddSpendingCommand extends PlannerBaseCommand {
     public AddSpendingCommand() {
         super("add", "attributes:\n &lt;category&gt; &lt;price&gt; &lt;description&gt;");
     }
+
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
         LOG.info("BotUser {}, id: {}, chat: {} is trying to execute '{}'.", user.getUserName(), user.getId(), chat.getId(), getCommandIdentifier());
