@@ -11,4 +11,6 @@ import java.util.List;
 public interface ProductRepository extends CrudRepository<Product, Long> {
 
     List<Product> getAllByDataBetween(LocalDateTime startDate, LocalDateTime endDate);
+
+    void deleteAllByCategoryAndPrice(String category, int price);
 }

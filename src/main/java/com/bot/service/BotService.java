@@ -16,6 +16,7 @@ public class BotService {
     public BotService() {
         accessBotUserList = new ArrayList<>();
         accessBotUserList.add(botAdminUser);
+        accessBotUserList.add(botCommonUser);
     }
 
     public boolean hasAccessToCommands(int id) {
@@ -27,7 +28,6 @@ public class BotService {
     }
 
     public void addUser(BotUser botUser){
-        accessBotUserList.add(botUser);
         accessBotUserList.add(botUser);
     }
 

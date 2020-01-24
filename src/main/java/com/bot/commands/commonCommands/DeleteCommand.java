@@ -1,6 +1,8 @@
 package com.bot.commands.commonCommands;
 
 import com.bot.commands.PlannerBaseCommand;
+import com.bot.repositories.ProductRepository;
+import com.bot.service.util.ParseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,9 @@ import com.bot.service.BotService;
 
 @Component
 public class DeleteCommand extends PlannerBaseCommand {
+
+    @Autowired
+    ProductRepository productRepository;
 
     public DeleteCommand() {
         super("delete", "attributes:\n &lt;category&gt; &lt;price&gt; ");
@@ -29,7 +34,7 @@ public class DeleteCommand extends PlannerBaseCommand {
                 addMessage.append("You need to use this format:\n /add &lt;category&gt; &lt;price&gt;");
             } else {
                 addMessage.append(String.format("Purchase %s with price %s successfully deleted.", arguments[0], arguments[1]));
-                //add purchase to DB
+                productRepository.deleteAllByCategoryAndPrice(arguments[0], ParseUtil.getIntFromString(arguments[1]));
             }
         }
 
