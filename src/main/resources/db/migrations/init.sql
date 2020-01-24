@@ -1,3 +1,4 @@
+DROP TABLE product;
 CREATE TABLE IF NOT EXISTS product(
     id int,
     category varchar(255),

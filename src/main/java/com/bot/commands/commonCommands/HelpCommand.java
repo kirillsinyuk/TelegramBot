@@ -1,6 +1,7 @@
 package com.bot.commands.commonCommands;
 
 import com.bot.commands.PlannerBaseCommand;
+import com.bot.model.Bot;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,11 +14,12 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 @Component
 public class HelpCommand extends PlannerBaseCommand {
 
-    private final ICommandRegistry commandRegistry;
+    @Autowired
+    private Bot bot;
 
-    public HelpCommand(ICommandRegistry commandRegistry) {
+
+    public HelpCommand() {
         super("help", "list all known com.bot.commands");
-        this.commandRegistry = commandRegistry;
     }
 
     @Override
@@ -29,7 +31,7 @@ public class HelpCommand extends PlannerBaseCommand {
 
         helpMessageBuilder.append("<b>Available com.bot.commands:</b>\n");
         //TODO разделение для администратора и пользователя
-        commandRegistry.getRegisteredCommands()
+        bot.getRegisteredCommands()
                 .forEach(cmd -> helpMessageBuilder.append(cmd.toString()).append("\n"));
 
         SendMessage helpMessage = new SendMessage();
