@@ -4,6 +4,7 @@ import com.bot.model.entities.Product;
 import com.bot.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,11 +17,13 @@ public class ProductService {
     @Autowired
     private BotService botService;
 
+    @Transactional
     public Product createAndSaveProduct(String[] arguments, String username){
            Product product = toProduct(arguments, username);
            return productRepository.save(product);
     }
 
+    @Transactional
     public List<Product> getPurchases(LocalDateTime start, LocalDateTime end){
         return productRepository.getAllByDataBetween(start, end);
     }

@@ -1,8 +1,6 @@
 package com.bot.commands.commonCommands;
 
 import com.bot.commands.PlannerBaseCommand;
-import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
@@ -25,7 +23,7 @@ public class StartCommand extends PlannerBaseCommand {
         message.setChatId(chat.getId().toString());
 
         LOG.info("BotUser {}, id: {}, chat: {} is trying to execute '{}'.", user.getUserName(), user.getId(), chat.getId(), getCommandIdentifier());
-        sb.append("Hi, ").append(user.getUserName()).append("! You've been added to com.bot.model users' list!\n")
+        sb.append("Hi, ").append(user.getFirstName()).append("! You've been added to com.bot.model users' list!\n")
                 .append("Please enter '/help' for more information.");
 
         message.setText(sb.toString());
