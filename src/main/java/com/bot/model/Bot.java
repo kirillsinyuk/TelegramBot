@@ -87,7 +87,7 @@ public class Bot extends TelegramLongPollingCommandBot {
         Message msg = update.getMessage();
         User user = msg.getFrom();
 
-        LOG.info("User {} id: {} is trying to send non command message", user.getUserName(), user.getId());
+        LOG.info("User {} id: {} is trying to send non command message", user.getFirstName() + " " + user.getLastName(), user.getId());
 
         //TODO проверка на право возможности откравки сообщения
 
@@ -100,7 +100,7 @@ public class Bot extends TelegramLongPollingCommandBot {
         answer.setText(messageForUsers);
         botService.getAccessBotUserList().stream()
                 .filter(a -> !a.equals(botService.getUserById(user.getId())))
-                .filter(a -> a.getChat() == null)
+                .filter(a -> a.getChat() != null)
                 .forEach(a -> {
                     answer.setChatId(a.getChat().getId());
                     sendMessageToUser(answer, botService.getUserById(a.getId()).getTlgUser(), user);

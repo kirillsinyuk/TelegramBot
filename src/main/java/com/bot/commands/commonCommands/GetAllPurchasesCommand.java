@@ -3,21 +3,15 @@ package com.bot.commands.commonCommands;
 import com.bot.commands.PlannerBaseCommand;
 import com.bot.service.ProductService;
 import com.bot.service.util.ParseUtil;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
-import com.bot.service.BotService;
 
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-
-import static java.time.temporal.ChronoField.*;
 
 @Component
 public class GetAllPurchasesCommand extends PlannerBaseCommand {
