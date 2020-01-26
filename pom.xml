@@ -12,8 +12,6 @@
         <mysql-version>8.0.13</mysql-version>
         <lombok-version>1.18.8</lombok-version>
         <spring-boot-version>2.2.2.RELEASE</spring-boot-version>
-        <aspectjweaver>1.9.5</aspectjweaver>
-        <spring-aop>5.2.2.RELEASE</spring-aop>
     </properties>
 
     <build>
@@ -58,13 +56,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- aop -->
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>${aspectjweaver}</version>
-        </dependency>
-
         <!-- Spring -->
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent -->
         <dependency>
@@ -79,13 +70,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
             <version>${spring-boot-version}</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.springframework/spring-aop -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-aop</artifactId>
-            <version>${spring-aop}</version>
         </dependency>
 
     </dependencies>
