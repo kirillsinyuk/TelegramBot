@@ -5,6 +5,7 @@ import com.bot.commands.adminCommands.AddUserCommand;
 import com.bot.commands.commonCommands.AddSpendingCommand;
 import com.bot.commands.commonCommands.DeleteCommand;
 import com.bot.commands.commonCommands.GetAllPurchasesCommand;
+import com.bot.commands.commonCommands.GetStatistic;
 import com.bot.commands.commonCommands.HelpCommand;
 import com.bot.commands.commonCommands.StartCommand;
 import com.bot.service.BotService;
@@ -36,6 +37,8 @@ public class Bot extends TelegramLongPollingCommandBot {
     private AddUserCommand addUserCommand;
     @Autowired
     private GetAllPurchasesCommand getAllPurchasesCommand;
+    @Autowired
+    private GetStatistic getStatistic;
     @Autowired
     private BotService botService;
     @Autowired
@@ -121,6 +124,8 @@ public class Bot extends TelegramLongPollingCommandBot {
         register(addUserCommand);
         LOG.info("/addUser command initialized.");
         register(getAllPurchasesCommand);
+        LOG.info("/getProd command initialized.");
+        register(getStatistic);
         LOG.info("/getStats command initialized.");
 
         // Registering default action'...
