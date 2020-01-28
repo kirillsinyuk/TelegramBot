@@ -1,5 +1,6 @@
 package com.bot.service;
 
+import com.bot.model.dto.StatisticDto;
 import com.bot.model.entities.Product;
 import com.bot.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,11 @@ public class ProductService {
         return productRepository.getAllByDataBetween(start, end);
     }
 
+    @Transactional
+    public List<Object[]> getStatistic(LocalDateTime start, LocalDateTime end){
+        return productRepository.getStatistic(start, end);
+    }
+
     private Product toProduct(String[] arguments, String username){
         Product product = new Product();
         product.setCategory(arguments[0]);
@@ -39,4 +45,9 @@ public class ProductService {
         }
         return product;
     }
+
+    public StatisticDto toStatisticsDto(Object[] obj){
+        return new StatisticDto((String)obj[0], (int)obj[1]);
+    }
+
 }

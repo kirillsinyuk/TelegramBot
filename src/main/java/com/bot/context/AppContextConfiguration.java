@@ -20,6 +20,7 @@ public class AppContextConfiguration {
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
         try {
             telegramBotsApi.registerBot(bot);
+            LOG.info( "Регистрация прошла успешно!");
         } catch (TelegramApiRequestException e) {
             LOG.error( "Ошибка регистрации бота:", e.fillInStackTrace());
         }
@@ -35,7 +36,7 @@ public class AppContextConfiguration {
     public DefaultBotOptions getDefaultBotOptions() {
         ApiContextInitializer.init();
         DefaultBotOptions botOptions = ApiContext.getInstance(DefaultBotOptions.class);
-        String PROXY_HOST = "198.27.75.152";
+        String PROXY_HOST = "165.22.85.57";
         int PROXY_PORT = 1080;
         botOptions.setProxyHost(PROXY_HOST);
         botOptions.setProxyPort(PROXY_PORT);
