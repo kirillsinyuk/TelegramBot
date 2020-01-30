@@ -4,7 +4,6 @@ import com.bot.commands.PlannerBaseCommand;
 import com.bot.model.Bot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
@@ -25,18 +24,12 @@ public class HelpCommand extends PlannerBaseCommand {
 
         LOG.info("BotUser {}, id: {}, chat: {} is trying to execute '{}'.", user.getUserName(), user.getId(), chat.getId(), getCommandIdentifier());
 
-        StringBuilder helpMessageBuilder = new StringBuilder();
-
-        helpMessageBuilder.append("<b>Available com.bot.commands:</b>\n");
-        //TODO разделение для администратора и пользователя
+        StringBuilder message = new StringBuilder();
+        message.append("<b>Available com.bot.commands:</b>\n");
+        //TODO разделение команд для администратора и пользователя
         bot.getRegisteredCommands()
-                .forEach(cmd -> helpMessageBuilder.append(cmd.toString()).append("\n"));
+                .forEach(cmd -> message.append(cmd.toString()).append("\n"));
 
-        SendMessage helpMessage = new SendMessage();
-        helpMessage.setChatId(chat.getId().toString());
-        helpMessage.enableHtml(true);
-        helpMessage.setText(helpMessageBuilder.toString());
-
-        execute(absSender, helpMessage, chat, user);
+        sendMsg(absSender, user, chat, message.toString());
     }
 }
