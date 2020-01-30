@@ -3,6 +3,7 @@ package com.bot.commands.commonCommands;
 import com.bot.commands.PlannerBaseCommand;
 import com.bot.model.dto.StatisticDto;
 import com.bot.service.ProductService;
+import com.bot.service.util.CalculateUtils;
 import com.bot.service.util.ParseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 
+import java.math.BigDecimal;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -37,15 +39,19 @@ public class GetStatistic extends PlannerBaseCommand {
             } else {
                 try {
                     LocalDateTime startDate = ParseUtil.getLocalDateTimeFromString(arguments[0]);
-                    LocalDateTime endDate = ParseUtil.getLocalDateTimeFromString(arguments[1]);
+                    LocalDateTime endDate = ParseUtil.getLocalDateTimeFromString(arguments[1]).plusDays(1);
                     if (startDate.isAfter(endDate)) {
                         addMessage.append("Первая дата позднее второй!");
                     } else {
+                        BigDecimal total = productService.totalSpend(startDate, endDate);
                         productService.getStatistic(startDate, endDate)
                                 .stream()
                                 .map(productService::toStatisticsDto)
-                                .map(StatisticDto::toString)
-                                .forEach(addMessage::append);
+                                .forEach(price -> addMessage.append(price.toString())
+                                        .append(" (")
+                                        .append(CalculateUtils.getPercent(price.getPrice(), total))
+                                        .append("%)\n"));
+                        addMessage.append("Всего потрачено : " + total);
                     }
                 } catch (DateTimeException e) {
                     addMessage.append("Неверный формат дат! Требуется dd-MM-yyyy");

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -34,6 +35,11 @@ public class ProductService {
         return productRepository.getStatistic(start, end);
     }
 
+    @Transactional
+    public BigDecimal totalSpend(LocalDateTime start, LocalDateTime end){
+        return productRepository.getSum(start, end);
+    }
+
     private Product toProduct(String[] arguments, String username){
         Product product = new Product();
         product.setCategory(arguments[0]);
@@ -47,7 +53,7 @@ public class ProductService {
     }
 
     public StatisticDto toStatisticsDto(Object[] obj){
-        return new StatisticDto((String)obj[0], (int)obj[1]);
+        return new StatisticDto((String)obj[0], (BigDecimal) obj[1]);
     }
 
 }
