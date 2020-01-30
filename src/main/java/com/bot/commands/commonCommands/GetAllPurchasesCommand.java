@@ -35,7 +35,7 @@ public class GetAllPurchasesCommand extends PlannerBaseCommand {
             } else {
                 try {
                     LocalDateTime startDate = ParseUtil.getLocalDateTimeFromString(arguments[0]);
-                    LocalDateTime endDate = ParseUtil.getLocalDateTimeFromString(arguments[1]);
+                    LocalDateTime endDate = ParseUtil.getLocalDateTimeFromString(arguments[1]).plusDays(1);
                     if (startDate.isAfter(endDate)) {
                         addMessage.append("Первая дата позднее второй!");
                     } else {

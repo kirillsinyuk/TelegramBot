@@ -14,6 +14,8 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 @Configuration
 public class AppContextConfiguration {
 
+    private static final String PROXY_HOST = "79.110.164.22";
+    private static final int PROXY_PORT = 8080;
 
     @Bean
     public TelegramBotsApi getTlgBot(Bot bot, Logger LOG){
@@ -36,8 +38,6 @@ public class AppContextConfiguration {
     public DefaultBotOptions getDefaultBotOptions() {
         ApiContextInitializer.init();
         DefaultBotOptions botOptions = ApiContext.getInstance(DefaultBotOptions.class);
-        String PROXY_HOST = "165.22.85.57";
-        int PROXY_PORT = 1080;
         botOptions.setProxyHost(PROXY_HOST);
         botOptions.setProxyPort(PROXY_PORT);
         botOptions.setProxyType(DefaultBotOptions.ProxyType.SOCKS5);
