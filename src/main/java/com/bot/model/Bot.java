@@ -52,7 +52,6 @@ public class Bot extends TelegramLongPollingCommandBot {
 
     public Bot(DefaultBotOptions botOptions) {
         super(botOptions);
-        //registerCommands();
     }
 
 
