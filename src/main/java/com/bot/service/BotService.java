@@ -9,6 +9,7 @@ import java.util.List;
 @Service
 public class BotService {
 
+    //TODO перенести хранение в БД. Сейчас как черновой вариант сойдет
     private List<BotUser> accessBotUserList;
     private BotUser botAdminUser = new BotUser(728739455, null, true);
     private BotUser botCommonUser = new BotUser(268641929, null, true);

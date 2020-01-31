@@ -38,4 +38,13 @@ public abstract class PlannerBaseCommand extends BotCommand {
         }
     }
 
+    public void sendMsg(AbsSender absSender, User user, Chat chat, String message){
+        SendMessage helpMessage = new SendMessage();
+        helpMessage.setChatId(chat.getId().toString());
+        helpMessage.enableHtml(true);
+        helpMessage.setText(message);
+
+        execute(absSender, helpMessage, chat, user);
+    }
+
 }
