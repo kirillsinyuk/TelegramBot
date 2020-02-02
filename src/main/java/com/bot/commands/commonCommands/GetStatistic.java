@@ -4,6 +4,7 @@ import com.bot.commands.PlannerBaseCommand;
 import com.bot.service.ProductService;
 import com.bot.service.util.ParseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
@@ -34,7 +35,7 @@ public class GetStatistic extends PlannerBaseCommand {
         boolean argsIsOk = true;
 
         //TODO переделать проверку прав
-        if(botService.hasAccessToCommands(user.getId())){
+        if (botService.hasAccessToCommands(user.getId())) {
             if (arguments.length == 2) {
                 try {
                     startDate = ParseUtil.getLocalDateTimeFromString(arguments[0]);
@@ -55,5 +56,11 @@ public class GetStatistic extends PlannerBaseCommand {
         }
 
         sendMsg(absSender, user, chat, message.toString());
+    }
+
+    @Scheduled(fixedDelay = 1500000)
+    public void scheduledTask() {
+        //special for free heroku free dyno
+        LOG.info("Bot scheduled action every 25 minutes");
     }
 }
