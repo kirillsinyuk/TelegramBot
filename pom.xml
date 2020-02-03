@@ -12,7 +12,70 @@
         <mysql-version>8.0.13</mysql-version>
         <lombok-version>1.18.8</lombok-version>
         <spring-boot-version>2.2.2.RELEASE</spring-boot-version>
+        <html2image>2.0.1</html2image>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>spring-plugin</id>
+            <name>Spring Plugins Repository</name>
+            <url>https://repo.spring.io/plugins-release/</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+
+        <!-- telegram API -->
+        <dependency>
+            <groupId>org.telegram</groupId>
+            <artifactId>telegrambots</artifactId>
+            <version>LATEST</version>
+        </dependency>
+        <dependency>
+            <groupId>org.telegram</groupId>
+            <artifactId>telegrambotsextensions</artifactId>
+            <version>LATEST</version>
+        </dependency>
+
+        <!-- mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-version}</version>
+        </dependency>
+
+        <!-- html2image -->
+        <dependency>
+            <groupId>gui.ava</groupId>
+            <artifactId>html2image</artifactId>
+            <version>${html2image}</version>
+        </dependency>
+
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok-version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Spring -->
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-parent</artifactId>
+            <version>${spring-boot-version}</version>
+            <type>pom</type>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>${spring-boot-version}</version>
+        </dependency>
+
+    </dependencies>
 
     <build>
         <plugins>
@@ -48,54 +111,5 @@
             </plugin>
         </plugins>
     </build>
-
-    <dependencies>
-
-        <!-- telegram API -->
-        <dependency>
-            <groupId>org.telegram</groupId>
-            <artifactId>telegrambots</artifactId>
-            <version>LATEST</version>
-        </dependency>
-        <dependency>
-            <groupId>org.telegram</groupId>
-            <artifactId>telegrambotsextensions</artifactId>
-            <version>LATEST</version>
-        </dependency>
-
-        <!-- mysql-connector-java -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql-version}</version>
-        </dependency>
-
-        <!-- lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok-version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Spring -->
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-parent</artifactId>
-            <version>${spring-boot-version}</version>
-            <type>pom</type>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>${spring-boot-version}</version>
-        </dependency>
-
-    </dependencies>
-
-
 
 </project>
