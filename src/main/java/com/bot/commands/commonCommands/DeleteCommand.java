@@ -16,7 +16,7 @@ public class DeleteCommand extends PlannerBaseCommand {
     ProductRepository productRepository;
 
     public DeleteCommand() {
-        super("delete", "attributes:\n &lt;category&gt; &lt;price&gt; ");
+        super("delete", "Атибуты:\n &lt;category&gt; &lt;price&gt; ");
     }
 
     @Override
@@ -29,7 +29,7 @@ public class DeleteCommand extends PlannerBaseCommand {
             if (arguments.length < 2) {
                 message.append("You need to use this format:\n /add &lt;category&gt; &lt;price&gt;");
             } else {
-                message.append(String.format("Purchase %s with price %s successfully deleted.", arguments[0], arguments[1]));
+                message.append(String.format("Трата %s по цене %s руб. успешно удалена.", arguments[0], arguments[1]));
                 productRepository.deleteAllByCategoryAndPrice(arguments[0], ParseUtil.getIntFromString(arguments[1]));
             }
         }

@@ -16,7 +16,7 @@ public class HelpCommand extends PlannerBaseCommand {
 
 
     public HelpCommand() {
-        super("help", "list all known com.bot.commands");
+        super("help", "Список доступных команд.");
     }
 
     @Override
@@ -25,7 +25,7 @@ public class HelpCommand extends PlannerBaseCommand {
         LOG.info("BotUser {}, id: {}, chat: {} is trying to execute '{}'.", user.getUserName(), user.getId(), chat.getId(), getCommandIdentifier());
 
         StringBuilder message = new StringBuilder();
-        message.append("<b>Available com.bot.commands:</b>\n");
+        message.append("<b>Доступные команды:</b>\n");
         //TODO разделение команд для администратора и пользователя
         bot.getRegisteredCommands()
                 .forEach(cmd -> message.append(cmd.toString()).append("\n"));

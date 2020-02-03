@@ -22,7 +22,7 @@ public class GetStatistic extends PlannerBaseCommand {
     private ProductService productService;
 
     public GetStatistic() {
-        super("getstats", "атрибуты:\n &lt;after&gt; &lt;before&gt; (dd-MM-yyyy)\nбез отрибутов - статистика за месяц.");
+        super("getstats", "Атрибуты:\n &lt;after&gt; &lt;before&gt; (dd-MM-yyyy).\nБез aтрибутов - статистика за месяц.");
     }
 
     @Override
