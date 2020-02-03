@@ -1,32 +1,13 @@
 package com.bot.service.util;
 
 import java.time.LocalDateTime;
-import java.time.chrono.IsoChronology;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.time.format.ResolverStyle;
-import java.time.format.SignStyle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static java.time.temporal.ChronoField.*;
-
-
 public class ParseUtil {
-
-    public static final DateTimeFormatter ORDINAL_DATE;
-    static {
-        ORDINAL_DATE =  new DateTimeFormatterBuilder()
-                .parseCaseInsensitive()
-                .appendValue(DAY_OF_MONTH, 2)
-                .appendLiteral('-')
-                .appendValue(MONTH_OF_YEAR, 2)
-                .appendLiteral('-')
-                .appendValue(YEAR, 4)
-                .toFormatter();
-    }
 
     public static Integer getIntFromString(String s){
         List<Integer> numbers = new ArrayList<>(2);

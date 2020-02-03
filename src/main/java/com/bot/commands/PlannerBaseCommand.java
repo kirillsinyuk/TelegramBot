@@ -5,11 +5,14 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import com.bot.service.BotService;
+
+import java.io.File;
 
 public abstract class PlannerBaseCommand extends BotCommand {
 
@@ -26,7 +29,6 @@ public abstract class PlannerBaseCommand extends BotCommand {
         try {
             if (!botService.hasAccessToCommands(user.getId())) {
                 LOG.warn("BotUser {} has no access.", user.getId());
-                message.setText("ДОступ запрещён. Свяжитесь с @KirillSinyuk получения информации.");
             } else {
                 BotUser currentUser = botService.getUserById(user.getId());
                 currentUser.setTlgUser(user);
@@ -38,13 +40,32 @@ public abstract class PlannerBaseCommand extends BotCommand {
         }
     }
 
-    public void sendMsg(AbsSender absSender, User user, Chat chat, String message){
-        SendMessage helpMessage = new SendMessage();
-        helpMessage.setChatId(chat.getId().toString());
-        helpMessage.enableHtml(true);
-        helpMessage.setText(message);
+    public void execute(AbsSender sender, SendPhoto message, Chat chat, User user) {
+        try {
+            BotUser currentUser = botService.getUserById(user.getId());
+            currentUser.setTlgUser(user);
+            currentUser.setChat(chat);
+            sender.execute(message);
+        } catch (TelegramApiException e) {
+            LOG.error(user.getId() + getCommandIdentifier(), e);
+        }
+    }
 
-        execute(absSender, helpMessage, chat, user);
+    public void sendMsg(AbsSender absSender, User user, Chat chat, String message){
+        SendMessage msg = new SendMessage();
+        msg.setChatId(chat.getId().toString());
+        msg.enableHtml(true);
+        msg.setText(message);
+
+        execute(absSender, msg, chat, user);
+    }
+
+    public void sendPhoto(AbsSender absSender, User user, Chat chat, File photo){
+        SendPhoto photoMessage = new SendPhoto();
+        photoMessage.setChatId(chat.getId());
+        photoMessage.setPhoto(photo);
+
+        execute(absSender, photoMessage, chat, user);
     }
 
 }

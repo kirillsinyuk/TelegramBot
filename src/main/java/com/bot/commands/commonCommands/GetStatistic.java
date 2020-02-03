@@ -2,6 +2,7 @@ package com.bot.commands.commonCommands;
 
 import com.bot.commands.PlannerBaseCommand;
 import com.bot.service.ProductService;
+import com.bot.service.util.DataToImageConverter;
 import com.bot.service.util.ParseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -10,6 +11,7 @@ import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
@@ -28,7 +30,6 @@ public class GetStatistic extends PlannerBaseCommand {
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
         LOG.info("BotUser {}, id: {}, chat: {} is trying to execute '{}'.", user.getUserName(), user.getId(), chat.getId(), getCommandIdentifier());
-
         StringBuilder message = new StringBuilder();
         LocalDateTime startDate = LocalDateTime.now().with(TemporalAdjusters.firstDayOfMonth());
         LocalDateTime endDate = LocalDateTime.now().with(TemporalAdjusters.lastDayOfMonth()).plusDays(1);
@@ -51,7 +52,11 @@ public class GetStatistic extends PlannerBaseCommand {
             if (argsIsOk) {
                 BigDecimal total = productService.totalSpend(startDate, endDate);
                 productService.getStaticticMsg(startDate, endDate, total);
-                message.append("Всего потрачено : ").append(total);
+                message.append("Всего потрачено: ").append(total == null ? "0 руб." : total);
+                if(total != null) {
+                    File img = DataToImageConverter.convert();
+                    sendPhoto(absSender, user, chat, img);
+                }
             }
         }
 
