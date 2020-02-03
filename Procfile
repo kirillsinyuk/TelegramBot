@@ -1,1 +1,1 @@
-sktelegrambot: sh target/bin/SKTelegramBot
+worker: sh target/bin/SKTelegramBot
