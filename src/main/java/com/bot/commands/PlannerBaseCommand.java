@@ -26,7 +26,7 @@ public abstract class PlannerBaseCommand extends BotCommand {
         try {
             if (!botService.hasAccessToCommands(user.getId())) {
                 LOG.warn("BotUser {} has no access.", user.getId());
-                message.setText("Access denied for you. Try to connect @KirillSinyuk for more info.");
+                message.setText("ДОступ запрещён. Свяжитесь с @KirillSinyuk получения информации.");
             } else {
                 BotUser currentUser = botService.getUserById(user.getId());
                 currentUser.setTlgUser(user);
