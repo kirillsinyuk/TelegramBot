@@ -15,10 +15,6 @@
         <html2image>0.9</html2image>
     </properties>
 
-    <repositories>
-
-    </repositories>
-
     <dependencies>
 
         <!-- telegram API -->
@@ -104,6 +100,11 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>6.2.1</version>
             </plugin>
         </plugins>
     </build>
