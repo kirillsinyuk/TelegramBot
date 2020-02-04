@@ -25,7 +25,7 @@ public class ProductService {
     }
 
     public List<Product> getPurchases(LocalDateTime start, LocalDateTime end){
-        return productRepository.getAllByDataBetween(start, end);
+        return productRepository.getAllByDataBetweenAndDeletedFalse(start, end);
     }
 
     public Product deleteByCategoryAndPrice(String category, int price){

@@ -28,7 +28,7 @@ public class DeleteCommand extends PlannerBaseCommand {
 
         if(botService.hasAccessToCommands(user.getId())){
             if (arguments.length < 2) {
-                message.append("You need to use this format:\n /add &lt;category&gt; &lt;price&gt;");
+                message.append("Нужно использовать такой формат:\n /delete &lt;category&gt; &lt;price&gt;");
             } else {
                 try {
                     int price = Integer.parseInt(arguments[1]);
