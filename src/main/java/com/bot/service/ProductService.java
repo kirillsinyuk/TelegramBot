@@ -28,6 +28,12 @@ public class ProductService {
         return productRepository.getAllByDataBetween(start, end);
     }
 
+    public Product deleteByCategoryAndPrice(String category, int price){
+        Product product = productRepository.getByCategoryAndPrice(category, price);
+        product.setDeleted(true);
+        return productRepository.save(product);
+    }
+
     public List<StatisticDto> getStatistic(LocalDateTime start, LocalDateTime end){
         return productRepository.getStatistic(start, end)
                 .stream()

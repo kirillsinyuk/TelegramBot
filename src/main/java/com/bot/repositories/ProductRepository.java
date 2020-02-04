@@ -14,7 +14,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 
     List<Product> getAllByDataBetween(LocalDateTime startDate, LocalDateTime endDate);
 
-    void deleteAllByCategoryAndPrice(String category, int price);
+    Product getByCategoryAndPrice(String category, int price);
 
     @Query(value = "SELECT p.category, SUM(p.price) FROM product p WHERE add_data BETWEEN ?1 AND ?2 GROUP BY p.category", nativeQuery = true)
     List<Object[]> getStatistic(LocalDateTime startDate, LocalDateTime endDate);
