@@ -31,6 +31,9 @@ public class Product {
     @Column(name = "spended_by")
     private String spendedBy;
 
+    @Column(name = "deleted")
+    private boolean deleted;
+
     @Override
     public String toString() {
         return description == null ?

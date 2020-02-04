@@ -19,7 +19,7 @@ public class GetAllPurchasesCommand extends PlannerBaseCommand {
     private ProductService productService;
 
     public GetAllPurchasesCommand() {
-        super("getprod", "attributes:\n &lt;after&gt; &lt;before&gt; (dd-MM-yyyy)");
+        super("getprod", "Атрибуты:\n &lt;after&gt; &lt;before&gt; (dd-MM-yyyy)");
     }
 
     @Override
@@ -30,7 +30,7 @@ public class GetAllPurchasesCommand extends PlannerBaseCommand {
 
         if(botService.hasAccessToCommands(user.getId())){
             if (arguments.length < 2) {
-                message.append("You need to use this format:\n /getprod &lt;start&gt; &lt;end&gt;(dd-MM-yyyy)");
+                message.append("Неверный формат! Формат:\n /getprod &lt;start&gt; &lt;end&gt;(dd-MM-yyyy)");
             } else {
                 try {
                     LocalDateTime startDate = ParseUtil.getLocalDateTimeFromString(arguments[0]);

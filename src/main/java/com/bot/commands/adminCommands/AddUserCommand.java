@@ -12,7 +12,7 @@ import com.bot.service.util.ParseUtil;
 public class AddUserCommand extends PlannerBaseCommand {
 
     public AddUserCommand() {
-        super("user_add", "attributes:\n &lt;id&gt; &lt;hasAdminAccess&gt; ");
+        super("user_add", "Атрибуты:\n &lt;id&gt; &lt;hasAdminAccess&gt; ");
     }
 
     @Override
@@ -29,7 +29,7 @@ public class AddUserCommand extends PlannerBaseCommand {
                     id = ParseUtil.getIntFromString(arguments[0]);
                     if (id != null) {
                         botService.addUser(new BotUser(id, null, arguments.length == 2 && arguments[1].equals("true")));
-                        message.append(String.format("User %s successfully added", arguments[0]));
+                        message.append(String.format("Пользователь %s успешно добавлен.", arguments[0]));
                         break;
                     }
                 default:

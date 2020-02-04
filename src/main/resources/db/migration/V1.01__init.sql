@@ -1,4 +1,3 @@
-DROP TABLE product;
 CREATE TABLE IF NOT EXISTS product(
     id int primary key AUTO_INCREMENT,
     category varchar(255),
