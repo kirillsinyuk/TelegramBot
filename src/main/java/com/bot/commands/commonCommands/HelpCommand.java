@@ -2,6 +2,7 @@ package com.bot.commands.commonCommands;
 
 import com.bot.commands.PlannerBaseCommand;
 import com.bot.model.Bot;
+import com.bot.service.util.DataToImageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Chat;
@@ -21,7 +22,6 @@ public class HelpCommand extends PlannerBaseCommand {
 
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
-
         LOG.info("BotUser {}, id: {}, chat: {} is trying to execute '{}'.", user.getUserName(), user.getId(), chat.getId(), getCommandIdentifier());
 
         StringBuilder message = new StringBuilder();
@@ -29,6 +29,7 @@ public class HelpCommand extends PlannerBaseCommand {
         //TODO разделение команд для администратора и пользователя
         bot.getRegisteredCommands()
                 .forEach(cmd -> message.append(cmd.toString()).append("\n"));
+
 
         sendMsg(absSender, user, chat, message.toString());
     }
