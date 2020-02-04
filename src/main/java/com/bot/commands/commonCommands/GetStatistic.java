@@ -55,7 +55,7 @@ public class GetStatistic extends PlannerBaseCommand {
                 BigDecimal total = productService.totalSpend(startDate, endDate);
                 List<StatisticDto> statisticData = productService.getStatistic(startDate, endDate);
                 productService.getStaticticMsg(statisticData, total);
-                message.append("Всего потрачено: ").append(total == null ? "0 руб." : total);
+                message.append("Всего потрачено: ").append(total == null ? 0 : total).append(" руб.");
                 if(total != null) {
                     File img = DataToImageConverter.convert(statisticData);
                     sendPhoto(absSender, user, chat, img);
