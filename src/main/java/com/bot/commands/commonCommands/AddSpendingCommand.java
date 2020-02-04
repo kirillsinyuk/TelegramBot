@@ -26,10 +26,10 @@ public class AddSpendingCommand extends PlannerBaseCommand {
 
         if(botService.hasAccessToCommands(user.getId())){
             if (arguments.length < 2) {
-                message.append("You need to use this format:\n /add &lt;category&gt; &lt;price&gt; &lt;description&gt;");
+                message.append("Нужно использовать такой формат:\n /add &lt;category&gt; &lt;price&gt; &lt;description&gt;");
             } else {
                 productService.createAndSaveProduct(arguments, user.getUserName());
-                message.append(String.format("Purchase %s with price %s successfully added.", arguments[0], arguments[1]));
+                message.append(String.format("Трата %s по цене %s успешно добавлена.", arguments[0], arguments[1]));
             }
         }
 
