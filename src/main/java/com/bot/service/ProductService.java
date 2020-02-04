@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -24,19 +25,25 @@ public class ProductService {
     }
 
     public List<Product> getPurchases(LocalDateTime start, LocalDateTime end){
-        return productRepository.getAllByDataBetween(start, end);
+        return productRepository.getAllByDataBetweenAndDeletedFalse(start, end);
     }
 
-    private List<Object[]> getStatistic(LocalDateTime start, LocalDateTime end){
-        return productRepository.getStatistic(start, end);
+    public Product deleteByCategoryAndPrice(String category, int price){
+        Product product = productRepository.getByCategoryAndPrice(category, price);
+        product.setDeleted(true);
+        return productRepository.save(product);
     }
 
-    public String getStaticticMsg(LocalDateTime start, LocalDateTime end, BigDecimal total) {
-        StringBuilder str = new StringBuilder();
-        getStatistic(start, end)
+    public List<StatisticDto> getStatistic(LocalDateTime start, LocalDateTime end){
+        return productRepository.getStatistic(start, end)
                 .stream()
                 .map(this::toStatisticsDto)
-                .forEach(price -> str.append(price.toString())
+                .collect(Collectors.toList());
+    }
+
+    public String getStaticticMsg(List<StatisticDto> data, BigDecimal total) {
+        StringBuilder str = new StringBuilder();
+        data.forEach(price -> str.append(price.toString())
                         .append(" (")
                         .append(CalculateUtils.getPercent(price.getPrice(), total))
                         .append("%)\n"));

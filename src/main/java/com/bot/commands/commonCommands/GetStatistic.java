@@ -1,7 +1,9 @@
 package com.bot.commands.commonCommands;
 
 import com.bot.commands.PlannerBaseCommand;
+import com.bot.model.dto.StatisticDto;
 import com.bot.service.ProductService;
+import com.bot.service.util.DataToImageConverter;
 import com.bot.service.util.ParseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -10,10 +12,12 @@ import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
+import java.util.List;
 
 @Component
 public class GetStatistic extends PlannerBaseCommand {
@@ -22,13 +26,12 @@ public class GetStatistic extends PlannerBaseCommand {
     private ProductService productService;
 
     public GetStatistic() {
-        super("getstats", "атрибуты:\n &lt;after&gt; &lt;before&gt; (dd-MM-yyyy)\nбез отрибутов - статистика за месяц.");
+        super("getstats", "Атрибуты:\n &lt;after&gt; &lt;before&gt; (dd-MM-yyyy).\nБез aтрибутов - статистика за месяц.");
     }
 
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
         LOG.info("BotUser {}, id: {}, chat: {} is trying to execute '{}'.", user.getUserName(), user.getId(), chat.getId(), getCommandIdentifier());
-
         StringBuilder message = new StringBuilder();
         LocalDateTime startDate = LocalDateTime.now().with(TemporalAdjusters.firstDayOfMonth());
         LocalDateTime endDate = LocalDateTime.now().with(TemporalAdjusters.lastDayOfMonth()).plusDays(1);
@@ -50,8 +53,13 @@ public class GetStatistic extends PlannerBaseCommand {
             }
             if (argsIsOk) {
                 BigDecimal total = productService.totalSpend(startDate, endDate);
-                productService.getStaticticMsg(startDate, endDate, total);
-                message.append("Всего потрачено : ").append(total);
+                List<StatisticDto> statisticData = productService.getStatistic(startDate, endDate);
+                productService.getStaticticMsg(statisticData, total);
+                message.append("Всего потрачено: ").append(total == null ? "0 руб." : total);
+                if(total != null) {
+                    File img = DataToImageConverter.convert(statisticData);
+                    sendPhoto(absSender, user, chat, img);
+                }
             }
         }
 
