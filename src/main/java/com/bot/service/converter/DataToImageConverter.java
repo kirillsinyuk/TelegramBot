@@ -1,4 +1,4 @@
-package com.bot.service.util;
+package com.bot.service.converter;
 
 import com.bot.model.dto.StatisticDto;
 import org.jfree.chart.ChartFactory;

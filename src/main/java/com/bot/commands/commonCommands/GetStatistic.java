@@ -3,7 +3,7 @@ package com.bot.commands.commonCommands;
 import com.bot.commands.PlannerBaseCommand;
 import com.bot.model.dto.StatisticDto;
 import com.bot.service.ProductService;
-import com.bot.service.util.DataToImageConverter;
+import com.bot.service.converter.DataToImageConverter;
 import com.bot.service.util.ParseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
