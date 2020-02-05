@@ -57,7 +57,7 @@ public class GetStatistic extends PlannerBaseCommand {
                 message.append(productService.getStaticticMsg(statisticData, total));
                 message.append("Всего потрачено: ").append(total == null ? 0 : total).append(" руб.");
                 if(total != null) {
-                    File img = DataToImageConverter.convert(statisticData);
+                    File img = DataToImageConverter.convert(statisticData, startDate.toLocalDate(), endDate.toLocalDate());
                     sendPhoto(absSender, user, chat, img);
                 }
             }

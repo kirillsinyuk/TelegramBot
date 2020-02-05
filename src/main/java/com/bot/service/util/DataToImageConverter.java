@@ -16,6 +16,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class DataToImageConverter {
@@ -26,9 +28,10 @@ public class DataToImageConverter {
         return dataset;
     }
 
-    private static JFreeChart createChart(PieDataset dataset) {
+    private static JFreeChart createChart(PieDataset dataset, LocalDate startDate, LocalDate endDate) {
+        String title = "Статистика c" + startDate.format(DateTimeFormatter.ISO_LOCAL_DATE) + " по " + endDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
         final JFreeChart chart = ChartFactory.createPieChart3D(
-                "Статистика",
+                title,
                  dataset,
                 true,
                 true,
@@ -46,8 +49,8 @@ public class DataToImageConverter {
         return chart;
     }
 
-    private static JPanel createDemoPanel(List<StatisticDto> dataset) {
-        JFreeChart chart = createChart(createDataset(dataset));
+    private static JPanel createDemoPanel(List<StatisticDto> dataset, LocalDate startDate, LocalDate endDate) {
+        JFreeChart chart = createChart(createDataset(dataset), startDate, endDate);
         return new ChartPanel(chart);
     }
 
@@ -65,7 +68,7 @@ public class DataToImageConverter {
         return image;
     }
 
-    public static File convert(List<StatisticDto> dataset){
-        return takePicture(createDemoPanel(dataset));
+    public static File convert(List<StatisticDto> dataset, LocalDate startDate, LocalDate endDate){
+        return takePicture(createDemoPanel(dataset, startDate, endDate));
     }
 }
