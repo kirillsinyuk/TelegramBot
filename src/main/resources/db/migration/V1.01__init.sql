@@ -5,4 +5,4 @@ CREATE TABLE IF NOT EXISTS product(
     add_data timestamp,
     description varchar(255),
     spended_by varchar(255)
-) CHARSET=UTF8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
