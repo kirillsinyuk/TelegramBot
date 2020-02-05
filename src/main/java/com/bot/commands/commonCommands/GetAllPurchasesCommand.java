@@ -19,7 +19,7 @@ public class GetAllPurchasesCommand extends PlannerBaseCommand {
     private ProductService productService;
 
     public GetAllPurchasesCommand() {
-        super("getprod", "Атрибуты:\n &lt;after&gt; &lt;before&gt; (dd-MM-yyyy)");
+        super("getprod", "(вывести список всех трат)\nАтрибуты:\n &lt;after&gt; &lt;before&gt; (dd-MM-yyyy)");
     }
 
     @Override

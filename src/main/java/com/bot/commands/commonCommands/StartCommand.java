@@ -18,8 +18,8 @@ public class StartCommand extends PlannerBaseCommand {
 
         LOG.info("BotUser {}, id: {}, chat: {} is trying to execute '{}'.", user.getUserName(), user.getId(), chat.getId(), getCommandIdentifier());
 
-        String message = "Hi, " + user.getFirstName() + "! You've been added to bot users' list!\n" +
-                "Please enter '/help' for more information.";
+        String message = "Доброго времени суток, " + user.getFirstName() + "! Поздравляю, ты есть в списке пользователей!\n" +
+                "Введи команду '/help' для получения информации.";
 
         sendMsg(absSender, user, chat, message);
     }

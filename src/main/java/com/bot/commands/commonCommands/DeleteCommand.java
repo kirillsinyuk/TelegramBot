@@ -17,7 +17,7 @@ public class DeleteCommand extends PlannerBaseCommand {
     ProductService productService;
 
     public DeleteCommand() {
-        super("delete", "Атибуты:\n &lt;category&gt; &lt;price&gt; ");
+        super("delete", "(удалить трату)\nАтибуты:\n &lt;category&gt; &lt;price&gt; ");
     }
 
     @Override

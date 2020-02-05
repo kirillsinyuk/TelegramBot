@@ -15,7 +15,7 @@ public class AddSpendingCommand extends PlannerBaseCommand {
     private ProductService productService;
 
     public AddSpendingCommand() {
-        super("add", "Атрибуты:\n &lt;category&gt; &lt;price&gt; &lt;description&gt;");
+        super("add", "(добавить трату)\nАтрибуты:\n &lt;category&gt; &lt;price&gt; &lt;description&gt;");
     }
 
     @Override
