@@ -37,7 +37,7 @@ public class DataToImageConverter {
         final PiePlot3D plot = (PiePlot3D) chart.getPlot();
         plot.setStartAngle(210);
         plot.setDirection(Rotation.CLOCKWISE);
-        plot.setForegroundAlpha(0.7f);
+        plot.setForegroundAlpha(0.9f);
         plot.setDepthFactor(0.05f);
         plot.setLabelGenerator(new StandardPieSectionLabelGenerator(
                 "{0} {1}руб.({2})", NumberFormat.getNumberInstance(), NumberFormat.getPercentInstance()));
