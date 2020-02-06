@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 @Entity
@@ -37,7 +38,7 @@ public class Product {
     @Override
     public String toString() {
         return description == null ?
-          String.join(" - ", Arrays.asList(data.toString(), spendedBy, category, price + "\n"))
-                : String.join(" - ", Arrays.asList(data.toString(), spendedBy, category, description, price + "\n"));
+          String.join(" - ", Arrays.asList(data.format(DateTimeFormatter.ISO_LOCAL_DATE), spendedBy, category, price + "\n"))
+                : String.join(" - ", Arrays.asList(data.format(DateTimeFormatter.ISO_LOCAL_DATE), spendedBy, category, description, price + "\n"));
     }
 }

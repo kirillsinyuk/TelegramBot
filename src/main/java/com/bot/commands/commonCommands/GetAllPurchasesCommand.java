@@ -30,7 +30,7 @@ public class GetAllPurchasesCommand extends PlannerBaseCommand {
 
         if(botService.hasAccessToCommands(user.getId())){
             if (arguments.length < 2) {
-                message.append("Неверный формат! Формат:\n /getprod &lt;start&gt; &lt;end&gt;(dd-MM-yyyy)");
+                message.append("Неверный формат! Формат:\n/getprod &lt;start&gt; &lt;end&gt;(dd-MM-yyyy)");
             } else {
                 try {
                     LocalDateTime startDate = ParseUtil.getLocalDateTimeFromString(arguments[0]);

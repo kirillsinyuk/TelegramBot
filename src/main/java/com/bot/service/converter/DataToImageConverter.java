@@ -19,6 +19,7 @@ import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.StringJoiner;
 
 public class DataToImageConverter {
 
@@ -29,7 +30,12 @@ public class DataToImageConverter {
     }
 
     private static JFreeChart createChart(PieDataset dataset, LocalDate startDate, LocalDate endDate) {
-        String title = "Статистика c" + startDate.format(DateTimeFormatter.ISO_LOCAL_DATE) + " по " + endDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
+        String title = new StringJoiner(" ")
+                .add("Статистика c")
+                .add(startDate.format(DateTimeFormatter.ISO_LOCAL_DATE))
+                .add("по")
+                .add(endDate.format(DateTimeFormatter.ISO_LOCAL_DATE))
+                .toString();
         final JFreeChart chart = ChartFactory.createPieChart3D(
                 title,
                  dataset,
