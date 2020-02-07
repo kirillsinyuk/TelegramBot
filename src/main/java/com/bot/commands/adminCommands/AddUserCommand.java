@@ -30,8 +30,8 @@ public class AddUserCommand extends PlannerBaseCommand {
                     if (id != null) {
                         botService.addUser(new BotUser(id, null, arguments.length == 2 && arguments[1].equals("true")));
                         message.append(String.format("Пользователь %s успешно добавлен.", arguments[0]));
-                        break;
                     }
+                    break;
                 default:
                     message.append("You need to use this format:\n /user_add &lt;id&gt; &lt;hasAdminAccess&gt;");
             }

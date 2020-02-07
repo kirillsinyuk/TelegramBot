@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
 
 public class ParseUtil {
 
+    private ParseUtil(){}
+
     public static Integer getIntFromString(String s){
         List<Integer> numbers = new ArrayList<>(2);
         Pattern p = Pattern.compile("\\b^[0-9]+\\b$");
