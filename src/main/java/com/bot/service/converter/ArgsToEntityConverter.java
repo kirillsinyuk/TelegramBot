@@ -19,10 +19,6 @@ public class ArgsToEntityConverter {
                         .collect(Collectors.joining(" "))
                 : null;
 
-        if (!Category.containsCategory(arguments[0])) {
-            throw new IllegalArgumentException();
-        }
-
         return new Product(Category.getCategoryByName(arguments[0]), price, LocalDateTime.now(), desc, username);
     }
 

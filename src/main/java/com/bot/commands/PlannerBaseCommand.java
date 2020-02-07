@@ -1,6 +1,6 @@
 package com.bot.commands;
 
-import com.bot.model.entities.BotUser;
+import com.bot.model.BotUser;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
@@ -25,7 +25,7 @@ public abstract class PlannerBaseCommand extends BotCommand {
         super(commandIdentifier, description);
     }
 
-    public void execute(AbsSender sender, SendMessage message, Chat chat, User user) {
+    private void execute(AbsSender sender, SendMessage message, Chat chat, User user) {
         try {
             if (!botService.hasAccessToCommands(user.getId())) {
                 LOG.warn("BotUser {} has no access.", user.getId());
@@ -40,7 +40,7 @@ public abstract class PlannerBaseCommand extends BotCommand {
         }
     }
 
-    public void execute(AbsSender sender, SendPhoto message, Chat chat, User user) {
+    private void execute(AbsSender sender, SendPhoto message, Chat chat, User user) {
         try {
             BotUser currentUser = botService.getUserById(user.getId());
             currentUser.setTlgUser(user);

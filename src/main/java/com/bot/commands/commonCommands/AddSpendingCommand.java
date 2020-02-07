@@ -1,6 +1,7 @@
 package com.bot.commands.commonCommands;
 
 import com.bot.commands.PlannerBaseCommand;
+import com.bot.model.Action;
 import com.bot.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,9 +25,8 @@ public class AddSpendingCommand extends PlannerBaseCommand {
         StringBuilder message = new StringBuilder();
 
         if(botService.hasAccessToCommands(user.getId())){
-            productService.createAndSaveProduct(arguments, user, message);
+            productService.commonAction(arguments, user, message, Action.ADD);
+            sendMsg(absSender, user, chat, message.toString());
         }
-
-        sendMsg(absSender, user, chat, message.toString());
     }
 }

@@ -1,6 +1,6 @@
 package com.bot.service;
 
-import com.bot.model.entities.BotUser;
+import com.bot.model.BotUser;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

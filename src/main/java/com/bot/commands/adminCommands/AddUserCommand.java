@@ -1,7 +1,7 @@
 package com.bot.commands.adminCommands;
 
 import com.bot.commands.PlannerBaseCommand;
-import com.bot.model.entities.BotUser;
+import com.bot.model.BotUser;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
