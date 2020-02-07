@@ -2,7 +2,6 @@ package com.bot.commands.commonCommands;
 
 import com.bot.commands.PlannerBaseCommand;
 import com.bot.model.Bot;
-import com.bot.service.util.DataToImageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Chat;

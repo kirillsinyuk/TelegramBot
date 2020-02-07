@@ -1,8 +1,10 @@
 package com.bot.context;
 
 import com.bot.model.Bot;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -16,8 +18,10 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 @EnableScheduling
 public class AppContextConfiguration {
 
-    private static final String PROXY_HOST = "79.110.164.22";
-    private static final int PROXY_PORT = 8080;
+    @Value("${proxy.host}")
+    private String PROXY_HOST;
+    @Value("${proxy.port}")
+    private int PROXY_PORT;
 
     @Bean
     public TelegramBotsApi getTlgBot(Bot bot, Logger LOG){
