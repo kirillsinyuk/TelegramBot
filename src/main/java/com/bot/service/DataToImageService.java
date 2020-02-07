@@ -1,4 +1,4 @@
-package com.bot.service.converter;
+package com.bot.service;
 
 import com.bot.model.dto.StatisticDto;
 import org.jfree.chart.ChartFactory;
@@ -21,7 +21,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.StringJoiner;
 
-public class DataToImageConverter {
+public class DataToImageService {
 
     private static PieDataset createDataset(List<StatisticDto> data) {
         DefaultPieDataset dataset = new DefaultPieDataset();

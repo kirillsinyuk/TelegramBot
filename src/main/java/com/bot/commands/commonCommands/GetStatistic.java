@@ -3,7 +3,7 @@ package com.bot.commands.commonCommands;
 import com.bot.commands.PlannerBaseCommand;
 import com.bot.model.dto.StatisticDto;
 import com.bot.service.ProductService;
-import com.bot.service.converter.DataToImageConverter;
+import com.bot.service.DataToImageService;
 import com.bot.service.util.ParseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -57,7 +57,7 @@ public class GetStatistic extends PlannerBaseCommand {
                 message.append(productService.getStaticticMsg(statisticData, total));
                 message.append("Всего потрачено: ").append(total == null ? 0 : total).append(" руб.");
                 if(total != null) {
-                    File img = DataToImageConverter.convert(statisticData, startDate.toLocalDate(), endDate.toLocalDate());
+                    File img = DataToImageService.convert(statisticData, startDate.toLocalDate(), endDate.toLocalDate());
                     sendPhoto(absSender, user, chat, img);
                 }
             }
