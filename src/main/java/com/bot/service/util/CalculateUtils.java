@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 public class CalculateUtils {
 
+    private CalculateUtils(){}
+
     private static final BigDecimal PERCENTS = new BigDecimal(100);
     private static final int ROUND_TO = 4;
 
