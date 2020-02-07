@@ -13,6 +13,9 @@ import java.util.stream.Collectors;
 public class ArgsToEntityConverter {
 
     public static Product toProduct(String[] arguments, int price, String username) throws IllegalArgumentException {
+        if(Category.containsCategory(arguments[0])){
+            throw new IllegalArgumentException();
+        }
         String desc = arguments.length >= 3 ?
                 Arrays.stream(arguments)
                         .skip(2)

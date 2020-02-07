@@ -29,6 +29,8 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
     @Autowired
+    private DataToImageService dataToImageService;
+    @Autowired
     private Logger LOG;
 
 
@@ -103,20 +105,23 @@ public class ProductService {
         message.append(getStaticticMsg(statisticData, total));
         message.append("Всего потрачено: ").append(total == null ? 0 : total).append(" руб.");
         if (total != null) {
-            return DataToImageService.convert(statisticData, startDate.toLocalDate(), endDate.toLocalDate());
+            return dataToImageService.convert(statisticData, startDate.toLocalDate(), endDate.toLocalDate());
         }
 
         return null;
     }
 
 
-    private void createAndSaveProduct(String[] arguments, User user, int price,  StringBuilder message) throws NumberFormatException {
+    private void createAndSaveProduct(String[] arguments, User user, int price,  StringBuilder message) throws IllegalArgumentException {
         Product product = ArgsToEntityConverter.toProduct(arguments, price, user.getFirstName());
         productRepository.save(product);
         message.append(String.format("Трата %s по цене %s успешно добавлена.", arguments[0], arguments[1]));
     }
 
-    private void deleteProduct(String[] arguments, int price,  StringBuilder message) throws NumberFormatException {
+    private void deleteProduct(String[] arguments, int price,  StringBuilder message) throws IllegalArgumentException {
+        if(Category.containsCategory(arguments[0])){
+            throw new IllegalArgumentException();
+        }
         deleteByCategoryAndPrice(arguments[0], price);
         message.append(String.format("Трата %s по цене %s руб. успешно удалена.", arguments[0], arguments[1]));
     }

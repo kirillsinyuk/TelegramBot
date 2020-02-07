@@ -9,6 +9,9 @@ import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 import org.jfree.util.Rotation;
+import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -21,15 +24,19 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.StringJoiner;
 
+@Service
 public class DataToImageService {
 
-    private static PieDataset createDataset(List<StatisticDto> data) {
+    @Autowired
+    private Logger LOG;
+
+    private PieDataset createDataset(List<StatisticDto> data) {
         DefaultPieDataset dataset = new DefaultPieDataset();
         data.forEach(x -> dataset.setValue(x.getCategory(), x.getPrice().doubleValue()));
         return dataset;
     }
 
-    private static JFreeChart createChart(PieDataset dataset, LocalDate startDate, LocalDate endDate) {
+    private JFreeChart createChart(PieDataset dataset, LocalDate startDate, LocalDate endDate) {
         String title = new StringJoiner(" ")
                 .add("Статистика c")
                 .add(startDate.format(DateTimeFormatter.ISO_LOCAL_DATE))
@@ -55,12 +62,12 @@ public class DataToImageService {
         return chart;
     }
 
-    private static JPanel createDemoPanel(List<StatisticDto> dataset, LocalDate startDate, LocalDate endDate) {
+    private JPanel createDemoPanel(List<StatisticDto> dataset, LocalDate startDate, LocalDate endDate) {
         JFreeChart chart = createChart(createDataset(dataset), startDate, endDate);
         return new ChartPanel(chart);
     }
 
-    private static File takePicture(JPanel panel) {
+    private File takePicture(JPanel panel) {
         File image = new File("statistic.jpg");
         panel.setSize(560, 367);
         BufferedImage img = new BufferedImage(panel.getWidth(), panel.getHeight(), BufferedImage.TYPE_INT_RGB);
@@ -70,11 +77,12 @@ public class DataToImageService {
         }
         catch (IOException e) {
             e.printStackTrace();
+            LOG.error("Error while create image", e);
         }
         return image;
     }
 
-    public static File convert(List<StatisticDto> dataset, LocalDate startDate, LocalDate endDate){
+    public File convert(List<StatisticDto> dataset, LocalDate startDate, LocalDate endDate){
         return takePicture(createDemoPanel(dataset, startDate, endDate));
     }
 }
