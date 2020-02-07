@@ -109,6 +109,9 @@ public class Bot extends TelegramLongPollingCommandBot {
                 });
     }
 
+    /**
+     * Регистрация команд бота. необходимо выволнить после создания экземпляра
+     */
     @PostConstruct
     public void registerCommands() {
         LOG.info("Initializing Planner Bot...");

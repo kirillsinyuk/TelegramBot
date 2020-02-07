@@ -1,4 +1,4 @@
-package com.bot.service.util;
+package com.bot.service;
 
 import com.bot.model.dto.StatisticDto;
 import org.jfree.chart.ChartFactory;
@@ -16,9 +16,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.StringJoiner;
 
-public class DataToImageConverter {
+public class DataToImageService {
 
     private static PieDataset createDataset(List<StatisticDto> data) {
         DefaultPieDataset dataset = new DefaultPieDataset();
@@ -26,9 +29,15 @@ public class DataToImageConverter {
         return dataset;
     }
 
-    private static JFreeChart createChart(PieDataset dataset) {
+    private static JFreeChart createChart(PieDataset dataset, LocalDate startDate, LocalDate endDate) {
+        String title = new StringJoiner(" ")
+                .add("Статистика c")
+                .add(startDate.format(DateTimeFormatter.ISO_LOCAL_DATE))
+                .add("по")
+                .add(endDate.format(DateTimeFormatter.ISO_LOCAL_DATE))
+                .toString();
         final JFreeChart chart = ChartFactory.createPieChart3D(
-                "Статистика",
+                title,
                  dataset,
                 true,
                 true,
@@ -37,7 +46,7 @@ public class DataToImageConverter {
         final PiePlot3D plot = (PiePlot3D) chart.getPlot();
         plot.setStartAngle(210);
         plot.setDirection(Rotation.CLOCKWISE);
-        plot.setForegroundAlpha(0.7f);
+        plot.setForegroundAlpha(0.9f);
         plot.setDepthFactor(0.05f);
         plot.setLabelGenerator(new StandardPieSectionLabelGenerator(
                 "{0} {1}руб.({2})", NumberFormat.getNumberInstance(), NumberFormat.getPercentInstance()));
@@ -46,8 +55,8 @@ public class DataToImageConverter {
         return chart;
     }
 
-    private static JPanel createDemoPanel(List<StatisticDto> dataset) {
-        JFreeChart chart = createChart(createDataset(dataset));
+    private static JPanel createDemoPanel(List<StatisticDto> dataset, LocalDate startDate, LocalDate endDate) {
+        JFreeChart chart = createChart(createDataset(dataset), startDate, endDate);
         return new ChartPanel(chart);
     }
 
@@ -65,7 +74,7 @@ public class DataToImageConverter {
         return image;
     }
 
-    public static File convert(List<StatisticDto> dataset){
-        return takePicture(createDemoPanel(dataset));
+    public static File convert(List<StatisticDto> dataset, LocalDate startDate, LocalDate endDate){
+        return takePicture(createDemoPanel(dataset, startDate, endDate));
     }
 }

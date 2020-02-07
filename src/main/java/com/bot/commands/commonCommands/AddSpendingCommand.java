@@ -1,6 +1,7 @@
 package com.bot.commands.commonCommands;
 
 import com.bot.commands.PlannerBaseCommand;
+import com.bot.model.Action;
 import com.bot.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,24 +16,17 @@ public class AddSpendingCommand extends PlannerBaseCommand {
     private ProductService productService;
 
     public AddSpendingCommand() {
-        super("add", "Атрибуты:\n &lt;category&gt; &lt;price&gt; &lt;description&gt;");
+        super("add", "(добавить трату)\nАтрибуты:\n &lt;category&gt; &lt;price&gt; &lt;description&gt;");
     }
 
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
         LOG.info("BotUser {}, id: {}, chat: {} is trying to execute '{}'.", user.getUserName(), user.getId(), chat.getId(), getCommandIdentifier());
-
         StringBuilder message = new StringBuilder();
 
         if(botService.hasAccessToCommands(user.getId())){
-            if (arguments.length < 2) {
-                message.append("Нужно использовать такой формат:\n /add &lt;category&gt; &lt;price&gt; &lt;description&gt;");
-            } else {
-                productService.createAndSaveProduct(arguments, user.getUserName());
-                message.append(String.format("Трата %s по цене %s успешно добавлена.", arguments[0], arguments[1]));
-            }
+            productService.commonAction(arguments, user, message, Action.ADD);
+            sendMsg(absSender, user, chat, message.toString());
         }
-
-        sendMsg(absSender, user, chat, message.toString());
     }
 }
