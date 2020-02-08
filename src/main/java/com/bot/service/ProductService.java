@@ -122,7 +122,7 @@ public class ProductService {
         if(!Category.containsCategory(arguments[0])){
             throw new IllegalArgumentException();
         }
-        deleteByCategoryAndPrice(arguments[0], price);
+        deleteByCategoryAndPrice(Category.getCategoryByName(arguments[0]), price);
         message.append(String.format("Трата %s по цене %s руб. успешно удалена.", arguments[0], arguments[1]));
     }
 
@@ -130,7 +130,7 @@ public class ProductService {
         return productRepository.getAllByDataBetweenAndDeletedFalse(start, end);
     }
 
-    private Product deleteByCategoryAndPrice(String category, int price){
+    private Product deleteByCategoryAndPrice(Category category, int price){
         Product product = productRepository.getByCategoryAndPrice(category, price);
         product.setDeleted(true);
         return productRepository.save(product);

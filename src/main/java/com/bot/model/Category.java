@@ -37,6 +37,7 @@ public enum Category {
     TRAVEL("путешествия"),
     LUNCH("обеды"),
     OTHER("прочее"),
+    CLOTHES("одежда"),
     EDUCATION("обучение");
 
     private String name;
