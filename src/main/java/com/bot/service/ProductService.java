@@ -119,7 +119,7 @@ public class ProductService {
     }
 
     private void deleteProduct(String[] arguments, int price,  StringBuilder message) throws IllegalArgumentException {
-        if(Category.containsCategory(arguments[0])){
+        if(!Category.containsCategory(arguments[0])){
             throw new IllegalArgumentException();
         }
         deleteByCategoryAndPrice(arguments[0], price);
