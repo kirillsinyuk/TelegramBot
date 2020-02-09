@@ -32,7 +32,9 @@ public class DataToImageService {
 
     private PieDataset createDataset(List<StatisticDto> data) {
         DefaultPieDataset dataset = new DefaultPieDataset();
-        data.forEach(x -> dataset.setValue(x.getCategory(), x.getPrice().doubleValue()));
+        data.forEach(x -> {
+            LOG.info(x.getCategory() + " " + x.getPrice());
+            dataset.setValue(x.getCategory(), x.getPrice().doubleValue());});
         return dataset;
     }
 
@@ -69,7 +71,7 @@ public class DataToImageService {
 
     private File takePicture(JPanel panel) {
         File image = new File("statistic.jpg");
-        panel.setSize(560, 367);
+        panel.setSize(640, 480);
         BufferedImage img = new BufferedImage(panel.getWidth(), panel.getHeight(), BufferedImage.TYPE_INT_RGB);
         panel.print(img.getGraphics());
         try {
