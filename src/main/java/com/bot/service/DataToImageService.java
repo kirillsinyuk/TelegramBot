@@ -1,6 +1,7 @@
 package com.bot.service;
 
 import com.bot.model.dto.StatisticDto;
+import lombok.extern.slf4j.Slf4j;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -9,8 +10,6 @@ import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 import org.jfree.util.Rotation;
-import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -24,17 +23,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.StringJoiner;
 
+@Slf4j
 @Service
 public class DataToImageService {
 
-    @Autowired
-    private Logger LOG;
-
     private PieDataset createDataset(List<StatisticDto> data) {
         DefaultPieDataset dataset = new DefaultPieDataset();
-        data.forEach(x -> {
-            LOG.info(x.getCategory() + " " + x.getPrice());
-            dataset.setValue(x.getCategory(), x.getPrice().doubleValue());});
+        data.forEach(x ->
+            dataset.setValue(x.getCategory(), x.getPrice().doubleValue()));
         return dataset;
     }
 
@@ -79,7 +75,7 @@ public class DataToImageService {
         }
         catch (IOException e) {
             e.printStackTrace();
-            LOG.error("Error while create image", e);
+            log.error("Error while create image", e);
         }
         return image;
     }

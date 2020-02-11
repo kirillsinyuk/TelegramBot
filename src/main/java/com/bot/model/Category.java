@@ -20,6 +20,7 @@ public enum Category {
     Лишнее
     Путушествия
     Обеды
+    Одежда
     Обучение
  */
     RENT("квартплата"),
@@ -60,5 +61,9 @@ public enum Category {
 
     public static String getNameByCategory(String category){
         return Arrays.stream(Category.values()).filter(item -> item.toString().equals(category)).map(Category::getName).findFirst().orElse(null);
+    }
+
+    public static String getNameByCategory(Category category){
+        return Arrays.stream(Category.values()).filter(item -> item.equals(category)).map(Category::getName).findFirst().orElse(null);
     }
 }

@@ -2,12 +2,14 @@ package com.bot.commands.adminCommands;
 
 import com.bot.commands.PlannerBaseCommand;
 import com.bot.model.BotUser;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import com.bot.service.util.ParseUtil;
 
+@Slf4j
 @Component
 public class AddUserCommand extends PlannerBaseCommand {
 
@@ -17,7 +19,7 @@ public class AddUserCommand extends PlannerBaseCommand {
 
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
-        LOG.info("BotUser {}, id: {}, chat: {} is trying to execute '{}'.", user.getUserName(), user.getId(), chat.getId(), getCommandIdentifier());
+        log.info("BotUser {}, id: {}, chat: {} is trying to execute '{}'.", user.getUserName(), user.getId(), chat.getId(), getCommandIdentifier());
 
         StringBuilder message = new StringBuilder();
 
@@ -35,8 +37,7 @@ public class AddUserCommand extends PlannerBaseCommand {
                 default:
                     message.append("You need to use this format:\n /user_add &lt;id&gt; &lt;hasAdminAccess&gt;");
             }
+            sendMsg(absSender, user, chat, message.toString());
         }
-
-        sendMsg(absSender, user, chat, message.toString());
     }
 }

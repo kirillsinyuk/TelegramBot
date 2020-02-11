@@ -2,8 +2,7 @@ package com.bot.context;
 
 import com.bot.model.Bot;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +13,7 @@ import org.telegram.telegrambots.meta.ApiContext;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
+@Slf4j
 @Configuration
 @EnableScheduling
 public class AppContextConfiguration {
@@ -24,20 +24,15 @@ public class AppContextConfiguration {
     private int PROXY_PORT;
 
     @Bean
-    public TelegramBotsApi getTlgBot(Bot bot, Logger LOG){
+    public TelegramBotsApi getTlgBot(Bot bot){
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
         try {
             telegramBotsApi.registerBot(bot);
-            LOG.info( "Регистрация прошла успешно!");
+            log.info( "Регистрация прошла успешно!");
         } catch (TelegramApiRequestException e) {
-            LOG.error( "Ошибка регистрации бота:", e.fillInStackTrace());
+            log.error( "Ошибка регистрации бота:", e.fillInStackTrace());
         }
         return telegramBotsApi;
-    }
-
-    @Bean
-    public Logger logger() {
-        return LoggerFactory.getLogger("appLogger");
     }
 
     @Bean
