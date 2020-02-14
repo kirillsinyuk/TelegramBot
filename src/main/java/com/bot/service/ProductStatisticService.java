@@ -31,7 +31,7 @@ public class ProductStatisticService {
 
     public File getExtendedInfo(String[] arguments, StringBuilder message, Action action){
         LocalDateTime startDate = LocalDateTime.now().with(TemporalAdjusters.firstDayOfMonth());
-        LocalDateTime endDate = LocalDateTime.now().with(TemporalAdjusters.lastDayOfMonth()).plusDays(1);
+        LocalDateTime endDate = LocalDateTime.now().plusDays(1);
         if (arguments.length == 2) {
             try {
                 startDate = ParseUtil.getLocalDateTimeFromString(arguments[0]);
