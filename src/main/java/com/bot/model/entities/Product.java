@@ -49,7 +49,7 @@ public class Product {
     @Override
     public String toString() {
         return description == null ?
-          String.join(" - ", Arrays.asList(data.format(DateTimeFormatter.ISO_LOCAL_DATE), spendedBy, category.toString(), price + "\n"))
-                : String.join(" - ", Arrays.asList(data.format(DateTimeFormatter.ISO_LOCAL_DATE), spendedBy, category.toString(), description, price + "\n"));
+          String.join(" - ", Arrays.asList(data.format(DateTimeFormatter.ISO_LOCAL_DATE), spendedBy, Category.getNameByCategory(category), price + "\n"))
+                : String.join(" - ", Arrays.asList(data.format(DateTimeFormatter.ISO_LOCAL_DATE), spendedBy, Category.getNameByCategory(category), description, price + "\n"));
     }
 }

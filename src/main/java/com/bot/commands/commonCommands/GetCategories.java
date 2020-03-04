@@ -1,24 +1,21 @@
 package com.bot.commands.commonCommands;
 
 import com.bot.commands.PlannerBaseCommand;
-import com.bot.model.Action;
-import com.bot.service.ProductCommonCommandService;
+import com.bot.model.Category;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 
+import java.util.Arrays;
+
 @Slf4j
 @Component
-public class DeleteCommand extends PlannerBaseCommand {
+public class GetCategories extends PlannerBaseCommand {
 
-    @Autowired
-    ProductCommonCommandService productCommonCommandService;
-
-    public DeleteCommand() {
-        super("delete", "(удалить трату)\nАтибуты:\n &lt;category&gt; &lt;price&gt; ");
+    public GetCategories() {
+        super("cat", "Список доступных категорий.");
     }
 
     @Override
@@ -26,9 +23,10 @@ public class DeleteCommand extends PlannerBaseCommand {
         log.info("BotUser {}, id: {}, chat: {} is trying to execute '{}'.", user.getUserName(), user.getId(), chat.getId(), getCommandIdentifier());
 
         StringBuilder message = new StringBuilder();
+        if (botService.hasAccessToCommands(user.getId())) {
+            message.append("<b>Доступные категории трат:</b>\n");
+            Arrays.stream(Category.values()).forEach(category -> message.append(Category.getNameByCategory(category)).append("\n"));
 
-        if(botService.hasAccessToCommands(user.getId())){
-            productCommonCommandService.commonAction(arguments, user, message, Action.DELETE);
             sendMsg(absSender, user, chat, message.toString());
         }
     }

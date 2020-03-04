@@ -1,7 +1,7 @@
 package com.bot.commands;
 
 import com.bot.model.BotUser;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -14,12 +14,11 @@ import com.bot.service.BotService;
 
 import java.io.File;
 
+@Slf4j
 public abstract class PlannerBaseCommand extends BotCommand {
 
     @Autowired
     public BotService botService;
-    @Autowired
-    public Logger LOG;
 
     public PlannerBaseCommand(String commandIdentifier, String description) {
         super(commandIdentifier, description);
@@ -28,7 +27,7 @@ public abstract class PlannerBaseCommand extends BotCommand {
     private void execute(AbsSender sender, SendMessage message, Chat chat, User user) {
         try {
             if (!botService.hasAccessToCommands(user.getId())) {
-                LOG.warn("BotUser {} has no access.", user.getId());
+                log.warn("BotUser {} has no access.", user.getId());
             } else {
                 BotUser currentUser = botService.getUserById(user.getId());
                 currentUser.setTlgUser(user);
@@ -36,7 +35,7 @@ public abstract class PlannerBaseCommand extends BotCommand {
             }
             sender.execute(message);
         } catch (TelegramApiException e) {
-            LOG.error(user.getId() + getCommandIdentifier(), e);
+            log.error(user.getId() + getCommandIdentifier(), e);
         }
     }
 
@@ -47,7 +46,7 @@ public abstract class PlannerBaseCommand extends BotCommand {
             currentUser.setChat(chat);
             sender.execute(message);
         } catch (TelegramApiException e) {
-            LOG.error(user.getId() + getCommandIdentifier(), e);
+            log.error(user.getId() + getCommandIdentifier(), e);
         }
     }
 

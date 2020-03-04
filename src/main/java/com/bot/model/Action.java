@@ -4,5 +4,5 @@ public enum Action {
     ADD,
     DELETE,
     PURCHASES,
-    STATICTIC;
+    STATISTIC;
 }
