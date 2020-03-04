@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.math.BigDecimal;
 import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,8 +30,8 @@ public class ProductStatisticService {
     private DataToImageService dataToImageService;
 
     public File getExtendedInfo(String[] arguments, StringBuilder message, Action action){
-        LocalDateTime startDate = LocalDateTime.now().with(TemporalAdjusters.firstDayOfMonth());
-        LocalDateTime endDate = LocalDateTime.now().plusDays(1);
+        LocalDateTime startDate = LocalDate.now().atStartOfDay().withDayOfMonth(1);
+        LocalDateTime endDate = LocalDate.now().plusDays(1).atStartOfDay();
         if (arguments.length == 2) {
             try {
                 startDate = ParseUtil.getLocalDateTimeFromString(arguments[0]);
