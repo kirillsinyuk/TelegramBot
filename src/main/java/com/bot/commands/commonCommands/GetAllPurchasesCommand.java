@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 
 @Slf4j
@@ -28,8 +29,8 @@ public class GetAllPurchasesCommand extends PlannerBaseCommand {
         StringBuilder message = new StringBuilder();
 
         if(botService.hasAccessToCommands(user.getId())){
-            productStatisticService.getExtendedInfo(arguments, message, Action.PURCHASES);
-            sendMsg(absSender, user, chat, message.toString());
+            InlineKeyboardMarkup keyboard = productStatisticService.getExtendedKeyboard(arguments, message, Action.PURCHASES);
+            sendMsg(absSender, user, chat, message.toString(), keyboard);
         }
     }
 }

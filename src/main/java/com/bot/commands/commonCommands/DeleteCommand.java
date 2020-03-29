@@ -29,7 +29,7 @@ public class DeleteCommand extends PlannerBaseCommand {
 
         if(botService.hasAccessToCommands(user.getId())){
             productCommonCommandService.commonAction(arguments, user, message, Action.DELETE);
-            sendMsg(absSender, user, chat, message.toString());
+            sendMsg(absSender, user, chat, message.toString(), null);
         }
     }
 }

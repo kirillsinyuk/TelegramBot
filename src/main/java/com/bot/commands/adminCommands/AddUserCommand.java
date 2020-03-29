@@ -37,7 +37,7 @@ public class AddUserCommand extends PlannerBaseCommand {
                 default:
                     message.append("You need to use this format:\n /user_add &lt;id&gt; &lt;hasAdminAccess&gt;");
             }
-            sendMsg(absSender, user, chat, message.toString());
+            sendMsg(absSender, user, chat, message.toString(), null);
         }
     }
 }

@@ -27,7 +27,7 @@ public class GetCategories extends PlannerBaseCommand {
             message.append("<b>Доступные категории трат:</b>\n");
             Arrays.stream(Category.values()).forEach(category -> message.append(Category.getNameByCategory(category)).append("\n"));
 
-            sendMsg(absSender, user, chat, message.toString());
+            sendMsg(absSender, user, chat, message.toString(), null);
         }
     }
 }
