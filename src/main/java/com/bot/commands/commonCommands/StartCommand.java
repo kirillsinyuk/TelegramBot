@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 
 @Slf4j
@@ -20,6 +21,7 @@ public class StartCommand extends PlannerBaseCommand {
 
         log.info("BotUser {}, id: {}, chat: {} is trying to execute '{}'.", user.getUserName(), user.getId(), chat.getId(), getCommandIdentifier());
         StringBuilder message = new StringBuilder();
+        ReplyKeyboardMarkup rkm = new ReplyKeyboardMarkup();
         if (botService.hasAccessToCommands(user.getId())) {
            message.append("Доброго времени суток, ")
                    .append(user.getFirstName())
@@ -32,6 +34,6 @@ public class StartCommand extends PlannerBaseCommand {
                     .append("Обратись к @KirillSinyuk для получения дополнительной информации.");
         }
 
-        sendMsg(absSender, user, chat, message.toString());
+        sendMsg(absSender, user, chat, message.toString(), rkm);
     }
 }

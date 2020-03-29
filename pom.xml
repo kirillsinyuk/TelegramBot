@@ -12,7 +12,8 @@
         <mysql-version>8.0.13</mysql-version>
         <lombok-version>1.18.8</lombok-version>
         <spring-boot-version>2.2.2.RELEASE</spring-boot-version>
-        <html2image>0.9</html2image>
+        <flyway.version>5.2.4</flyway.version>
+        <jfree.version>1.0.13</jfree.version>
     </properties>
 
     <dependencies>
@@ -40,7 +41,7 @@
         <dependency>
             <groupId>jfree</groupId>
             <artifactId>jfreechart</artifactId>
-            <version>1.0.13</version>
+            <version>${jfree.version}</version>
         </dependency>
 
         <!-- lombok -->
@@ -51,11 +52,11 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-core -->
+        <!-- flywaydb -->
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
-            <version>5.2.4</version>
+            <version>${flyway.version}</version>
         </dependency>
 
         <!-- Spring -->

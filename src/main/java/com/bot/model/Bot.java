@@ -1,12 +1,13 @@
 package com.bot.model;
 
 
+import com.bot.commands.PlannerBaseCommand;
 import com.bot.commands.adminCommands.AddUserCommand;
 import com.bot.commands.commonCommands.AddSpendingCommand;
 import com.bot.commands.commonCommands.DeleteCommand;
 import com.bot.commands.commonCommands.GetAllPurchasesCommand;
 import com.bot.commands.commonCommands.GetCategories;
-import com.bot.commands.commonCommands.GetStatistic;
+import com.bot.commands.commonCommands.StatisticCommand;
 import com.bot.commands.commonCommands.HelpCommand;
 import com.bot.commands.commonCommands.StartCommand;
 import com.bot.service.BotService;
@@ -22,6 +23,7 @@ import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import javax.annotation.PostConstruct;
+import java.util.Arrays;
 
 @Slf4j
 @Component
@@ -42,10 +44,11 @@ public class Bot extends TelegramLongPollingCommandBot {
     @Autowired
     private GetAllPurchasesCommand getAllPurchasesCommand;
     @Autowired
-    private GetStatistic getStatistic;
+    private StatisticCommand statisticCommand;
     @Autowired
     private BotService botService;
 
+    private Update previousUpdate = new Update();
     private static final String BOT_NAME = "budget_planner_bot";
     private static final String BOT_TOKEN = "991064577:AAHtI9JsNg8mgR5IRNiveJMLxN9JpZMw4v8";
 
@@ -80,9 +83,17 @@ public class Bot extends TelegramLongPollingCommandBot {
     public void processNonCommandUpdate(Update update) {
         log.info("Processing non-command update...");
 
-        if (!update.hasMessage()) {
+        if (!update.hasMessage() && !update.hasCallbackQuery()) {
             log.error("Update doesn't have a body!");
             throw new IllegalStateException("Update doesn't have a body!");
+        }
+
+        if (update.hasCallbackQuery() || update.getMessage() != null && previousUpdate.hasCallbackQuery()) {
+            Update currentUpdate = update.hasCallbackQuery() ? update : previousUpdate;
+//            Message currentMessage = !update.hasCallbackQuery() && update.getMessage().
+            menuButtonTap(currentUpdate, update.getMessage());
+            previousUpdate = update;
+            return;
         }
 
         Message msg = update.getMessage();
@@ -107,6 +118,43 @@ public class Bot extends TelegramLongPollingCommandBot {
                     sendMessageToUser(answer, botService.getUserById(a.getId()).getTlgUser(), user);
                 });
     }
+    /**
+     * Обработчик сообщений меню
+     * @param update
+     */
+    private void menuButtonTap(Update update, Message message){
+        String commandStr = message == null ? update.getCallbackQuery().getData()
+                : update.getCallbackQuery().getData() + " " + message.getText();
+        String[] commandArr = commandStr.split(" ");
+        PlannerBaseCommand command;
+        switch (commandArr[0]) {
+            case "/add": {
+                command = addSpendingCommand;
+                break;
+            }
+            case "/delete": {
+                command = deleteCommand;
+                break;
+            }
+            case "/getstats": {
+                command = statisticCommand;
+                break;
+            }
+            case "/getprod": {
+                command = getAllPurchasesCommand;
+                break;
+            }
+            default: {
+                command = helpCommand;
+                break;
+            }
+        }
+
+        command.execute(this,
+                update.getCallbackQuery().getFrom(),
+                update.getCallbackQuery().getMessage().getChat(),
+                commandArr.length == 1 ? new String[0] : Arrays.copyOfRange(commandArr, 1, commandArr.length));
+    }
 
     /**
      * Регистрация команд бота. необходимо выволнить после создания экземпляра
@@ -126,7 +174,7 @@ public class Bot extends TelegramLongPollingCommandBot {
         log.info("/addUser command initialized.");
         register(getAllPurchasesCommand);
         log.info("/getProd command initialized.");
-        register(getStatistic);
+        register(statisticCommand);
         log.info("/getStats command initialized.");
         register(categoriesCommand);
         log.info("/cat command initialized.");
