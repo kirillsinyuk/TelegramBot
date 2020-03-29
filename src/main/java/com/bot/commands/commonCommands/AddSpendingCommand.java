@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 
 @Slf4j
@@ -26,9 +27,11 @@ public class AddSpendingCommand extends PlannerBaseCommand {
         log.info("BotUser {}, id: {}, chat: {} is trying to execute '{}'.", user.getUserName(), user.getId(), chat.getId(), getCommandIdentifier());
         StringBuilder message = new StringBuilder();
 
-        if(botService.hasAccessToCommands(user.getId())){
-            productCommonCommandService.commonAction(arguments, user, message, Action.ADD);
-            sendMsg(absSender, user, chat, message.toString());
+        if (botService.hasAccessToCommands(user.getId())){
+            InlineKeyboardMarkup keyboardMarkup = productCommonCommandService.commonAction(arguments, user, message, Action.ADD);
+            sendMsg(absSender, user, chat, message.toString(), keyboardMarkup);
         }
     }
+
+
 }

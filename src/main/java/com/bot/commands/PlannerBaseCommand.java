@@ -8,6 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import com.bot.service.BotService;
@@ -50,8 +51,9 @@ public abstract class PlannerBaseCommand extends BotCommand {
         }
     }
 
-    public void sendMsg(AbsSender absSender, User user, Chat chat, String message){
+    public void sendMsg(AbsSender absSender, User user, Chat chat, String message, ReplyKeyboard keyboard){
         SendMessage msg = new SendMessage();
+        msg.setReplyMarkup(keyboard);
         msg.setChatId(chat.getId().toString());
         msg.enableHtml(true);
         msg.setText(message);
