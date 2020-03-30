@@ -17,6 +17,8 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
@@ -90,7 +92,6 @@ public class Bot extends TelegramLongPollingCommandBot {
 
         if (update.hasCallbackQuery() || update.getMessage() != null && previousUpdate.hasCallbackQuery()) {
             Update currentUpdate = update.hasCallbackQuery() ? update : previousUpdate;
-//            Message currentMessage = !update.hasCallbackQuery() && update.getMessage().
             menuButtonTap(currentUpdate, update.getMessage());
             previousUpdate = update;
             return;
@@ -149,11 +150,11 @@ public class Bot extends TelegramLongPollingCommandBot {
                 break;
             }
         }
-
         command.execute(this,
                 update.getCallbackQuery().getFrom(),
                 update.getCallbackQuery().getMessage().getChat(),
                 commandArr.length == 1 ? new String[0] : Arrays.copyOfRange(commandArr, 1, commandArr.length));
+        command.hideKeyboard(this, update);
     }
 
     /**
