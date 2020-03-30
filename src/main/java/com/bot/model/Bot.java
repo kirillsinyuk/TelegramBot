@@ -86,7 +86,7 @@ public class Bot extends TelegramLongPollingCommandBot {
         log.info("Processing non-command update...");
 
         if (!update.hasMessage() && !update.hasCallbackQuery()) {
-            log.error("Update doesn't have a body!");
+            log.error("Update doesn't have a body!\n" + update.toString());
             throw new IllegalStateException("Update doesn't have a body!");
         }
 
