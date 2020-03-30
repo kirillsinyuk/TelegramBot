@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.objects.Chat;
+import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.bots.AbsSender;
@@ -59,6 +61,20 @@ public abstract class PlannerBaseCommand extends BotCommand {
         msg.setText(message);
 
         execute(absSender, msg, chat, user);
+    }
+
+    public void hideKeyboard(AbsSender absSender, Update update){
+        try {
+            EditMessageReplyMarkup replyMarkup = new EditMessageReplyMarkup()
+                    .setReplyMarkup(null)
+                    .setChatId(update.getCallbackQuery().getMessage().getChatId())
+                    .setInlineMessageId(update.getCallbackQuery().getInlineMessageId())
+                    .setMessageId(update.getCallbackQuery().getMessage().getMessageId());
+
+            absSender.execute(replyMarkup);
+        } catch (TelegramApiException e) {
+            log.error(update.getCallbackQuery().getFrom().getId() + getCommandIdentifier(), e);
+        }
     }
 
     public void sendPhoto(AbsSender absSender, User user, Chat chat, File photo){
