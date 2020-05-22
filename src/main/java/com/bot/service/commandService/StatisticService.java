@@ -1,6 +1,8 @@
 package com.bot.service.commandService;
 
 import com.bot.commands.commonCommands.HelpCommand;
+import com.bot.model.Action;
+import com.bot.model.Category;
 import com.bot.model.dto.StatisticDto;
 import com.bot.repositories.ProductRepository;
 import com.bot.service.DataToImageService;
@@ -33,10 +35,10 @@ public class StatisticService {
     @Autowired
     private HelpCommand helpCommand;
 
-    public InlineKeyboardMarkup statisticKeyboard(String[] arguments, StringBuilder message){
+    public InlineKeyboardMarkup statisticKeyboard(String[] arguments, StringBuilder message, Action type){
         if (arguments.length == 0) {
             message.append("Выберите период:");
-            return getDataRangeKeyboard();
+            return getDataRangeKeyboard(type);
         }
         return helpCommand.keyboardMarkup();
     }
@@ -114,14 +116,21 @@ public class StatisticService {
         }
     }
 
-    InlineKeyboardMarkup getDataRangeKeyboard(){
+    InlineKeyboardMarkup getDataRangeKeyboard(Action type){
         InlineKeyboardMarkup ikm = new InlineKeyboardMarkup();
 
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
-        keyboard.add(Collections.singletonList(new InlineKeyboardButton().setText("Сегодня").setCallbackData("/getstats today")));
-        keyboard.add(Collections.singletonList(new InlineKeyboardButton().setText("Неделя").setCallbackData("/getstats week")));
-        keyboard.add(Collections.singletonList(new InlineKeyboardButton().setText("Месяц").setCallbackData("/getstats month")));
-        keyboard.add(Collections.singletonList(new InlineKeyboardButton().setText("За весь период").setCallbackData("/getstats full")));
+        if (type == Action.STATISTIC) {
+            keyboard.add(Collections.singletonList(new InlineKeyboardButton().setText("Сегодня").setCallbackData("/getstats today")));
+            keyboard.add(Collections.singletonList(new InlineKeyboardButton().setText("Неделя").setCallbackData("/getstats week")));
+            keyboard.add(Collections.singletonList(new InlineKeyboardButton().setText("Месяц").setCallbackData("/getstats month")));
+            keyboard.add(Collections.singletonList(new InlineKeyboardButton().setText("За весь период").setCallbackData("/getstats full")));
+        } else if (type == Action.PURCHASES) {
+            keyboard.add(Collections.singletonList(new InlineKeyboardButton().setText("Сегодня").setCallbackData("/getprod today")));
+            keyboard.add(Collections.singletonList(new InlineKeyboardButton().setText("Неделя").setCallbackData("/getprod week")));
+            keyboard.add(Collections.singletonList(new InlineKeyboardButton().setText("Месяц").setCallbackData("/getprod month")));
+            keyboard.add(Collections.singletonList(new InlineKeyboardButton().setText("За весь период").setCallbackData("/getprod full")));
+        }
 
         ikm.setKeyboard(keyboard);
 

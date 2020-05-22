@@ -23,7 +23,7 @@ public class ProductStatisticService {
             case PURCHASES:
                 return purchasesService.getPurchasesCommand(arguments, message);
             case STATISTIC:
-                return statisticService.statisticKeyboard(arguments, message);
+                return statisticService.statisticKeyboard(arguments, message, Action.STATISTIC);
         }
         return null;
     }

@@ -36,7 +36,25 @@ public abstract class PlannerBaseCommand extends BotCommand {
                 currentUser.setTlgUser(user);
                 currentUser.setChat(chat);
             }
-            sender.execute(message);
+            if (message.getText().length() > 4096){
+                String temp = message.getText();
+                while (temp.length() > 4096) {
+                    int index = 0;
+                    while (index < 4096) {
+                        int temp_index = temp.indexOf('\n', index + 1);
+                        if (temp_index  < 4096) {
+                            index = temp_index;
+                        } else {
+                            break;
+                        }
+                    }
+                    sender.execute(message.setText(temp.substring(0, index)));
+                    temp = temp.substring(index);
+                }
+                sender.execute(message.setText(temp));
+            } else {
+                sender.execute(message);
+            }
         } catch (TelegramApiException e) {
             log.error(user.getId() + getCommandIdentifier(), e);
         }
