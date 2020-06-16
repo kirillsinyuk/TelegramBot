@@ -1,9 +1,10 @@
 package com.bot.service.commandService;
 
-import com.bot.commands.commonCommands.HelpCommand;
-import com.bot.model.Action;
+import com.bot.model.menu.CommonAction;
 import com.bot.model.entities.Product;
 import com.bot.repositories.ProductRepository;
+import com.bot.service.commandService.statistic.StatisticService;
+import com.bot.service.keyboard.KeyboardService;
 import com.bot.service.util.ParseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,18 +23,18 @@ public class PurchasesService {
     @Autowired
     private ProductRepository productRepository;
     @Autowired
-    private HelpCommand helpCommand;
+    private KeyboardService keyboardService;
 
     public InlineKeyboardMarkup getPurchasesCommand(String[] arguments, StringBuilder message){
-        switch (arguments.length ) {
+        switch (arguments.length) {
             case 0: {
-                return statisticService.statisticKeyboard(arguments, message, Action.PURCHASES);
+                return null; //statisticService.timePeriodKeyboard(arguments, message, CommonAction.PURCHASES);
             }
             case 1:
-                LocalDateTime startDate = statisticService.getStartDate(arguments[0]);
+                LocalDateTime startDate = null;//statisticService.getStartDate(arguments[0]);
                 getPurchases(startDate,  LocalDate.now().plusDays(1).atStartOfDay())
                         .forEach(item -> message.append(item.toString()));
-                return helpCommand.keyboardMarkup();
+                return keyboardService.basicKeyboardMarkup();
             case 2:
                 LocalDateTime endDate;
                     try {
@@ -50,7 +51,7 @@ public class PurchasesService {
                 getPurchases(startDate,  endDate)
                         .forEach(item -> message.append(item.toString()));
 
-                return helpCommand.keyboardMarkup();
+                return keyboardService.basicKeyboardMarkup();
 
         }
         return null;

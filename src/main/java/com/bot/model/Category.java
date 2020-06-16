@@ -1,15 +1,9 @@
 package com.bot.model;
 
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public enum Category {
+
     /*
     Категории:
     Квартплата
@@ -72,27 +66,5 @@ public enum Category {
 
     public static String getNameByCategory(Category category){
         return Arrays.stream(Category.values()).filter(item -> item.equals(category)).map(Category::getName).findFirst().orElse(null);
-    }
-
-    public static InlineKeyboardMarkup categoriesKeyboard(){
-        InlineKeyboardMarkup rkm = new InlineKeyboardMarkup();
-        List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
-
-        List<Category> list = Arrays.asList(Category.values());
-        int rowSize = 3;
-        //grouping buttons by rowSize
-        IntStream.range(0, (list.size() + rowSize - 1) / rowSize)
-                .mapToObj(i -> list.subList(i * rowSize, Math.min(rowSize * (i + 1), list.size())))
-                .map(catList -> catList
-                        .stream()
-                        .map(c -> new InlineKeyboardButton()
-                                        .setText(c.getName())
-                                        .setCallbackData("/add " + c.getName())
-                        ).collect(Collectors.toList())
-                )
-                .forEach(keyboard::add);
-
-        rkm.setKeyboard(keyboard);
-        return rkm;
     }
 }

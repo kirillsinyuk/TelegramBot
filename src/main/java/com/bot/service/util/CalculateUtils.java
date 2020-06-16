@@ -14,4 +14,9 @@ public class CalculateUtils {
         return from.divide(total, ROUND_TO, BigDecimal.ROUND_HALF_UP).multiply(PERCENTS).floatValue();
     }
 
+    public static int getRandomInt(int max){
+        int low = 0;
+        return (int) ((Math.random() * max-low) + low);
+    }
+
 }

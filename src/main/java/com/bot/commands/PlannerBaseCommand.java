@@ -1,19 +1,16 @@
 package com.bot.commands;
 
-import com.bot.model.BotUser;
+import com.bot.service.entity.BotUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
-import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.objects.Chat;
-import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import com.bot.service.BotService;
 
 import java.io.File;
 
@@ -21,86 +18,89 @@ import java.io.File;
 public abstract class PlannerBaseCommand extends BotCommand {
 
     @Autowired
-    public BotService botService;
+    protected BotUserService botUserService;
+
+    private static final int MAX_MSG_LENGTH = 4096;
 
     public PlannerBaseCommand(String commandIdentifier, String description) {
         super(commandIdentifier, description);
     }
 
-    private void execute(AbsSender sender, SendMessage message, Chat chat, User user) {
-        try {
-            if (!botService.hasAccessToCommands(user.getId())) {
-                log.warn("BotUser {} has no access.", user.getId());
-            } else {
-                BotUser currentUser = botService.getUserById(user.getId());
-                currentUser.setTlgUser(user);
-                currentUser.setChat(chat);
-            }
-            if (message.getText().length() > 4096){
-                String temp = message.getText();
-                while (temp.length() > 4096) {
-                    int index = 0;
-                    while (index < 4096) {
-                        int temp_index = temp.indexOf('\n', index + 1);
-                        if (temp_index  < 4096) {
-                            index = temp_index;
-                        } else {
-                            break;
-                        }
-                    }
-                    sender.execute(message.setText(temp.substring(0, index)));
-                    temp = temp.substring(index);
-                }
-                sender.execute(message.setText(temp));
-            } else {
-                sender.execute(message);
-            }
-        } catch (TelegramApiException e) {
-            log.error(user.getId() + getCommandIdentifier(), e);
-        }
+    protected void sendPhoto(AbsSender absSender, User user, Chat chat, File photo){
+        SendPhoto photoMessage = createAndTuneSendPhoto(chat, photo);
+
+        sendImgMsg(absSender, photoMessage, user);
     }
 
-    private void execute(AbsSender sender, SendPhoto message, Chat chat, User user) {
+    private SendPhoto createAndTuneSendPhoto(Chat chat, File photo) {
+        SendPhoto photoMessage = new SendPhoto();
+
+        photoMessage.setChatId(chat.getId());
+        photoMessage.setPhoto(photo);
+
+        return photoMessage;
+    }
+
+    private void sendImgMsg(AbsSender sender, SendPhoto message, User user) {
         try {
-            BotUser currentUser = botService.getUserById(user.getId());
-            currentUser.setTlgUser(user);
-            currentUser.setChat(chat);
             sender.execute(message);
         } catch (TelegramApiException e) {
             log.error(user.getId() + getCommandIdentifier(), e);
         }
     }
 
-    public void sendMsg(AbsSender absSender, User user, Chat chat, String message, ReplyKeyboard keyboard){
+    protected void sendMsg(AbsSender absSender, User user, Chat chat, String message, ReplyKeyboard keyboard){
+        SendMessage msg = createAndTuneSendMessage(chat, message, keyboard);
+
+        sendTextMsg(absSender, msg, user);
+    }
+
+
+    private SendMessage createAndTuneSendMessage(Chat chat, String message, ReplyKeyboard keyboard) {
         SendMessage msg = new SendMessage();
+
         msg.setReplyMarkup(keyboard);
         msg.setChatId(chat.getId().toString());
         msg.enableHtml(true);
         msg.setText(message);
 
-        execute(absSender, msg, chat, user);
+        return msg;
     }
 
-    public void hideKeyboard(AbsSender absSender, Update update){
+    private void sendTextMsg(AbsSender sender, SendMessage message, User user) {
         try {
-            EditMessageReplyMarkup replyMarkup = new EditMessageReplyMarkup()
-                    .setReplyMarkup(null)
-                    .setChatId(update.getCallbackQuery().getMessage().getChatId())
-                    .setInlineMessageId(update.getCallbackQuery().getInlineMessageId())
-                    .setMessageId(update.getCallbackQuery().getMessage().getMessageId());
-
-            absSender.execute(replyMarkup);
+            sendTextMsg(sender, message);
         } catch (TelegramApiException e) {
-            log.error(update.getCallbackQuery().getFrom().getId() + getCommandIdentifier(), e);
+            log.error(user.getId() + getCommandIdentifier(), e);
         }
     }
 
-    public void sendPhoto(AbsSender absSender, User user, Chat chat, File photo){
-        SendPhoto photoMessage = new SendPhoto();
-        photoMessage.setChatId(chat.getId());
-        photoMessage.setPhoto(photo);
+    private void sendTextMsg(AbsSender sender, SendMessage message) throws TelegramApiException {
+        String temp = message.getText();
+        temp = divideMsgIfLong(sender, message, temp);
+        sender.execute(message.setText(temp));
+    }
 
-        execute(absSender, photoMessage, chat, user);
+    private String divideMsgIfLong(AbsSender sender, SendMessage message, String temp) throws TelegramApiException {
+        while (temp.length() > MAX_MSG_LENGTH) {
+            int index = 0;
+            index = getLineIndexLessThanMax(temp, index);
+            sender.execute(message.setText(temp.substring(0, index)));
+            temp = temp.substring(index);
+        }
+        return temp;
+    }
+
+    private int getLineIndexLessThanMax(String temp, int index) {
+        while (index < MAX_MSG_LENGTH) {
+            int temp_index = temp.indexOf('\n', index + 1);
+            if (temp_index  < MAX_MSG_LENGTH) {
+                index = temp_index;
+            } else {
+                break;
+            }
+        }
+        return index;
     }
 
 }

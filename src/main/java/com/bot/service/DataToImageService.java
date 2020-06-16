@@ -1,6 +1,6 @@
 package com.bot.service;
 
-import com.bot.model.dto.StatisticDto;
+import com.bot.model.dto.StatisticDataDto;
 import lombok.extern.slf4j.Slf4j;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -27,42 +27,45 @@ import java.util.StringJoiner;
 @Service
 public class DataToImageService {
 
-    private PieDataset createDataset(List<StatisticDto> data) {
+    private PieDataset createDataset(List<StatisticDataDto> data) {
         DefaultPieDataset dataset = new DefaultPieDataset();
         data.forEach(x ->
-            dataset.setValue(x.getCategory(), x.getPrice().doubleValue()));
+            dataset.setValue(x.getCategory().getName(), x.getPrice().doubleValue()));
         return dataset;
     }
 
     private JFreeChart createChart(PieDataset dataset, LocalDate startDate, LocalDate endDate) {
-        String title = new StringJoiner(" ")
+        String title = getTitleString(startDate, endDate);
+        JFreeChart chart = ChartFactory.createPieChart3D(title, dataset, true, true, false);
+
+        getAndTunePiePlot(chart);
+
+        return chart;
+    }
+
+    private String getTitleString(LocalDate startDate, LocalDate endDate) {
+        return new StringJoiner(" ")
                 .add("Статистика c")
                 .add(startDate.format(DateTimeFormatter.ISO_LOCAL_DATE))
                 .add("по")
                 .add(endDate.format(DateTimeFormatter.ISO_LOCAL_DATE))
                 .toString();
-        final JFreeChart chart = ChartFactory.createPieChart3D(
-                title,
-                 dataset,
-                true,
-                true,
-                false);
+    }
 
-        final PiePlot3D plot = (PiePlot3D) chart.getPlot();
+    private PiePlot3D getAndTunePiePlot(JFreeChart chart){
+        PiePlot3D plot = (PiePlot3D) chart.getPlot();
+
         plot.setStartAngle(210);
         plot.setDirection(Rotation.CLOCKWISE);
         plot.setForegroundAlpha(0.9f);
         plot.setDepthFactor(0.05f);
-        plot.setLabelGenerator(new StandardPieSectionLabelGenerator(
-                "{0} {1}руб.({2})", NumberFormat.getNumberInstance(), NumberFormat.getPercentInstance()));
         plot.setNoDataMessage("No data to display");
+        plot.setLabelGenerator(new StandardPieSectionLabelGenerator("{0} {1}руб.({2})",
+                NumberFormat.getNumberInstance(),
+                NumberFormat.getPercentInstance())
+        );
 
-        return chart;
-    }
-
-    private JPanel createDemoPanel(List<StatisticDto> dataset, LocalDate startDate, LocalDate endDate) {
-        JFreeChart chart = createChart(createDataset(dataset), startDate, endDate);
-        return new ChartPanel(chart);
+        return  plot;
     }
 
     private File takePicture(JPanel panel) {
@@ -70,6 +73,13 @@ public class DataToImageService {
         panel.setSize(640, 480);
         BufferedImage img = new BufferedImage(panel.getWidth(), panel.getHeight(), BufferedImage.TYPE_INT_RGB);
         panel.print(img.getGraphics());
+
+        createJpgImage(image, img);
+
+        return image;
+    }
+
+    private void createJpgImage(File image, BufferedImage img) {
         try {
             ImageIO.write(img, "jpg", image);
         }
@@ -77,10 +87,14 @@ public class DataToImageService {
             e.printStackTrace();
             log.error("Error while create image", e);
         }
-        return image;
     }
 
-    public File convert(List<StatisticDto> dataset, LocalDate startDate, LocalDate endDate){
+    public File convert(List<StatisticDataDto> dataset, LocalDate startDate, LocalDate endDate){
         return takePicture(createDemoPanel(dataset, startDate, endDate));
+    }
+
+    private JPanel createDemoPanel(List<StatisticDataDto> dataset, LocalDate startDate, LocalDate endDate) {
+        JFreeChart chart = createChart(createDataset(dataset), startDate, endDate);
+        return new ChartPanel(chart);
     }
 }
