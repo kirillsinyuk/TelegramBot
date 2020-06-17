@@ -1,7 +1,6 @@
 package com.bot.service.commandService.add;
 
 import com.bot.model.entities.Category;
-import com.bot.model.entities.Band;
 import com.bot.model.entities.BotUser;
 import com.bot.model.menu.CommonAction;
 import com.bot.model.menu.DataAction;
@@ -58,16 +57,21 @@ public class AddDataService {
     InlineKeyboardMarkup addData(String[] args, BotUser user, StringBuilder message) {
         String categoryName = validService.joinArgs(args);
         if (categoryCash.get(user.getId()) == null) {
-            return checkAndPutInCash(user.getBand(), message, categoryName);
+            return checkAndPutInCash(user, message, categoryName);
         } else {
+            args = getArgsWithoutCat(categoryCash.get(user.getId()).getName(), args);
             return addspendingIfValid(args, categoryCash.get(user.getId()), user, message);
         }
     }
 
+    private String[] getArgsWithoutCat(String categoryName, String[] args) {
+        return validService.joinArgs(args).replaceFirst(categoryName, "").trim().split(" ");
+    }
+
     @Transactional
-    InlineKeyboardMarkup checkAndPutInCash(Band band, StringBuilder message, String categoryName) {
-        if (validOldCategory(categoryName, band.getCategories(), message)) {
-            categoryCash.put(band.getId(), categoryService.getCategoryByName(categoryName, band.getCategories()));
+    InlineKeyboardMarkup checkAndPutInCash(BotUser user, StringBuilder message, String categoryName) {
+        if (validOldCategory(categoryName, user.getBand().getCategories(), message)) {
+            categoryCash.put(user.getId(), categoryService.getCategoryByName(categoryName, user.getBand().getCategories()));
             message.append("Введите цену и коммертарий(опционально)");
             return new InlineKeyboardMarkup();
         }
@@ -89,9 +93,9 @@ public class AddDataService {
     InlineKeyboardMarkup addspendingIfValid(String[] args, Category category, BotUser user, StringBuilder message) {
         if(validService.validData(args, category, user.getBand().getCategories(), message)){
             createAndSaveProduct(args, category, user);
-            message.append(String.format("Трата %s по цене %s успешно добавлена.", args[0], args[1]));
+            message.append(String.format("Трата %s по цене %s успешно добавлена.", category.getName(), args[0]));
         }
-        categoryCash.remove(user.getBand().getId());
+        categoryCash.remove(user.getId());
         return dataKeyboardService.basicKeyboardMarkup();
     }
 

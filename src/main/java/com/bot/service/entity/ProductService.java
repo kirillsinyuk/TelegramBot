@@ -39,8 +39,8 @@ public class ProductService {
     }
 
     private Product toProduct(String[] arguments, Category category, BotUser user) {
-        int price = Integer.parseInt(arguments[1]);
-        String desc = arguments.length >= 3 ?
+        int price = Integer.parseInt(arguments[0]);
+        String desc = arguments.length > 2 ?
                 Arrays.stream(arguments)
                         .skip(2)
                         .collect(Collectors.joining(" "))
