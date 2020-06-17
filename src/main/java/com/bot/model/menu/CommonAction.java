@@ -9,7 +9,7 @@ import java.util.Arrays;
 public enum CommonAction {
     ADD("/add", "Добавить"),
     DELETE("/del", "Удалить"),
-    PURCHASES("/data", "Список трат"),
+    PURCHASES("/getspend", "Список трат"),
     STATISTIC("/stat", "Статистика");
    // MEMBERS("/members", "Участники группы");
 

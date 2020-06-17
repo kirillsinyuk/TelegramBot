@@ -57,14 +57,14 @@ public class ValidService {
         return true;
     }
 
-    public boolean validData(String[] args, Set<Category> categories, StringBuilder message){
+    public boolean validData(String[] args, Category category, Set<Category> categories, StringBuilder message){
         if(!validPrice(args[1])){
             message.append("Цена введена неверно.(целое число больше 0 и меньше 2,147,483,647) (;");
             return false;
         } else if(!validDataComment(args)){
             message.append("Длина комментария превышает допустимую.(64 символа)");
             return false;
-        } else if(!catAlreadyExist(args[0], categories)){
+        } else if(!catAlreadyExist(category.getName(), categories)){
             message.append("Категории с таким названием не существует для этой группы.");
             return false;
         }

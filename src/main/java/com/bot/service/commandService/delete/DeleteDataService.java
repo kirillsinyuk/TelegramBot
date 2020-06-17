@@ -1,11 +1,10 @@
 package com.bot.service.commandService.delete;
 
+import com.bot.model.entities.Band;
 import com.bot.model.entities.BotUser;
 import com.bot.model.entities.Category;
-import com.bot.model.entities.Product;
 import com.bot.model.menu.CommonAction;
 import com.bot.model.menu.DataAction;
-import com.bot.repositories.ProductRepository;
 import com.bot.service.entity.BotUserService;
 import com.bot.service.entity.CategoryService;
 import com.bot.service.entity.ProductService;
@@ -18,6 +17,9 @@ import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 @Service
 public class DeleteDataService {
@@ -33,6 +35,10 @@ public class DeleteDataService {
     @Autowired
     private CategoryService categoryService;
 
+    //но пока пусть будет временный вариант.
+    //TODO переделать на хранение в БД
+    private Map<Long, Category> categoryCash = new HashMap<>();
+
     @Transactional
     public InlineKeyboardMarkup deleteCommand(String[] args, User user, StringBuilder message){
         return delCommandHandler(args, botUserService.getBotUserByUserId(user.getId()), message);
@@ -41,25 +47,59 @@ public class DeleteDataService {
     private InlineKeyboardMarkup delCommandHandler(String[] args, BotUser user, StringBuilder message) {
         args = args.length == 1 ? new String[0] : Arrays.copyOfRange(args, 1, args.length);
 
-        switch (args.length){
-            case 0:
-                message.append("Выберите категорию:");
-                return dataKeyboardService.categoriesKeyboard(CommonAction.DELETE, DataAction.DATA, user.getBand());
-            case 1:
-                message.append("Введите цену и коммертарий(опционально)");
-                return new InlineKeyboardMarkup();
-            default: {
-                return delData(args, user, message);
-            }
+        if (args.length == 0) {
+            message.append("Выберите категорию:");
+            return dataKeyboardService.categoriesKeyboard(CommonAction.ADD, DataAction.DATA, user.getBand());
+        }
+
+        return delData(args, user, message);
+    }
+
+    @Transactional
+    InlineKeyboardMarkup delData(String[] args, BotUser user, StringBuilder message) {
+        String categoryName = validService.joinArgs(args);
+        if (categoryCash.get(user.getId()) == null) {
+            return checkAndPutInCash(user.getBand(), message, categoryName);
+        } else {
+            args = getArgsWithoutCat(categoryName, args);
+            return delspendingIfValid(args, user, message);
         }
     }
 
-    private InlineKeyboardMarkup delData(String[] args, BotUser user, StringBuilder message) {
-        if(validService.validData(args, user.getBand().getCategories(), message)){
-            int price = Integer.parseInt(args[1]);
-            Category category = categoryService.getCategoryByName(args[0], user.getBand().getCategories());
-            productService.deleteByCategoryAndPrice(category, price, message);
+    @Transactional
+    InlineKeyboardMarkup checkAndPutInCash(Band band, StringBuilder message, String categoryName) {
+        if (validOldCategory(categoryName, band.getCategories(), message)) {
+            categoryCash.put(band.getId(), categoryService.getCategoryByName(categoryName, band.getCategories()));
+            message.append("Введите цену и коммертарий(опционально)");
+            return new InlineKeyboardMarkup();
         }
         return dataKeyboardService.basicKeyboardMarkup();
+    }
+
+    private boolean validOldCategory(String category, Set<Category> categories, StringBuilder message){
+        if(!validService.validCatLength(category)){
+            message.append("Слишком длинное название категории.(не более 25 символов)");
+            return false;
+        } else if(!validService.catAlreadyExist(category, categories)){
+            message.append("Нет этой группе нет категории с таким именем.");
+            return false;
+        }
+        return true;
+    }
+
+    @Transactional
+    InlineKeyboardMarkup delspendingIfValid(String[] args, BotUser user, StringBuilder message) {
+        Category category = categoryCash.get(user.getId());
+
+        if(validService.validData(args, category, user.getBand().getCategories(), message)){
+            productService.deleteByCategoryAndPrice(category, Integer.parseInt(args[1]), message);
+            message.append(String.format("Трата %s по цене %s успешно удалена.", category.getName(), args[1]));
+        }
+        categoryCash.remove(user.getBand().getId());
+        return dataKeyboardService.basicKeyboardMarkup();
+    }
+
+    private String[] getArgsWithoutCat(String categoryName, String[] args) {
+        return validService.joinArgs(args).replaceFirst(categoryName, "").trim().split(" ");
     }
 }

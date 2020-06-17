@@ -3,9 +3,7 @@ package com.bot.commands.statistic.category.group.each;
 import com.bot.commands.PlannerBaseCommand;
 import com.bot.model.dto.StatisticDto;
 import com.bot.model.menu.stats.TimeStatisticType;
-import com.bot.service.commandService.statistic.divided.DividedCurrentStatisticService;
 import com.bot.service.commandService.statistic.divided.DividedPastStatisticService;
-import com.bot.service.keyboard.StatsKeyboardService;
 import com.bot.service.keyboard.TimePeriodKeyboardService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,6 @@ import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -35,17 +32,18 @@ public class GroupCatEachPastStatisticCommand extends PlannerBaseCommand {
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
         log.info("BotUser {}, id: {}, chat: {} is trying to execute '{}'.", user.getUserName(), user.getId(), chat.getId(), getCommandIdentifier());
+        StringBuilder message = new StringBuilder();
 
         if (arguments.length == 1) {
-            InlineKeyboardMarkup ikb = timePeriodKeyboard.timePeriodKeyboard(arguments, new StringBuilder(), TimeStatisticType.PAST);
-            sendMsg(absSender, user, chat, null, ikb);
+            InlineKeyboardMarkup ikb = timePeriodKeyboard.timePeriodKeyboard(arguments, message, TimeStatisticType.PAST);
+            sendMsg(absSender, user, chat, message.toString(), ikb);
         } else {
             List<StatisticDto> data = statisticService.getUsersStatistic(arguments, user);
             for (StatisticDto dto : data) {
                 sendMsg(absSender, user, chat, dto.getMessage(), null);
                 sendPhoto(absSender, user, chat, dto.getStatisticFile());
             }
-            sendMsg(absSender, user, chat, null, timePeriodKeyboard.basicKeyboardMarkup());
+            sendMsg(absSender, user, chat, "Статистика успешно собрана", timePeriodKeyboard.basicKeyboardMarkup());
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.bot.service.entity;
 
+import com.bot.model.dto.DynamicsDataDto;
 import com.bot.model.dto.StatisticDataDto;
 import com.bot.model.entities.BotUser;
 import com.bot.model.entities.Category;
@@ -22,8 +23,6 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
     @Autowired
-    private CategoryService categoryService;
-    @Autowired
     private ArgsToEntityConverter argsToEntityConverter;
 
     @Transactional
@@ -39,8 +38,7 @@ public class ProductService {
         }
     }
 
-    private Product toProduct(String[] arguments, BotUser user) {
-        Category category = categoryService.getCategoryByName(arguments[0], user.getBand().getCategories());
+    private Product toProduct(String[] arguments, Category category, BotUser user) {
         int price = Integer.parseInt(arguments[1]);
         String desc = arguments.length >= 3 ?
                 Arrays.stream(arguments)
@@ -51,18 +49,28 @@ public class ProductService {
         return new Product(category, price, LocalDateTime.now(), desc, user);
     }
 
-    public Product createAndSaveProduct(String[] args, BotUser user){
-        return productRepository.save(toProduct(args, user));
+    public Product createAndSaveProduct(String[] args, Category category, BotUser user){
+        return productRepository.save(toProduct(args, category, user));
     }
 
     public BigDecimal getTotalSpend(LocalDateTime start, LocalDateTime end, BotUser user){
         return productRepository.getSumByUser(start, end, user.getId());
     }
 
+    public BigDecimal getTotalSpendAllTime(BotUser user){
+        return productRepository.getSumByUser(user.getId());
+    }
+
     public List<StatisticDataDto> getStatisticDataDto(LocalDateTime start, LocalDateTime end, BotUser user) {
         return productRepository.getStatisticByUser(start, end, user.getId())
                 .stream()
                 .map(raw -> argsToEntityConverter.toStatisticsDto(raw))
+                .collect(Collectors.toList());
+    }
+
+    public List<DynamicsDataDto> getDynamicsDataDto(BotUser user) {
+        return productRepository.getDynamicsByUser(user.getId()).stream()
+                .map(raw -> argsToEntityConverter.toDynamicsDto(raw, user.getUsername()))
                 .collect(Collectors.toList());
     }
 

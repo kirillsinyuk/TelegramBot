@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 
-//TODO много шаблонного кода. подумать над рефакторингом. возможно подойдут дженерики.
+
 @Service
 public class TimePeriodKeyboardService extends KeyboardService {
 

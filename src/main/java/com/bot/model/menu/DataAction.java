@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+
 @Getter
 public enum DataAction implements Type {
     DATA("Трату", "data", Arrays.asList(CommonAction.ADD, CommonAction.DELETE), false),

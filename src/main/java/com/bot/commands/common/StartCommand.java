@@ -1,7 +1,7 @@
 package com.bot.commands.common;
 
 import com.bot.commands.PlannerBaseCommand;
-import com.bot.service.commandService.StartCommandService;
+import com.bot.service.commandService.common.StartCommandService;
 import com.bot.service.keyboard.KeyboardService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

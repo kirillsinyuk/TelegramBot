@@ -2,7 +2,6 @@ package com.bot.model.dto;
 
 import com.bot.model.entities.Category;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;

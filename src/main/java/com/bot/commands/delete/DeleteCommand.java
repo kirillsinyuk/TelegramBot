@@ -1,8 +1,7 @@
-package com.bot.commands.common;
+package com.bot.commands.delete;
 
 import com.bot.commands.PlannerBaseCommand;
-import com.bot.model.menu.CommonAction;
-import com.bot.service.ProductStatisticService;
+import com.bot.service.commandService.delete.DeleteCommandService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,22 +12,21 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 
 @Slf4j
 @Component
-public class SpendListCommand extends PlannerBaseCommand {
+public class DeleteCommand extends PlannerBaseCommand {
 
     @Autowired
-    private ProductStatisticService productStatisticService;
+    DeleteCommandService deleteCommandService;
 
-    public SpendListCommand() {
-        super("getspend", "(вывести список всех трат)\nАтрибуты:\n &lt;after&gt; &lt;before&gt; (dd-MM-yyyy)");
+    public DeleteCommand() {
+        super("del", "(удалить трату)\nАтибуты:\n &lt;category&gt; &lt;price&gt; ");
     }
 
     @Override
-    public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
+    public void execute(AbsSender absSender, User user, Chat chat, String[] args) {
         log.info("BotUser {}, id: {}, chat: {} is trying to execute '{}'.", user.getUserName(), user.getId(), chat.getId(), getCommandIdentifier());
-
         StringBuilder message = new StringBuilder();
 
-        InlineKeyboardMarkup keyboard = productStatisticService.getExtendedKeyboard(arguments, message, CommonAction.PURCHASES);
-        sendMsg(absSender, user, chat, message.toString(), keyboard);
+        InlineKeyboardMarkup ikb = deleteCommandService.delCommand(args, user, message);
+        sendMsg(absSender, user, chat, message.toString(), ikb);
     }
 }

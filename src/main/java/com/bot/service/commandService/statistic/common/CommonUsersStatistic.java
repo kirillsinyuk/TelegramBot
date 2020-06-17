@@ -1,6 +1,7 @@
 package com.bot.service.commandService.statistic.common;
 
 import com.bot.model.dto.StatisticDto;
+import com.bot.service.commandService.statistic.TimePeriodsStatisticImpl;
 import com.bot.service.entity.StatisticDtoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 
 @Service
-public abstract class CommonUsersStatistic {
+public abstract class CommonUsersStatistic extends TimePeriodsStatisticImpl {
 
     @Autowired
     private StatisticDtoService statisticDtoService;
@@ -29,8 +30,4 @@ public abstract class CommonUsersStatistic {
     protected StatisticDto getStatistic(LocalDateTime startDate, LocalDateTime endDate) {
         return statisticDtoService.getStaticticDto(startDate, endDate);
     }
-
-    protected abstract LocalDateTime getStartDate(String period);
-
-    protected abstract LocalDateTime getEndDate(String period);
 }

@@ -1,4 +1,4 @@
-package com.bot.service.commandService;
+package com.bot.service.commandService.common;
 
 import com.bot.service.entity.BotUserService;
 import org.springframework.beans.factory.annotation.Autowired;

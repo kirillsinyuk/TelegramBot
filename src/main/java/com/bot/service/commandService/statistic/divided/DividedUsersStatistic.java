@@ -2,6 +2,7 @@ package com.bot.service.commandService.statistic.divided;
 
 import com.bot.model.dto.StatisticDto;
 import com.bot.model.entities.BotUser;
+import com.bot.service.commandService.statistic.TimePeriodsStatisticImpl;
 import com.bot.service.entity.BotUserService;
 import com.bot.service.entity.StatisticDtoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public abstract class DividedUsersStatistic {
+public abstract class DividedUsersStatistic extends TimePeriodsStatisticImpl {
 
     @Autowired
     private BotUserService botUserService;
@@ -40,7 +41,4 @@ public abstract class DividedUsersStatistic {
                 .collect(Collectors.toList());
     }
 
-    protected abstract LocalDateTime getStartDate(String period);
-
-    protected abstract LocalDateTime getEndDate(String period);
 }

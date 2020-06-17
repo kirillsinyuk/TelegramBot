@@ -1,7 +1,6 @@
 package com.bot.commands.delete;
 
 import com.bot.commands.PlannerBaseCommand;
-import com.bot.service.commandService.add.AddDataService;
 import com.bot.service.commandService.delete.DeleteDataService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -15,6 +15,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import java.io.File;
 
 @Slf4j
+
 public abstract class PlannerBaseCommand extends BotCommand {
 
     @Autowired

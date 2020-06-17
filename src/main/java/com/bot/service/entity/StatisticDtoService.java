@@ -3,7 +3,7 @@ package com.bot.service.entity;
 import com.bot.model.dto.StatisticDataDto;
 import com.bot.model.dto.StatisticDto;
 import com.bot.model.entities.BotUser;
-import com.bot.service.DataToImageService;
+import com.bot.service.graphics.DataTo3DPieService;
 import com.bot.service.util.CalculateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class StatisticDtoService {
     @Autowired
     private ProductService productService;
     @Autowired
-    private DataToImageService dataToImageService;
+    private DataTo3DPieService dataTo3DPieService;
 
     public StatisticDto getStaticticDto(LocalDateTime start, LocalDateTime end, BotUser user){
         BigDecimal totalSpend = totalSpend(start, end, user);
@@ -43,7 +43,7 @@ public class StatisticDtoService {
     }
 
     private File getStatFile(List<StatisticDataDto> data, LocalDateTime start, LocalDateTime end) {
-        return dataToImageService.convert(data, start.toLocalDate(), end.toLocalDate());
+        return dataTo3DPieService.convert(data, start.toLocalDate(), end.toLocalDate());
     }
 
     private String getStaticticMsg(List<StatisticDataDto> data, BotUser user, BigDecimal total) {

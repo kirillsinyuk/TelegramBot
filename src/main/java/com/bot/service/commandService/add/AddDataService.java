@@ -60,8 +60,13 @@ public class AddDataService {
         if (categoryCash.get(user.getId()) == null) {
             return checkAndPutInCash(user.getBand(), message, categoryName);
         } else {
-            return addspendingIfValid(args, user, message);
+            args = getArgsWithoutCat(categoryName, args);
+            return addspendingIfValid(args, categoryCash.get(user.getId()), user, message);
         }
+    }
+
+    private String[] getArgsWithoutCat(String categoryName, String[] args) {
+        return validService.joinArgs(args).replaceFirst(categoryName, "").trim().split(" ");
     }
 
     @Transactional
@@ -74,7 +79,7 @@ public class AddDataService {
         return dataKeyboardService.basicKeyboardMarkup();
     }
 
-    private boolean validOldCategory(String category, Set<com.bot.model.entities.Category> categories, StringBuilder message){
+    private boolean validOldCategory(String category, Set<Category> categories, StringBuilder message){
         if(!validService.validCatLength(category)){
             message.append("Слишком длинное название категории.(не более 25 символов)");
             return false;
@@ -86,17 +91,17 @@ public class AddDataService {
     }
 
     @Transactional
-    InlineKeyboardMarkup addspendingIfValid(String[] args, BotUser user, StringBuilder message) {
-        if(validService.validData(args, user.getBand().getCategories(), message)){
-            createAndSaveProduct(args, user);
+    InlineKeyboardMarkup addspendingIfValid(String[] args, Category category, BotUser user, StringBuilder message) {
+        if(validService.validData(args, category, user.getBand().getCategories(), message)){
+            createAndSaveProduct(args, category, user);
             message.append(String.format("Трата %s по цене %s успешно добавлена.", args[0], args[1]));
         }
         categoryCash.remove(user.getBand().getId());
         return dataKeyboardService.basicKeyboardMarkup();
     }
 
-    private void createAndSaveProduct(String[] args, BotUser user) throws IllegalArgumentException {
-        productService.createAndSaveProduct(args, user);
+    private void createAndSaveProduct(String[] args, Category category, BotUser user) throws IllegalArgumentException {
+        productService.createAndSaveProduct(args, category, user);
     }
 
 }

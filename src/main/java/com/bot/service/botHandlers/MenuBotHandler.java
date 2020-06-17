@@ -5,17 +5,24 @@ import com.bot.commands.add.AddDataCommand;
 import com.bot.commands.add.admin.AddCatCommand;
 import com.bot.commands.add.admin.AddUserCommand;
 import com.bot.commands.add.admin.CategoryRenameCommand;
-import com.bot.commands.common.AddCommand;
-import com.bot.commands.common.DeleteCommand;
-import com.bot.commands.common.SpendListCommand;
+import com.bot.commands.add.AddCommand;
+import com.bot.commands.delete.DeleteCommand;
+import com.bot.commands.spendings.SpendListCommand;
 import com.bot.commands.common.HelpCommand;
 import com.bot.commands.statistic.StatisticCommand;
 import com.bot.commands.delete.DelDataCommand;
 import com.bot.commands.delete.admin.DelCatCommand;
 import com.bot.commands.delete.admin.DelUserCommand;
 import com.bot.commands.statistic.category.StatisticCatCommand;
+import com.bot.commands.statistic.category.group.all.GroupCatAllNowStatisticCommand;
+import com.bot.commands.statistic.category.group.all.GroupCatAllPastStatisticCommand;
+import com.bot.commands.statistic.category.group.all.GroupCatAllStatisticCommand;
+import com.bot.commands.statistic.category.group.each.GroupCatEachNowStatisticCommand;
+import com.bot.commands.statistic.category.group.each.GroupCatEachPastStatisticCommand;
+import com.bot.commands.statistic.category.group.each.GroupCatEachStatisticCommand;
 import com.bot.commands.statistic.category.single.SingleCatCurrentStatisticCommand;
 import com.bot.commands.statistic.category.single.SingleCatPastStatisticCommand;
+import com.bot.commands.statistic.dynamics.StatisticDynCommand;
 import com.bot.model.menu.CommonAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,6 +64,21 @@ public class MenuBotHandler extends AbstractHandler{
     private SingleCatCurrentStatisticCommand catCurrentStatisticCommand;
     @Autowired
     private SingleCatPastStatisticCommand catPastStatisticCommand;
+    @Autowired
+    private GroupCatAllStatisticCommand catAllStatisticCommand;
+    @Autowired
+    private GroupCatAllPastStatisticCommand catAllPastStatisticCommand;
+    @Autowired
+    private GroupCatAllNowStatisticCommand catAllNowStatisticCommand;
+    @Autowired
+    private GroupCatEachStatisticCommand groupCatEachStatisticCommand;
+    @Autowired
+    private GroupCatEachNowStatisticCommand catEachNowStatisticCommand;
+    @Autowired
+    private GroupCatEachPastStatisticCommand catEachPastStatisticCommand;
+
+    @Autowired
+    private StatisticDynCommand statisticDynCommand;
 
     @Autowired
     private HelpCommand helpCommand;
@@ -77,12 +99,10 @@ public class MenuBotHandler extends AbstractHandler{
             return getDelCommands(commandArg);
         }  else if(commandArg.contains(CommonAction.STATISTIC.getName())) {
             return getStatCommands(commandArg);
-        }
-        switch (commandArg) {
-            case "/getprod":
-                return spendListCommand;
-            default:
-                return helpCommand;
+        } else if(commandArg.contains(CommonAction.PURCHASES.getName())) {
+            return getSpendCommands(commandArg);
+        } else {
+            return helpCommand;
         }
     }
 
@@ -128,6 +148,29 @@ public class MenuBotHandler extends AbstractHandler{
                 return catCurrentStatisticCommand;
             case "/statcatpast":
                 return catPastStatisticCommand;
+            case "/statcateach":
+                return groupCatEachStatisticCommand;
+            case "/statcateachnow":
+                return catEachNowStatisticCommand;
+            case "/statcateachpast":
+                return catEachPastStatisticCommand;
+            case "/statcatall":
+                return catAllStatisticCommand;
+            case "/statcatallnow":
+                return catAllNowStatisticCommand;
+            case "/statcatallpast":
+                return catAllPastStatisticCommand;
+            case "/statdyn":
+                return statisticDynCommand;
+            default:
+                return helpCommand;
+        }
+    }
+
+    private PlannerBaseCommand getSpendCommands(String commandArg) {
+        switch (commandArg) {
+            case "/getspend":
+                return spendListCommand;
             default:
                 return helpCommand;
         }

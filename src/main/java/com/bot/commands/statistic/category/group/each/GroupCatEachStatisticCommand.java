@@ -12,7 +12,6 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import org.telegram.telegrambots.meta.bots.AbsSender;
 
 
-
 @Slf4j
 @Component
 public class GroupCatEachStatisticCommand extends PlannerBaseCommand {

@@ -1,8 +1,6 @@
 package com.bot.commands.delete.admin;
 
 import com.bot.commands.PlannerBaseCommand;
-import com.bot.service.commandService.add.admin.AddUserService;
-import com.bot.service.commandService.delete.DeleteCommandService;
 import com.bot.service.commandService.delete.admin.DelUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

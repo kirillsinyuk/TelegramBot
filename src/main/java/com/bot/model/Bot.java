@@ -1,6 +1,5 @@
 package com.bot.model;
 
-
 import com.bot.service.botHandlers.CommandBotHandler;
 import com.bot.service.botHandlers.MenuBotHandler;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +12,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.HashMap;
 import java.util.Map;
+
 
 @Slf4j
 @Component

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class DividedPastStatisticService extends DividedUsersStatistic {
 
     @Override
-    protected LocalDateTime getStartDate(String period){
+    public LocalDateTime getStartDate(String period){
         LocalDateTime today = LocalDate.now().atStartOfDay();
         switch (period){
             case "week":
@@ -27,7 +27,7 @@ public class DividedPastStatisticService extends DividedUsersStatistic {
     }
 
     @Override
-    protected LocalDateTime getEndDate(String period) {
+    public LocalDateTime getEndDate(String period) {
         LocalDateTime today = LocalDate.now().atStartOfDay();
         switch (period){
             case "week":

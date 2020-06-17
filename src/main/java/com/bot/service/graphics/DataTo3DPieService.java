@@ -1,4 +1,4 @@
-package com.bot.service;
+package com.bot.service.graphics;
 
 import com.bot.model.dto.StatisticDataDto;
 import lombok.extern.slf4j.Slf4j;
@@ -25,13 +25,15 @@ import java.util.StringJoiner;
 
 @Slf4j
 @Service
-public class DataToImageService {
+public class DataTo3DPieService {
 
-    private PieDataset createDataset(List<StatisticDataDto> data) {
-        DefaultPieDataset dataset = new DefaultPieDataset();
-        data.forEach(x ->
-            dataset.setValue(x.getCategory().getName(), x.getPrice().doubleValue()));
-        return dataset;
+    public File convert(List<StatisticDataDto> dataset, LocalDate startDate, LocalDate endDate){
+        return takePicture(createDemoPanel(dataset, startDate, endDate));
+    }
+
+    private JPanel createDemoPanel(List<StatisticDataDto> dataset, LocalDate startDate, LocalDate endDate) {
+        JFreeChart chart = createChart(createDataset(dataset), startDate, endDate);
+        return new ChartPanel(chart);
     }
 
     private JFreeChart createChart(PieDataset dataset, LocalDate startDate, LocalDate endDate) {
@@ -41,15 +43,6 @@ public class DataToImageService {
         getAndTunePiePlot(chart);
 
         return chart;
-    }
-
-    private String getTitleString(LocalDate startDate, LocalDate endDate) {
-        return new StringJoiner(" ")
-                .add("Статистика c")
-                .add(startDate.format(DateTimeFormatter.ISO_LOCAL_DATE))
-                .add("по")
-                .add(endDate.format(DateTimeFormatter.ISO_LOCAL_DATE))
-                .toString();
     }
 
     private PiePlot3D getAndTunePiePlot(JFreeChart chart){
@@ -89,12 +82,19 @@ public class DataToImageService {
         }
     }
 
-    public File convert(List<StatisticDataDto> dataset, LocalDate startDate, LocalDate endDate){
-        return takePicture(createDemoPanel(dataset, startDate, endDate));
+    private PieDataset createDataset(List<StatisticDataDto> data) {
+        DefaultPieDataset dataset = new DefaultPieDataset();
+        data.forEach(x ->
+            dataset.setValue(x.getCategory().getName(), x.getPrice().doubleValue()));
+        return dataset;
     }
 
-    private JPanel createDemoPanel(List<StatisticDataDto> dataset, LocalDate startDate, LocalDate endDate) {
-        JFreeChart chart = createChart(createDataset(dataset), startDate, endDate);
-        return new ChartPanel(chart);
+    private String getTitleString(LocalDate startDate, LocalDate endDate) {
+        return new StringJoiner(" ")
+                .add("Статистика c")
+                .add(startDate.format(DateTimeFormatter.ISO_LOCAL_DATE))
+                .add("по")
+                .add(endDate.format(DateTimeFormatter.ISO_LOCAL_DATE))
+                .toString();
     }
 }

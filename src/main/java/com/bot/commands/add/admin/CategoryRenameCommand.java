@@ -2,7 +2,6 @@ package com.bot.commands.add.admin;
 
 import com.bot.commands.PlannerBaseCommand;
 import com.bot.service.commandService.add.admin.AddCatRenamedService;
-import com.bot.service.commandService.add.admin.AddCatService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
