@@ -60,13 +60,8 @@ public class AddDataService {
         if (categoryCash.get(user.getId()) == null) {
             return checkAndPutInCash(user.getBand(), message, categoryName);
         } else {
-            args = getArgsWithoutCat(categoryName, args);
             return addspendingIfValid(args, categoryCash.get(user.getId()), user, message);
         }
-    }
-
-    private String[] getArgsWithoutCat(String categoryName, String[] args) {
-        return validService.joinArgs(args).replaceFirst(categoryName, "").trim().split(" ");
     }
 
     @Transactional
@@ -84,7 +79,7 @@ public class AddDataService {
             message.append("Слишком длинное название категории.(не более 25 символов)");
             return false;
         } else if(!validService.catAlreadyExist(category, categories)){
-            message.append("Нет этой группе нет категории с таким именем.");
+            message.append("В этой группе нет категории с таким именем.");
             return false;
         }
         return true;

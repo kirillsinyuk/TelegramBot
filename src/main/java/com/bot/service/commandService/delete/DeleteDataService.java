@@ -61,7 +61,6 @@ public class DeleteDataService {
         if (categoryCash.get(user.getId()) == null) {
             return checkAndPutInCash(user.getBand(), message, categoryName);
         } else {
-            args = getArgsWithoutCat(categoryName, args);
             return delspendingIfValid(args, user, message);
         }
     }
@@ -81,7 +80,7 @@ public class DeleteDataService {
             message.append("Слишком длинное название категории.(не более 25 символов)");
             return false;
         } else if(!validService.catAlreadyExist(category, categories)){
-            message.append("Нет этой группе нет категории с таким именем.");
+            message.append("В этой группе нет категории с таким именем.");
             return false;
         }
         return true;
@@ -97,9 +96,5 @@ public class DeleteDataService {
         }
         categoryCash.remove(user.getBand().getId());
         return dataKeyboardService.basicKeyboardMarkup();
-    }
-
-    private String[] getArgsWithoutCat(String categoryName, String[] args) {
-        return validService.joinArgs(args).replaceFirst(categoryName, "").trim().split(" ");
     }
 }
