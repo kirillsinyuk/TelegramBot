@@ -1,62 +1,51 @@
 package com.bot.service.commandService;
 
-import com.bot.commands.commonCommands.HelpCommand;
-import com.bot.model.Action;
+import com.bot.model.entities.BotUser;
 import com.bot.model.entities.Product;
+import com.bot.model.menu.stats.TimeStatisticType;
 import com.bot.repositories.ProductRepository;
-import com.bot.service.util.ParseUtil;
+import com.bot.service.commandService.statistic.TimePeriodsStatisticImpl;
+import com.bot.service.entity.BotUserService;
+import com.bot.service.keyboard.TimePeriodKeyboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 
-import java.time.DateTimeException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class PurchasesService {
+public class PurchasesService extends TimePeriodsStatisticImpl {
 
-    @Autowired
-    private StatisticService statisticService;
     @Autowired
     private ProductRepository productRepository;
     @Autowired
-    private HelpCommand helpCommand;
+    private TimePeriodKeyboardService keyboardService;
+    @Autowired
+    private BotUserService botUserService;
 
-    public InlineKeyboardMarkup getPurchasesCommand(String[] arguments, StringBuilder message){
-        switch (arguments.length ) {
-            case 0: {
-                return statisticService.statisticKeyboard(arguments, message, Action.PURCHASES);
+    @Transactional
+    public InlineKeyboardMarkup getPurchasesCommand(String[] arguments, User user, StringBuilder message) {
+        switch (arguments.length) {
+            case 1: {
+                return keyboardService.timePeriodKeyboard(arguments, message, TimeStatisticType.NOW);
             }
-            case 1:
-                LocalDateTime startDate = statisticService.getStartDate(arguments[0]);
-                getPurchases(startDate,  LocalDate.now().plusDays(1).atStartOfDay())
-                        .forEach(item -> message.append(item.toString()));
-                return helpCommand.keyboardMarkup();
             case 2:
-                LocalDateTime endDate;
-                    try {
-                        startDate = ParseUtil.getLocalDateTimeFromString(arguments[0]);
-                        endDate = ParseUtil.getLocalDateTimeFromString(arguments[1]).plusDays(1);
-                        if (startDate.isAfter(endDate)) {
-                            message.append("Первая дата позднее второй!");
-                            return null;
-                        }
-                    } catch (DateTimeException e) {
-                        message.append("Неверный формат дат!(требуется dd-MM-yyyy)");
-                        return null;
-                    }
-                getPurchases(startDate,  endDate)
+                LocalDateTime startDate = getStartDate(arguments[1]);
+                LocalDateTime endDate = getEndDate(arguments[1]);
+
+                getPurchases(startDate, endDate, botUserService.getBotUserByUserId(user.getId()))
                         .forEach(item -> message.append(item.toString()));
-
-                return helpCommand.keyboardMarkup();
-
+                return keyboardService.basicKeyboardMarkup();
+            default:
+                return keyboardService.basicKeyboardMarkup();
         }
-        return null;
     }
 
-    private List<Product> getPurchases(LocalDateTime start, LocalDateTime end){
-        return productRepository.getAllByDataBetweenAndDeletedFalse(start, end);
+    @Transactional
+    List<Product> getPurchases(LocalDateTime start, LocalDateTime end, BotUser user){
+        return productRepository.getAllByDataBetweenAndUserAndDeletedFalseOrderByData (start, end, user);
     }
 }

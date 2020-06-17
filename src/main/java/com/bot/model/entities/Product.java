@@ -1,9 +1,8 @@
 package com.bot.model.entities;
 
-
-import com.bot.model.Category;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,16 +10,20 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "product")
 @NoArgsConstructor
 public class Product {
+
+    public final static int MAX_COMMENT_LENGTH = 64;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="category_id", nullable=false)
     private Category category;
 
     @Column(name = "price")
@@ -32,24 +35,25 @@ public class Product {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "spended_by")
-    private String spendedBy;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id", nullable=false)
+    private BotUser user;
 
     @Column(name = "deleted")
     private boolean deleted;
 
-    public Product(Category category, int price, LocalDateTime data, String description, String spendedBy) {
+    public Product(Category category, int price, LocalDateTime data, String description, BotUser user) {
         this.category = category;
         this.price = price;
         this.data = data;
         this.description = description;
-        this.spendedBy = spendedBy;
+        this.user = user;
     }
 
     @Override
     public String toString() {
         return description == null ?
-          String.join(" - ", Arrays.asList(data.format(DateTimeFormatter.ISO_LOCAL_DATE), spendedBy, Category.getNameByCategory(category), price + "\n"))
-                : String.join(" - ", Arrays.asList(data.format(DateTimeFormatter.ISO_LOCAL_DATE), spendedBy, Category.getNameByCategory(category), description, price + "\n"));
+          String.join(" - ", Arrays.asList(data.format(DateTimeFormatter.ISO_LOCAL_DATE), user.getUsername(), category.getName(), price + "\n"))
+                : String.join(" - ", Arrays.asList(data.format(DateTimeFormatter.ISO_LOCAL_DATE), user.getUsername(), category.getName(), description, price + "\n"));
     }
 }

@@ -39,9 +39,11 @@ public class AppContextConfiguration {
     public DefaultBotOptions getDefaultBotOptions() {
         ApiContextInitializer.init();
         DefaultBotOptions botOptions = ApiContext.getInstance(DefaultBotOptions.class);
+
         botOptions.setProxyHost(PROXY_HOST);
         botOptions.setProxyPort(PROXY_PORT);
         botOptions.setProxyType(DefaultBotOptions.ProxyType.SOCKS5);
+
         return botOptions;
     }
 

@@ -1,0 +1,46 @@
+LOCK TABLES
+  product WRITE,
+  band WRITE,
+  bot_user WRITE,
+  category WRITE;
+
+ALTER TABLE category
+  DROP FOREIGN KEY category_band_1,
+  MODIFY band_id BIGINT;
+
+ALTER TABLE bot_user MODIFY COLUMN id BIGINT AUTO_INCREMENT;
+
+ALTER TABLE bot_user MODIFY COLUMN chat_id BIGINT;
+
+ALTER TABLE bot_user MODIFY COLUMN band_id BIGINT;
+
+ALTER TABLE band MODIFY COLUMN id BIGINT AUTO_INCREMENT;
+
+ALTER TABLE category MODIFY COLUMN band_id BIGINT;
+
+ALTER TABLE category MODIFY COLUMN id BIGINT AUTO_INCREMENT;
+
+ALTER TABLE product MODIFY COLUMN category_id BIGINT;
+
+
+ALTER TABLE product MODIFY COLUMN id BIGINT AUTO_INCREMENT;
+
+ALTER TABLE product MODIFY COLUMN user_id BIGINT;
+
+ALTER TABLE product
+  ADD CONSTRAINT FK_ProductCategory
+    FOREIGN KEY (category_id) REFERENCES category (id);
+
+ALTER TABLE product
+  ADD CONSTRAINT FK_ProductUser
+    FOREIGN KEY (user_id) REFERENCES bot_user (id);
+
+ALTER TABLE bot_user
+  ADD CONSTRAINT user_band_1
+    FOREIGN KEY (band_id) REFERENCES band (id);
+
+ALTER TABLE category
+  ADD CONSTRAINT category_band_1
+    FOREIGN KEY (band_id) REFERENCES band (id);
+
+UNLOCK TABLES;
