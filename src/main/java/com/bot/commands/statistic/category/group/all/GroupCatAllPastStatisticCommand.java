@@ -42,7 +42,7 @@ public class GroupCatAllPastStatisticCommand extends PlannerBaseCommand {
 
     private void sendData(AbsSender absSender, User user, Chat chat, StatisticDto data) {
         if(data.getTotalSpend()== null){
-            sendMsg(absSender, user, chat, data.getMessage() + "\nНет трат за данный период.", timePeriodKeyboard.basicKeyboardMarkup());
+            sendMsg(absSender, user, chat, data.getMessage() + "\nНет трат за данный период.", null);
             return;
         }
         if (data.getStatisticFile() != null) {

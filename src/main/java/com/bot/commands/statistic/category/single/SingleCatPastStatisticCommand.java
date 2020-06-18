@@ -48,7 +48,7 @@ public class SingleCatPastStatisticCommand extends PlannerBaseCommand {
 
     private void sendData(AbsSender absSender, User user, Chat chat, StatisticDto dto) {
         if(dto.getTotalSpend()== null){
-            sendMsg(absSender, user, chat, dto.getMessage() + "\nНет трат за данный период.", timePeriodKeyboard.basicKeyboardMarkup());
+            sendMsg(absSender, user, chat, dto.getMessage() + "\nНет трат за данный период.", null);
             return;
         }
         sendMsg(absSender, user, chat, dto.getMessage() + "\nВсего потрачено: " + dto.getTotalSpend().intValue(), null);
