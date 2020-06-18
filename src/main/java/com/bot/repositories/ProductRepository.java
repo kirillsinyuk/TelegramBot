@@ -42,4 +42,6 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
     Set<Product> getAllByCategoryAndUser(Category category, BotUser user);
 
     Set<Product> getAllByCategory(Category category);
+
+    Set<Product> getAllByUser(BotUser user);
 }

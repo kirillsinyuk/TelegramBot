@@ -85,4 +85,8 @@ public class CategoryService {
     public Category getCategoryById(Long id){
         return categogyRepository.findById(id).orElse(null);
     }
+
+    public void deleteAll(Set<Category> categories){
+        categogyRepository.deleteAll(categories);
+    }
 }

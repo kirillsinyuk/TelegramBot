@@ -6,6 +6,7 @@ import com.bot.commands.add.admin.AddCatCommand;
 import com.bot.commands.add.admin.AddUserCommand;
 import com.bot.commands.add.admin.CategoryRenameCommand;
 import com.bot.commands.add.AddCommand;
+import com.bot.commands.delete.DelAllDataCommand;
 import com.bot.commands.delete.DeleteCommand;
 import com.bot.commands.spendings.SpendListCommand;
 import com.bot.commands.common.HelpCommand;
@@ -55,6 +56,8 @@ public class MenuBotHandler extends AbstractHandler{
     private DelUserCommand delUserCommand;
     @Autowired
     private DelDataCommand delDataCommand;
+    @Autowired
+    private DelAllDataCommand delAllDataCommand;
 
     @Autowired
     private StatisticCommand statisticCommand;
@@ -133,6 +136,8 @@ public class MenuBotHandler extends AbstractHandler{
                 return delUserCommand;
             case "/deldata":
                 return delDataCommand;
+            case "/delall":
+                return delAllDataCommand;
             default:
                 return helpCommand;
         }

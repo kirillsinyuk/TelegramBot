@@ -82,4 +82,9 @@ public class BotUserService {
         user.setBand(band);
         return botUserRepository.save(user);
     }
+
+    @Transactional
+    public void deleteUser(BotUser user){
+        botUserRepository.delete(user);
+    }
 }

@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -83,5 +84,13 @@ public class ProductService {
                 .stream()
                 .map(raw -> argsToEntityConverter.toStatisticsDto(raw))
                 .collect(Collectors.toList());
+    }
+
+    public Set<Product> getAllSpendingsByUser(BotUser user){
+        return productRepository.getAllByUser(user);
+    }
+
+    public void deleteAllSpendings(BotUser user){
+        productRepository.deleteAll(getAllSpendingsByUser(user));
     }
 }
