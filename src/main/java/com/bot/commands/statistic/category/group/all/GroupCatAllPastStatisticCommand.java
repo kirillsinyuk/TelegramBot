@@ -36,10 +36,18 @@ public class GroupCatAllPastStatisticCommand extends PlannerBaseCommand {
             sendMsg(absSender, user, chat, message.toString(), ikb);
         } else {
             StatisticDto data = statisticService.getUsersStatistic(arguments);
-            if (data.getStatisticFile() != null) {
-                sendPhoto(absSender, user, chat, data.getStatisticFile());
-            }
-            sendMsg(absSender, user, chat, data.getMessage() + "\nВсего потрачено: " + data.getTotalSpend().intValue(), timePeriodKeyboard.basicKeyboardMarkup());
+            sendData(absSender, user, chat, data);
         }
+    }
+
+    private void sendData(AbsSender absSender, User user, Chat chat, StatisticDto data) {
+        if(data.getTotalSpend()== null){
+            sendMsg(absSender, user, chat, data.getMessage() + "\nНет трат за данный период.", timePeriodKeyboard.basicKeyboardMarkup());
+            return;
+        }
+        if (data.getStatisticFile() != null) {
+            sendPhoto(absSender, user, chat, data.getStatisticFile());
+        }
+        sendMsg(absSender, user, chat, data.getMessage() + "\nВсего потрачено: " + data.getTotalSpend().intValue(), timePeriodKeyboard.basicKeyboardMarkup());
     }
 }

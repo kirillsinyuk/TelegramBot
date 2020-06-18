@@ -36,8 +36,12 @@ public class PurchasesService extends TimePeriodsStatisticImpl {
                 LocalDateTime startDate = getStartDate(arguments[1]);
                 LocalDateTime endDate = getEndDate(arguments[1]);
 
-                getPurchases(startDate, endDate, botUserService.getBotUserByUserId(user.getId()))
-                        .forEach(item -> message.append(item.toString()));
+                List<Product> products = getPurchases(startDate, endDate, botUserService.getBotUserByUserId(user.getId()));
+                if (products.size() == 0) {
+                    message.append("Ещё нет трат за этот период");
+                } else {
+                    products.forEach(item -> message.append(item.toString()));
+                }
                 return keyboardService.basicKeyboardMarkup();
             default:
                 return keyboardService.basicKeyboardMarkup();
