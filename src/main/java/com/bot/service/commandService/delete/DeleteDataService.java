@@ -1,6 +1,5 @@
 package com.bot.service.commandService.delete;
 
-import com.bot.model.entities.Band;
 import com.bot.model.entities.BotUser;
 import com.bot.model.entities.Category;
 import com.bot.model.menu.CommonAction;
@@ -49,7 +48,7 @@ public class DeleteDataService {
 
         if (args.length == 0) {
             message.append("Выберите категорию:");
-            return dataKeyboardService.categoriesKeyboard(CommonAction.ADD, DataAction.DATA, user.getBand());
+            return dataKeyboardService.categoriesKeyboard(CommonAction.DELETE, DataAction.DATA, user.getBand());
         }
 
         return delData(args, user, message);

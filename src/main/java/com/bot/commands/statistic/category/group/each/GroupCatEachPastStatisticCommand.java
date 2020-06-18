@@ -40,7 +40,7 @@ public class GroupCatEachPastStatisticCommand extends PlannerBaseCommand {
         } else {
             List<StatisticDto> data = statisticService.getUsersStatistic(arguments, user);
             for (StatisticDto dto : data) {
-                sendMsg(absSender, user, chat, dto.getMessage(), null);
+                sendMsg(absSender, user, chat, dto.getMessage() + "\nВсего потрачено: " + dto.getTotalSpend().intValue(), null);
                 sendPhoto(absSender, user, chat, dto.getStatisticFile());
             }
             sendMsg(absSender, user, chat, "Статистика успешно собрана", timePeriodKeyboard.basicKeyboardMarkup());

@@ -39,7 +39,7 @@ public class GroupCatAllNowStatisticCommand extends PlannerBaseCommand {
             if (data.getStatisticFile() != null) {
                 sendPhoto(absSender, user, chat, data.getStatisticFile());
             }
-            sendMsg(absSender, user, chat, data.getMessage(), timePeriodKeyboard.basicKeyboardMarkup());
+            sendMsg(absSender, user, chat, data.getMessage() + "\nВсего потрачено: " + data.getTotalSpend().intValue(), timePeriodKeyboard.basicKeyboardMarkup());
         }
     }
 }
