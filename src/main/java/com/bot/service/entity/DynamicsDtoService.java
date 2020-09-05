@@ -3,7 +3,7 @@ package com.bot.service.entity;
 import com.bot.model.dto.DynamicsDataDto;
 import com.bot.model.dto.DynamicsDto;
 import com.bot.model.entities.BotUser;
-import com.bot.service.graphics.DataToDynamicsService;
+import com.bot.service.chart.DynamicChartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ public class DynamicsDtoService {
     @Autowired
     private ProductService productService;
     @Autowired
-    private DataToDynamicsService dataToDynamicsService;
+    private DynamicChartService dynamicChartService;
 
     public DynamicsDto getDynamicsDto(Set<BotUser> users){
         BigDecimal totalSpend = totalSpend(users);
@@ -47,7 +47,7 @@ public class DynamicsDtoService {
     }
 
     private File getDynamicsFile(Map<String, List<DynamicsDataDto>> dynData) {
-        return dataToDynamicsService.convert(dynData);
+        return dynamicChartService.createDynamicChart(dynData);
     }
 
     private String getStaticticMsg(BigDecimal total) {

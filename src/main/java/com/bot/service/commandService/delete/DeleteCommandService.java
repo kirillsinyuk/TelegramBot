@@ -1,6 +1,6 @@
 package com.bot.service.commandService.delete;
 
-import com.bot.model.menu.CommonAction;
+import com.bot.model.enumeration.CommonAction;
 import com.bot.service.entity.BotUserService;
 import com.bot.service.keyboard.DataKeyboardService;
 import org.springframework.beans.factory.annotation.Autowired;

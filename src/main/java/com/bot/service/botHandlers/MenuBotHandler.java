@@ -24,7 +24,7 @@ import com.bot.commands.statistic.category.group.each.GroupCatEachStatisticComma
 import com.bot.commands.statistic.category.single.SingleCatCurrentStatisticCommand;
 import com.bot.commands.statistic.category.single.SingleCatPastStatisticCommand;
 import com.bot.commands.statistic.dynamics.StatisticDynCommand;
-import com.bot.model.menu.CommonAction;
+import com.bot.model.enumeration.CommonAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Message;

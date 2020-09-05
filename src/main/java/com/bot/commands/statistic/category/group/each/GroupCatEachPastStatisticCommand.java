@@ -2,7 +2,7 @@ package com.bot.commands.statistic.category.group.each;
 
 import com.bot.commands.PlannerBaseCommand;
 import com.bot.model.dto.StatisticDto;
-import com.bot.model.menu.stats.TimeStatisticType;
+import com.bot.model.enumeration.stats.TimeStatisticType;
 import com.bot.service.commandService.statistic.divided.DividedPastStatisticService;
 import com.bot.service.keyboard.TimePeriodKeyboardService;
 import lombok.extern.slf4j.Slf4j;

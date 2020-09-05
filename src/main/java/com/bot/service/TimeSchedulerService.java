@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class ProductCommonCommandService {
+public class TimeSchedulerService {
 
     /**
      * в отсутствие активности в течение 30 минут heroku усыпляет приложение.

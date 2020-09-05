@@ -3,7 +3,7 @@ package com.bot.service.commandService.add.admin;
 import com.bot.model.entities.Band;
 import com.bot.model.entities.BotUser;
 import com.bot.model.entities.Category;
-import com.bot.repositories.ProductRepository;
+import com.bot.model.repository.ProductRepository;
 import com.bot.service.entity.BandService;
 import com.bot.service.entity.BotUserService;
 import com.bot.service.entity.CategoryService;

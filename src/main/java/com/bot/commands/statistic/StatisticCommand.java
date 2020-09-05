@@ -1,7 +1,7 @@
 package com.bot.commands.statistic;
 
 import com.bot.commands.PlannerBaseCommand;
-import com.bot.model.menu.stats.CommonStatisticType;
+import com.bot.model.enumeration.stats.CommonStatisticType;
 import com.bot.service.keyboard.StatsKeyboardService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

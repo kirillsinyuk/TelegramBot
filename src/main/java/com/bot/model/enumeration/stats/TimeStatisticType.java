@@ -1,15 +1,15 @@
-package com.bot.model.menu.stats;
+package com.bot.model.enumeration.stats;
 
 import lombok.Getter;
 
 import java.util.Arrays;
 
 @Getter
-public enum MemberStatisticType implements Type {
-    EACH("По каждому", "each"),
-    ALL("Общая", "all");
+public enum TimeStatisticType implements Type {
+    PAST("За прошедший период", "past"),
+    NOW("За текущий период", "now");
 
-    MemberStatisticType(String ruName, String name) {
+    TimeStatisticType(String ruName, String name) {
         this.ruName = ruName;
         this.name = name;
     }
@@ -17,15 +17,15 @@ public enum MemberStatisticType implements Type {
     private String ruName;
     private String name;
 
-    public MemberStatisticType getByRuName(String ruName) {
-        return Arrays.stream(MemberStatisticType.values())
+    public TimeStatisticType getByRuName(String ruName) {
+        return Arrays.stream(TimeStatisticType.values())
                 .filter(dataAction -> dataAction.getRuName().toLowerCase().equals(ruName.toLowerCase()))
                 .findFirst()
                 .orElse(null);
     }
 
-    public MemberStatisticType getByName(String name) {
-        return Arrays.stream(MemberStatisticType.values())
+    public TimeStatisticType getByName(String name) {
+        return Arrays.stream(TimeStatisticType.values())
                 .filter(dataAction -> dataAction.getRuName().toLowerCase().equals(name.toLowerCase()))
                 .findFirst()
                 .orElse(null);

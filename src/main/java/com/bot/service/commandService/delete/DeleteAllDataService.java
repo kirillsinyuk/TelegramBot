@@ -1,9 +1,6 @@
 package com.bot.service.commandService.delete;
 
 import com.bot.model.entities.BotUser;
-import com.bot.model.entities.Category;
-import com.bot.model.menu.CommonAction;
-import com.bot.model.menu.DataAction;
 import com.bot.service.entity.BandService;
 import com.bot.service.entity.BotUserService;
 import com.bot.service.entity.CategoryService;
@@ -17,9 +14,6 @@ import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 @Service
 public class DeleteAllDataService {

@@ -1,4 +1,4 @@
-package com.bot.model.menu.stats;
+package com.bot.model.enumeration.stats;
 
 public interface Type {
 

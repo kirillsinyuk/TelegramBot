@@ -2,8 +2,8 @@ package com.bot.service.commandService.add.admin;
 
 import com.bot.model.entities.Band;
 import com.bot.model.entities.Category;
-import com.bot.model.menu.CommonAction;
-import com.bot.model.menu.DataAction;
+import com.bot.model.enumeration.CommonAction;
+import com.bot.model.enumeration.DataAction;
 import com.bot.service.entity.BotUserService;
 import com.bot.service.entity.CategoryService;
 import com.bot.service.keyboard.DataKeyboardService;

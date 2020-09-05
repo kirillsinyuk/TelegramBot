@@ -1,4 +1,4 @@
-package com.bot.context;
+package com.bot.config;
 
 import com.bot.model.Bot;
 

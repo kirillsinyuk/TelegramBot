@@ -5,7 +5,7 @@ import com.bot.model.dto.StatisticDataDto;
 import com.bot.model.entities.BotUser;
 import com.bot.model.entities.Category;
 import com.bot.model.entities.Product;
-import com.bot.repositories.ProductRepository;
+import com.bot.model.repository.ProductRepository;
 import com.bot.service.converter.ArgsToEntityConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

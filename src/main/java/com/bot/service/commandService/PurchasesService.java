@@ -2,8 +2,8 @@ package com.bot.service.commandService;
 
 import com.bot.model.entities.BotUser;
 import com.bot.model.entities.Product;
-import com.bot.model.menu.stats.TimeStatisticType;
-import com.bot.repositories.ProductRepository;
+import com.bot.model.repository.ProductRepository;
+import com.bot.model.enumeration.stats.TimeStatisticType;
 import com.bot.service.commandService.statistic.TimePeriodsStatisticImpl;
 import com.bot.service.entity.BotUserService;
 import com.bot.service.keyboard.TimePeriodKeyboardService;

@@ -1,6 +1,6 @@
-package com.bot.model.menu;
+package com.bot.model.enumeration;
 
-import com.bot.model.menu.stats.Type;
+import com.bot.model.enumeration.stats.Type;
 import lombok.Getter;
 
 import java.util.Arrays;

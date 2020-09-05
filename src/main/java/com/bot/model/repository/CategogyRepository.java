@@ -1,4 +1,4 @@
-package com.bot.repositories;
+package com.bot.model.repository;
 
 import com.bot.model.entities.Category;
 import com.bot.model.entities.Band;
