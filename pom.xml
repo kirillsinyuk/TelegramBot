@@ -14,7 +14,7 @@
         <spring-boot-version>2.2.2.RELEASE</spring-boot-version>
         <flyway.version>5.2.4</flyway.version>
         <jfree.version>1.0.13</jfree.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
     </properties>
 
     <dependencies>
@@ -85,7 +85,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>4.13.1</version>
             <scope>compile</scope>
         </dependency>
 
