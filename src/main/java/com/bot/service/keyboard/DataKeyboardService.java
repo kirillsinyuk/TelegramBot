@@ -5,7 +5,6 @@ import com.bot.model.entities.Band;
 import com.bot.model.enumeration.CommonAction;
 import com.bot.model.enumeration.DataAction;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
