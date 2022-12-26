@@ -1,4 +1,4 @@
-package com.bot.model.menu;
+package com.bot.model.enumeration;
 
 public enum CommonCategories {
 

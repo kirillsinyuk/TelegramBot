@@ -2,8 +2,8 @@ package com.bot.service.keyboard;
 
 import com.bot.model.entities.Category;
 import com.bot.model.entities.Band;
-import com.bot.model.menu.CommonAction;
-import com.bot.model.menu.DataAction;
+import com.bot.model.enumeration.CommonAction;
+import com.bot.model.enumeration.DataAction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
@@ -42,14 +42,12 @@ public class DataKeyboardService extends KeyboardService {
                 .setCallbackData(type.getName() + dataAction.getName());
     }
 
-    @Transactional
     public InlineKeyboardMarkup categoriesKeyboard(CommonAction commonAction, DataAction dataAction, Band band){
 
         return new InlineKeyboardMarkup()
                 .setKeyboard(getCategoriesKeyboard(commonAction, dataAction, band));
     }
 
-    @Transactional
     List<List<InlineKeyboardButton>> getCategoriesKeyboard(CommonAction commonAction, DataAction dataAction, Band band) {
         List<Category> list = new ArrayList<>(band.getCategories());
         int rowSize = 3;

@@ -1,6 +1,6 @@
 package com.bot.service.keyboard;
 
-import com.bot.model.menu.stats.Type;
+import com.bot.model.enumeration.stats.Type;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;

@@ -1,8 +1,8 @@
 package com.bot.service.keyboard;
 
-import com.bot.model.menu.stats.CurrentTimePeriod;
-import com.bot.model.menu.stats.PastTimePeriod;
-import com.bot.model.menu.stats.TimeStatisticType;
+import com.bot.model.enumeration.stats.CurrentTimePeriod;
+import com.bot.model.enumeration.stats.PastTimePeriod;
+import com.bot.model.enumeration.stats.TimeStatisticType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;

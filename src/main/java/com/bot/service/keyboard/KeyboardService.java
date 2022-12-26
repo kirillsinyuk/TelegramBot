@@ -1,6 +1,6 @@
 package com.bot.service.keyboard;
 
-import com.bot.model.menu.CommonAction;
+import com.bot.model.enumeration.CommonAction;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;

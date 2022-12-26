@@ -2,7 +2,7 @@ package com.bot.commands.statistic.category.single;
 
 import com.bot.commands.PlannerBaseCommand;
 import com.bot.model.dto.StatisticDto;
-import com.bot.model.menu.stats.TimeStatisticType;
+import com.bot.model.enumeration.stats.TimeStatisticType;
 import com.bot.service.commandService.statistic.divided.DividedPastStatisticService;
 import com.bot.service.keyboard.TimePeriodKeyboardService;
 import lombok.extern.slf4j.Slf4j;
@@ -40,10 +40,18 @@ public class SingleCatPastStatisticCommand extends PlannerBaseCommand {
         } else {
             List<StatisticDto> data = statisticService.getUsersStatistic(arguments, user);
             for (StatisticDto dto : data) {
-                sendMsg(absSender, user, chat, dto.getMessage(), null);
-                sendPhoto(absSender, user, chat, dto.getStatisticFile());
+                sendData(absSender, user, chat, dto);
             }
             sendMsg(absSender, user, chat, "Статистика успешно собрана", timePeriodKeyboard.basicKeyboardMarkup());
         }
+    }
+
+    private void sendData(AbsSender absSender, User user, Chat chat, StatisticDto dto) {
+        if(dto.getTotalSpend()== null){
+            sendMsg(absSender, user, chat, dto.getMessage() + "\nНет трат за данный период.", null);
+            return;
+        }
+        sendMsg(absSender, user, chat, dto.getMessage() + "\nВсего потрачено: " + dto.getTotalSpend().intValue(), null);
+        sendPhoto(absSender, user, chat, dto.getStatisticFile());
     }
 }

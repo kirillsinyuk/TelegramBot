@@ -27,8 +27,8 @@ public class ValidService {
     }
 
     public boolean validDataComment(String[] args) {
-        String comment = joinArgs(Arrays.copyOfRange(args, 2, args.length));
-        if(args.length >= 2) {
+        String comment = joinArgs(Arrays.copyOfRange(args, 1, args.length));
+        if(args.length > 1) {
             return validCommentLength(comment);
         }
 
@@ -58,7 +58,7 @@ public class ValidService {
     }
 
     public boolean validData(String[] args, Category category, Set<Category> categories, StringBuilder message){
-        if(!validPrice(args[1])){
+        if(!validPrice(args[0])){
             message.append("Цена введена неверно.(целое число больше 0 и меньше 2,147,483,647) (;");
             return false;
         } else if(!validDataComment(args)){

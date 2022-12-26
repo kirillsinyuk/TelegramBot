@@ -2,8 +2,8 @@ package com.bot.service.entity;
 
 import com.bot.model.entities.Band;
 import com.bot.model.entities.Category;
-import com.bot.model.menu.CommonCategories;
-import com.bot.repositories.CategogyRepository;
+import com.bot.model.enumeration.CommonCategories;
+import com.bot.model.repository.CategogyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -84,5 +84,9 @@ public class CategoryService {
 
     public Category getCategoryById(Long id){
         return categogyRepository.findById(id).orElse(null);
+    }
+
+    public void deleteAll(Set<Category> categories){
+        categogyRepository.deleteAll(categories);
     }
 }

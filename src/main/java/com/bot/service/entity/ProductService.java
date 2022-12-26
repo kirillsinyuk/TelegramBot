@@ -5,7 +5,7 @@ import com.bot.model.dto.StatisticDataDto;
 import com.bot.model.entities.BotUser;
 import com.bot.model.entities.Category;
 import com.bot.model.entities.Product;
-import com.bot.repositories.ProductRepository;
+import com.bot.model.repository.ProductRepository;
 import com.bot.service.converter.ArgsToEntityConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,8 +40,8 @@ public class ProductService {
     }
 
     private Product toProduct(String[] arguments, Category category, BotUser user) {
-        int price = Integer.parseInt(arguments[1]);
-        String desc = arguments.length >= 3 ?
+        int price = Integer.parseInt(arguments[0]);
+        String desc = arguments.length > 2 ?
                 Arrays.stream(arguments)
                         .skip(2)
                         .collect(Collectors.joining(" "))
@@ -83,5 +84,13 @@ public class ProductService {
                 .stream()
                 .map(raw -> argsToEntityConverter.toStatisticsDto(raw))
                 .collect(Collectors.toList());
+    }
+
+    public Set<Product> getAllSpendingsByUser(BotUser user){
+        return productRepository.getAllByUser(user);
+    }
+
+    public void deleteAllSpendings(BotUser user){
+        productRepository.deleteAll(getAllSpendingsByUser(user));
     }
 }

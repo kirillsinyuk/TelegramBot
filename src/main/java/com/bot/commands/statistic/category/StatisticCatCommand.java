@@ -1,8 +1,8 @@
 package com.bot.commands.statistic.category;
 
 import com.bot.commands.PlannerBaseCommand;
-import com.bot.model.menu.stats.MemberStatisticType;
-import com.bot.model.menu.stats.TimeStatisticType;
+import com.bot.model.enumeration.stats.MemberStatisticType;
+import com.bot.model.enumeration.stats.TimeStatisticType;
 import com.bot.service.entity.BotUserService;
 import com.bot.service.keyboard.StatsKeyboardService;
 import lombok.extern.slf4j.Slf4j;

@@ -2,7 +2,7 @@ package com.bot.commands.statistic.category.group.all;
 
 import com.bot.commands.PlannerBaseCommand;
 import com.bot.model.dto.StatisticDto;
-import com.bot.model.menu.stats.TimeStatisticType;
+import com.bot.model.enumeration.stats.TimeStatisticType;
 import com.bot.service.commandService.statistic.common.CommonPastStatisticService;
 import com.bot.service.keyboard.TimePeriodKeyboardService;
 import lombok.extern.slf4j.Slf4j;
@@ -36,10 +36,18 @@ public class GroupCatAllPastStatisticCommand extends PlannerBaseCommand {
             sendMsg(absSender, user, chat, message.toString(), ikb);
         } else {
             StatisticDto data = statisticService.getUsersStatistic(arguments);
-            if (data.getStatisticFile() != null) {
-                sendPhoto(absSender, user, chat, data.getStatisticFile());
-            }
-            sendMsg(absSender, user, chat, data.getMessage(), timePeriodKeyboard.basicKeyboardMarkup());
+            sendData(absSender, user, chat, data);
         }
+    }
+
+    private void sendData(AbsSender absSender, User user, Chat chat, StatisticDto data) {
+        if(data.getTotalSpend()== null){
+            sendMsg(absSender, user, chat, data.getMessage() + "\nНет трат за данный период.", null);
+            return;
+        }
+        if (data.getStatisticFile() != null) {
+            sendPhoto(absSender, user, chat, data.getStatisticFile());
+        }
+        sendMsg(absSender, user, chat, data.getMessage() + "\nВсего потрачено: " + data.getTotalSpend().intValue(), timePeriodKeyboard.basicKeyboardMarkup());
     }
 }

@@ -6,6 +6,7 @@ import com.bot.commands.add.admin.AddCatCommand;
 import com.bot.commands.add.admin.AddUserCommand;
 import com.bot.commands.add.admin.CategoryRenameCommand;
 import com.bot.commands.add.AddCommand;
+import com.bot.commands.delete.DelAllDataCommand;
 import com.bot.commands.delete.DeleteCommand;
 import com.bot.commands.spendings.SpendListCommand;
 import com.bot.commands.common.HelpCommand;
@@ -23,7 +24,7 @@ import com.bot.commands.statistic.category.group.each.GroupCatEachStatisticComma
 import com.bot.commands.statistic.category.single.SingleCatCurrentStatisticCommand;
 import com.bot.commands.statistic.category.single.SingleCatPastStatisticCommand;
 import com.bot.commands.statistic.dynamics.StatisticDynCommand;
-import com.bot.model.menu.CommonAction;
+import com.bot.model.enumeration.CommonAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -55,6 +56,8 @@ public class MenuBotHandler extends AbstractHandler{
     private DelUserCommand delUserCommand;
     @Autowired
     private DelDataCommand delDataCommand;
+    @Autowired
+    private DelAllDataCommand delAllDataCommand;
 
     @Autowired
     private StatisticCommand statisticCommand;
@@ -133,6 +136,8 @@ public class MenuBotHandler extends AbstractHandler{
                 return delUserCommand;
             case "/deldata":
                 return delDataCommand;
+            case "/delall":
+                return delAllDataCommand;
             default:
                 return helpCommand;
         }

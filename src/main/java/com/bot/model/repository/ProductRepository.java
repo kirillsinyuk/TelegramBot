@@ -1,4 +1,4 @@
-package com.bot.repositories;
+package com.bot.model.repository;
 
 import com.bot.model.entities.BotUser;
 import com.bot.model.entities.Category;
@@ -42,4 +42,6 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
     Set<Product> getAllByCategoryAndUser(Category category, BotUser user);
 
     Set<Product> getAllByCategory(Category category);
+
+    Set<Product> getAllByUser(BotUser user);
 }

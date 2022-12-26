@@ -2,7 +2,7 @@ package com.bot.service.entity;
 
 import com.bot.model.entities.Band;
 import com.bot.model.entities.BotUser;
-import com.bot.repositories.BotUserRepository;
+import com.bot.model.repository.BotUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -81,5 +81,10 @@ public class BotUserService {
     public BotUser changeUserBand(BotUser user, Band band){
         user.setBand(band);
         return botUserRepository.save(user);
+    }
+
+    @Transactional
+    public void deleteUser(BotUser user){
+        botUserRepository.delete(user);
     }
 }
