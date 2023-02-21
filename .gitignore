@@ -1,5 +1,8 @@
-.idea
+**/.idea
 /target
 *.iml
 /lib
 .gradle
+**/build
+gradlew
+gradlew.bat
