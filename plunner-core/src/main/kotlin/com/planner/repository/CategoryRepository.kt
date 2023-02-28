@@ -11,5 +11,11 @@ interface CategoryRepository : CrudRepository<Category, Long> {
     @Query("select category from Category category where category.group.id=:groupId")
     fun getCategoriesByGroupId(groupId: Long): Set<Category>
 
+    @Query("select category from Category category " +
+            "join UserGroup group " +
+            "join User user " +
+            "where user.id=:userId")
+    fun getCategoriesByUserId(userId: Long): Set<Category>
+
     fun findByGroup(group: UserGroup): Set<Category>
 }

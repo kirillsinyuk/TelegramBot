@@ -1,6 +1,7 @@
 package com.planner.service
 
 import com.planner.dto.request.CreateUserRequestDto
+import com.planner.exception.NotFoundException
 import com.planner.mapper.UserMapper
 import com.planner.model.User
 import com.planner.repository.UserRepository
@@ -25,52 +26,7 @@ class UserService(
         return newUser
     }
 
-//    fun deleteUser(user: User) {
-//        userRepository.delete(user)
-//    }
-//    fun isGroupAdmin(user: TelegramUser) =
-//        getGroupByUser(user)!!.admin?.userId == user.id
-//
-//    fun getGroupByUser(user: TelegramUser) =
-//        getUserByUserId(user.id).group
-//
-//    fun getUsersByGroup(band: UserGroup) =
-//        userRepository.findByGroup(band)
-//
-//    fun isUserExist(id: Int): Boolean {
-//        return Optional.ofNullable<Any>(getUserById(id)).isPresent
-//    }
-//
-//    fun isSingleBandMemberIfExist(id: Int): Boolean {
-//        return isUserExist(id) && getUserById(id).getBand().isSingle()
-//    }
-//
-//    fun getUserByUserId(userId: Long)=
-//        userRepository.getByUserId(userId)
-//            ?: throw RuntimeException("This never happen")
-//    private fun getUserById(id: Long) =
-//        userRepository.getByUserId(id)
-//            ?: throw RuntimeException("This never happen")
-//
-//    fun getAllBandUsers(band: UserGroup?): Set<User> {
-//        return userRepository.findByGroup(band)
-//    }
-//
-//    private fun createBotUser(user: TelegramUser, chatId: Long): User {
-//        val newUser: BotUser = BotUser.builder()
-//            .chatId(chatId)
-//            .band(bandService.createNewGroup(user))
-//            .firstName(user.firstName)
-//            .lastName(user.lastName)
-//            .username(user.userName)
-//            .userId(user.id)
-//            .isBot(user.getBot())
-//            .build()
-//        return userRepository.save<BotUser>(newUser)
-//    }
-//
-//    fun changeUserGroup(user: User, group: UserGroup?)=
-//        user
-//            .apply { this.group = group }
-//            .let { userRepository.save(user) }
+    fun getUserById(id: Long) =
+        userRepository.getById(id)
+            ?: throw NotFoundException("User not found")
 }

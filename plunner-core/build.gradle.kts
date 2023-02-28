@@ -17,6 +17,7 @@ repositories {
 }
 
 val mapstructVersion = "1.5.3.Final"
+val jjwtVersion = "0.11.5"
 
 kapt {
     correctErrorTypes = true
@@ -30,11 +31,16 @@ dependencies {
     // spring
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    //implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-security")
 
     kapt("org.hibernate:hibernate-jpamodelgen:6.1.7.Final")
     kapt("org.mapstruct:mapstruct-processor:$mapstructVersion")
     implementation("org.mapstruct:mapstruct:$mapstructVersion")
+
+    // JWT
+    implementation("io.jsonwebtoken:jjwt-api:$jjwtVersion")
+    implementation("io.jsonwebtoken:jjwt-impl:$jjwtVersion")
+    implementation("io.jsonwebtoken:jjwt-jackson:$jjwtVersion")
 
     // metrics
     implementation("org.springframework.boot:spring-boot-starter-actuator")

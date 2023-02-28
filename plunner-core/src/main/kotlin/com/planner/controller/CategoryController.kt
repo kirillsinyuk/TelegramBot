@@ -19,9 +19,14 @@ class CategoryController(
     private val categoryMapper: CategoryMapper
 ) {
 
-    @GetMapping("/{groupId}")
-    fun getUserCategories(@PathVariable groupId: Long) =
-        categoryService.getUserCategories(groupId)
+    @GetMapping("/byGroup/{groupId}")
+    fun getGroupCategories(@PathVariable groupId: Long) =
+        categoryService.getGroupCategories(groupId)
+            .let { categoryMapper.toGetCategoryResponseDto(it) }
+
+    @GetMapping("/byUser/{userId}")
+    fun getUserCategories(@PathVariable userId: Long) =
+        categoryService.getUserCategories(userId)
             .let { categoryMapper.toGetCategoryResponseDto(it) }
 
     @PostMapping

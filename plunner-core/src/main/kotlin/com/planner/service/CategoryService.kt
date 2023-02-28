@@ -24,8 +24,11 @@ class CategoryService(
         return categoryRepository.save(category)
     }
 
-    fun getUserCategories(groupId: Long) =
+    fun getGroupCategories(groupId: Long) =
         categoryRepository.getCategoriesByGroupId(groupId)
+
+    fun getUserCategories(userId: Long) =
+        categoryRepository.getCategoriesByUserId(userId)
 
     fun getCategoryById(id: Long) =
         categoryRepository.getById(id)

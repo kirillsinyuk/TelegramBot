@@ -8,5 +8,8 @@ import java.time.Instant
 fun isBetweenDates(from: Instant, to: Instant) =
     Specification { root, _, cb -> cb.between(root.get(Product_.createdAt), from, to) }
 
+fun isNotDeleted() =
+    Specification { root, _, cb -> cb.equal(root.get(Product_.deleted), false) }
+
 fun inCategories(categoryIds: Set<Long>) =
     Specification { root, _, cb -> root.get(Product_.category).get(Category_.id).`in`(categoryIds) }

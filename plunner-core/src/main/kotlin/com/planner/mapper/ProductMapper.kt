@@ -2,11 +2,11 @@ package com.planner.mapper
 
 import com.planner.dto.request.CreateProductRequestDto
 import com.planner.dto.response.CreateProductResponseDto
-import com.planner.dto.response.GetCategoriesResponseDto
 import com.planner.dto.response.GetProductsResponseDto
 import com.planner.dto.response.ProductResponseDto
 import com.planner.model.Category
 import com.planner.model.Product
+import com.planner.model.User
 import org.mapstruct.InjectionStrategy
 import org.mapstruct.Mapper
 import org.mapstruct.Mapping
@@ -15,7 +15,8 @@ import org.mapstruct.Mapping
 interface ProductMapper {
 
     @Mapping(source = "category", target = "category")
-    fun toProduct(createProductRequestDto: CreateProductRequestDto, category: Category): Product
+    @Mapping(source = "user", target = "author")
+    fun toProduct(createProductRequestDto: CreateProductRequestDto, category: Category, user: User): Product
 
     fun toGetProductResponseDto(products: List<Product>): List<ProductResponseDto>
 
