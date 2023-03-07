@@ -34,7 +34,7 @@ class ProductService(
     }
 
     fun getProduct(request: GetProductsRequestDto): List<Product> {
-        val categories = categoryService.getGroupCategories(request.groupId)
+        val categories = categoryService.getUserCategories(request.userId)
             .mapTo(HashSet()) { it.id }
 
         return productRepository.findAll(

@@ -13,6 +13,7 @@ version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
@@ -36,6 +37,7 @@ dependencies {
     kapt("org.hibernate:hibernate-jpamodelgen:6.1.7.Final")
     kapt("org.mapstruct:mapstruct-processor:$mapstructVersion")
     implementation("org.mapstruct:mapstruct:$mapstructVersion")
+    implementation("com.kvsinyuk:xls-generator-spring-boot-starter:0.0.1-SNAPSHOT")
 
     // JWT
     implementation("io.jsonwebtoken:jjwt-api:$jjwtVersion")
