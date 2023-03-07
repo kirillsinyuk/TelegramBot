@@ -5,8 +5,15 @@ import com.planner.model.Product_
 import org.springframework.data.jpa.domain.Specification
 import java.time.Instant
 
-fun isBetweenDates(from: Instant, to: Instant) =
-    Specification { root, _, cb -> cb.between(root.get(Product_.createdAt), from, to) }
+fun isAfter(date: Instant?) =
+    Specification { root, _, cb ->
+        date?.let { cb.greaterThanOrEqualTo(root.get(Product_.createdAt), date) } ?: cb.conjunction()
+    }
+
+fun isBefore(date: Instant?) =
+    Specification { root, _, cb ->
+        date?.let { cb.lessThanOrEqualTo(root.get(Product_.createdAt), date) } ?: cb.conjunction()
+    }
 
 fun isNotDeleted() =
     Specification { root, _, cb -> cb.equal(root.get(Product_.deleted), false) }

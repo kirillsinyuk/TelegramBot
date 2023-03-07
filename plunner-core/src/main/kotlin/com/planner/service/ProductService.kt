@@ -6,7 +6,8 @@ import com.planner.mapper.ProductMapper
 import com.planner.model.Product
 import com.planner.repository.ProductRepository
 import com.planner.repository.inCategories
-import com.planner.repository.isBetweenDates
+import com.planner.repository.isAfter
+import com.planner.repository.isBefore
 import com.planner.repository.isNotDeleted
 import org.springframework.data.jpa.domain.Specification.where
 import org.springframework.stereotype.Service
@@ -33,12 +34,13 @@ class ProductService(
         productRepository.deleteProductById(id)
     }
 
-    fun getProduct(request: GetProductsRequestDto): List<Product> {
-        val categories = categoryService.getUserCategories(request.userId)
+    fun getProduct(userId: Long, request: GetProductsRequestDto): List<Product> {
+        val categories = categoryService.getUserCategories(userId)
             .mapTo(HashSet()) { it.id }
 
         return productRepository.findAll(
-            where(isBetweenDates(request.from.toInstant(), request.to.toInstant()))
+            where(isAfter(request.from?.toInstant()))
+                .and(isBefore( request.to?.toInstant()))
                 .and(inCategories(categories))
                 .and(isNotDeleted())
         )

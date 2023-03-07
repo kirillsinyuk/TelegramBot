@@ -29,9 +29,4 @@ class ProductController(
         productService.deleteProduct(id)
     }
 
-    @PostMapping("/all")
-    fun getProducts(@RequestBody request: GetProductsRequestDto) =
-        productService.getProduct(request)
-            .let { productMapper.toGetProductsResponseDto(it) }
-
 }

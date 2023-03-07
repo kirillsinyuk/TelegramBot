@@ -1,10 +1,7 @@
 package com.planner.controller
 
 import com.planner.dto.request.CreateUserRequestDto
-import com.planner.mapper.CategoryMapper
 import com.planner.mapper.UserMapper
-import com.planner.mapper.toGetCategoryResponseDto
-import com.planner.service.CategoryService
 import com.planner.service.CreateUserService
 import com.planner.service.UserService
 import org.springframework.web.bind.annotation.GetMapping
@@ -19,9 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 class UserController(
     private val userCreateService: CreateUserService,
     private val userService: UserService,
-    private val userMapper: UserMapper,
-    private val categoryService: CategoryService,
-    private val categoryMapper: CategoryMapper
+    private val userMapper: UserMapper
 ) {
 
     @PostMapping
@@ -33,9 +28,4 @@ class UserController(
     fun getUser(@PathVariable userId: Long) =
         userService.getUserById(userId)
             .let { userMapper.toGetUserResponse(it) }
-
-    @GetMapping("/{userId}/categories")
-    fun getUserCategories(@PathVariable userId: Long) =
-        categoryService.getUserCategories(userId)
-            .let { categoryMapper.toGetCategoryResponseDto(it) }
 }
