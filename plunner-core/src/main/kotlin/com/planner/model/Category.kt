@@ -19,13 +19,14 @@ import jakarta.persistence.Table
 @Table(name = "category")
 class Category {
 
+    // Move to sequence
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "group_id")
-    var group: UserGroup? = null
+    @JoinColumn(name = "user_id")
+    lateinit var user: User
 
     @OneToMany(mappedBy = "category", cascade = [CascadeType.REMOVE])
     var products: List<Product> = emptyList()

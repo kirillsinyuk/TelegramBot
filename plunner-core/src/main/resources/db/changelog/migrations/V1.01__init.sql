@@ -1,22 +1,15 @@
 create table if not exists person
 (
     id serial primary key,
-    group_id integer not null,
     first_name varchar(30),
     last_name varchar(30)
-);
-
-create table if not exists user_group
-(
-    id serial primary key,
-    admin_id integer
 );
 
 create table if not exists category
 (
     id serial primary key,
     "name" varchar(50) not null,
-    group_id integer not null
+    user_id integer not null
 );
 
 create table if not exists product
@@ -33,17 +26,7 @@ create table if not exists product
             references category (id)
 );
 
-alter table person
-    add constraint fk_user_group
-        foreign key (group_id)
-            references user_group (id);
-
-alter table user_group
-    add constraint fk_group_admin
-        foreign key (admin_id)
-            references person (id);
-
 alter table "category"
-    add constraint fk_category_group
-        foreign key (group_id)
-            references user_group (id);
+    add constraint fk_category_user
+        foreign key (user_id)
+            references person (id);

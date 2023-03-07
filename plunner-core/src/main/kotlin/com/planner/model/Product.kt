@@ -24,7 +24,7 @@ class Product {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    var category: Category? = null
+    lateinit var category: Category
 
     /**
      * Price in RUB
@@ -40,7 +40,7 @@ class Product {
 
     @ManyToOne
     @JoinColumn(name = "author_id")
-    var author: User? = null
+    lateinit var author: User
 
     @CreatedDate
     var createdAt: Instant = Instant.now()

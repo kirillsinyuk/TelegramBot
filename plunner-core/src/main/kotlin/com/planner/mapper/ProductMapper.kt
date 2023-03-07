@@ -14,6 +14,7 @@ import org.mapstruct.Mapping
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 interface ProductMapper {
 
+    @Mapping(ignore = true, target = "id")
     @Mapping(source = "category", target = "category")
     @Mapping(source = "user", target = "author")
     fun toProduct(createProductRequestDto: CreateProductRequestDto, category: Category, user: User): Product
@@ -24,6 +25,4 @@ interface ProductMapper {
 }
 
 fun ProductMapper.toGetProductsResponseDto(products: List<Product>) =
-    GetProductsResponseDto(
-        products = toGetProductResponseDto(products)
-    )
+    GetProductsResponseDto(toGetProductResponseDto(products))
