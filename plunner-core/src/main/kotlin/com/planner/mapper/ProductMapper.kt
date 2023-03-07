@@ -24,5 +24,10 @@ interface ProductMapper {
     fun toCreateProductResponseDto(product: Product): CreateProductResponseDto
 }
 
+fun ProductMapper.toGetProductsResponseDto(productsByCategory: Map<Category, List<Product>>) =
+    productsByCategory
+        .map { (key, value) -> key.name to toGetProductResponseDto(value) }
+        .toMap()
+
 fun ProductMapper.toGetProductsResponseDto(products: List<Product>) =
     GetProductsResponseDto(toGetProductResponseDto(products))

@@ -20,6 +20,13 @@ class UserProductController(
     fun getProductsByUser(
         @PathVariable userId: Long,
         request: GetProductsRequestDto
-    ) = productService.getProduct(userId, request)
+    ) = productService.getProducts(userId, request)
+        .let { productMapper.toGetProductsResponseDto(it) }
+
+    @GetMapping("/{userId}/products/byCategories")
+    fun getGroupedProductsByUser(
+        @PathVariable userId: Long,
+        request: GetProductsRequestDto
+    ) = productService.getProductsByCategories(userId, request)
         .let { productMapper.toGetProductsResponseDto(it) }
 }

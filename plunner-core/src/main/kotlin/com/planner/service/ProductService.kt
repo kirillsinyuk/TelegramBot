@@ -34,7 +34,7 @@ class ProductService(
         productRepository.deleteProductById(id)
     }
 
-    fun getProduct(userId: Long, request: GetProductsRequestDto): List<Product> {
+    fun getProducts(userId: Long, request: GetProductsRequestDto): List<Product> {
         val categories = categoryService.getUserCategories(userId)
             .mapTo(HashSet()) { it.id }
 
@@ -45,5 +45,8 @@ class ProductService(
                 .and(isNotDeleted())
         )
     }
-}
 
+    fun getProductsByCategories(userId: Long, request: GetProductsRequestDto) =
+        getProducts(userId, request)
+            .groupBy(Product::category)
+}
