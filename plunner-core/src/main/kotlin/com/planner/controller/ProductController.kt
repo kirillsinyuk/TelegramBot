@@ -1,9 +1,7 @@
 package com.planner.controller
 
 import com.planner.dto.request.CreateProductRequestDto
-import com.planner.dto.request.GetProductsRequestDto
 import com.planner.mapper.ProductMapper
-import com.planner.mapper.toGetProductsResponseDto
 import com.planner.service.ProductService
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -28,10 +26,5 @@ class ProductController(
     fun deleteProduct(@PathVariable id: Long) {
         productService.deleteProduct(id)
     }
-
-    @PostMapping("/all")
-    fun getProducts(@RequestBody request: GetProductsRequestDto) =
-        productService.getProduct(request)
-            .let { productMapper.toGetProductsResponseDto(it) }
 
 }
