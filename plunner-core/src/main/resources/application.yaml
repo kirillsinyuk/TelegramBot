@@ -1,0 +1,23 @@
+bot:
+  name: budget_planner_bot
+  token: 991064577:AAHtI9JsNg8mgR5IRNiveJMLxN9JpZMw4v8
+
+spring:
+  datasource:
+    url: jdbc:postgresql://host.docker.internal:5432/planner
+    username: postgres
+    password: mysecretpassword
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+
+security:
+  token: 423F4528482B4D6251655468576D5A7134743777397A24432646294A404E6352
