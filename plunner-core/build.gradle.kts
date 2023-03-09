@@ -8,7 +8,7 @@ plugins {
     kotlin("kapt")
 }
 
-group = "com.core"
+group = "com.kvsinyuk"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
@@ -28,6 +28,7 @@ kapt {
 }
 
 dependencies {
+    implementation("com.kvsinyuk:planner-core-api:0.0.1-SNAPSHOT")
 
     // spring
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
