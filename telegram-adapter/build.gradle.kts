@@ -8,7 +8,7 @@ plugins {
     kotlin("plugin.jpa") version "1.7.22"
 }
 
-group = "com.planner"
+group = "com.kvsinyuk"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
@@ -19,13 +19,10 @@ repositories {
 
 dependencies {
     // telegram
-    implementation("org.telegram:telegrambots:6.5.0")
-    implementation("org.telegram:telegrambotsextensions:6.5.0")
+    implementation("com.github.pengrad:java-telegram-bot-api:6.5.0")
 
     // spring
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    //implementation("org.springframework.boot:spring-boot-starter-security")
 
     // kotlin
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

@@ -6,7 +6,7 @@ plugins {
     jacoco
 }
 
-group = "com.planner"
+group = "com.kvsinyuk"
 version = "0.0.1-SNAPSHOT"
 
 
