@@ -1,3 +1,3 @@
 ## Adapter service for Telegram
 
-TBC
+### TBD

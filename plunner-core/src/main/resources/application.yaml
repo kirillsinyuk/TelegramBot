@@ -1,7 +1,3 @@
-bot:
-  name: budget_planner_bot
-  token: 991064577:AAHtI9JsNg8mgR5IRNiveJMLxN9JpZMw4v8
-
 spring:
   datasource:
     url: jdbc:postgresql://host.docker.internal:5432/planner

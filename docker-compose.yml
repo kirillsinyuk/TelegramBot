@@ -59,7 +59,7 @@ services:
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: 'kafka:9092'
       KAFKA_CLUSTERS_0_SCHEMAREGISTRY: 'http://schema-registry:8085'
     ports:
-      - 8080:8080
+      - 8090:8080
     links:
       - kafka
       - schema-registry
