@@ -1,0 +1,30 @@
+bot:
+  name: budget_planner_bot
+  token: 991064577:AAHtI9JsNg8mgR5IRNiveJMLxN9JpZMw4v8
+
+spring:
+  cloud:
+    stream:
+      kafka:
+        binder:
+          minPartitionCount: 3
+      bindings:
+        core-data-message-in-0:
+          destination: core.data.message
+        telegram-data-cmd-out-0:
+          destination: telegram.data.command
+    function:
+      definition: "telegram-data-cmd;core-data-message"
+  datasource:
+    url: jdbc:postgresql://host.docker.internal:5432/telegram
+    username: postgres
+    password: mysecretpassword
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+
+server:
+  port: 8081
