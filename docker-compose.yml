@@ -38,7 +38,7 @@ services:
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
       KAFKA_AUTHORIZER_CLASS_NAME: 'kafka.security.authorizer.AclAuthorizer'
       KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: 'true'
-    links:
+    depends_on:
       - zookeeper
 
   schema-registry:
@@ -66,3 +66,10 @@ services:
     depends_on:
       - kafka
       - schema-registry
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: 'mysecretpassword'
+    ports:
+      - 5432:5432

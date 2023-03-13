@@ -1,5 +1,5 @@
 rootProject.name = "planner_bot"
 
-include("plunner-core")
-include("plunner-core-api")
-include("telegram-adapter")
+include("planner-core-api")
+include("planner-core")
+include("telegram")
