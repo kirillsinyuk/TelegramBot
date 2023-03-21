@@ -1,11 +1,11 @@
 package com.kvsinyuk.telegram
 
-import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.runApplication
 
 @SpringBootApplication
 class Main
 
 fun main(args: Array<String>) {
-    SpringApplication.run(Main::class.java, *args)
+    runApplication<Main>(*args)
 }
