@@ -10,7 +10,6 @@ class StartCmdProcessor(
     private val messageService: MessageService
 ): Processor {
     override fun process(message: Message) {
-        messageService.sendMessage(message.chat().id(), "Hello! You used /start command!")
     }
 
     override fun canApply(message: Message) =

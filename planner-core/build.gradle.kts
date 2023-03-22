@@ -2,7 +2,6 @@ plugins {
     kotlin("jvm") version "1.7.22"
     id("org.springframework.boot") version "3.0.2"
     id("io.spring.dependency-management") version "1.1.0"
-    id("io.gitlab.arturbosch.detekt") version "1.22.0"
     kotlin("plugin.spring") version "1.7.22"
     kotlin("plugin.jpa") version "1.7.22"
     kotlin("kapt") version "1.7.22"
@@ -27,6 +26,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.cloud:spring-cloud-stream:4.0.0")
+    implementation("org.springframework.cloud:spring-cloud-starter-stream-kafka:4.0.0")
 
     kapt("org.hibernate:hibernate-jpamodelgen:6.1.7.Final")
     kapt("org.mapstruct:mapstruct-processor:$mapstructVersion")

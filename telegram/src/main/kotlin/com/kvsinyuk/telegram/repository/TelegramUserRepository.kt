@@ -16,6 +16,6 @@ interface TelegramUserRepository: CrudRepository<TelegramUser, Long> {
         "update TelegramUser user set user.coreUserId=:coreUserId " +
                 "where user.chatId=:chatId and user.userId=:userId"
     )
-    fun setCoreUserId(coreUserId: Long, chatId: Long, userId: Long): TelegramUser
+    fun setCoreUserId(coreUserId: Long, chatId: Long, userId: Long): Int
 
 }

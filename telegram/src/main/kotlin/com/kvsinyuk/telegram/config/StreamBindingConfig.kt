@@ -1,32 +1,21 @@
 package com.kvsinyuk.telegram.config
 
-import com.kvsinyuk.telegram.model.TelegramUser
-import com.kvsinyuk.telegram.service.streams.CoreDataConsumer
-import com.kvsinyuk.telegram.service.streams.TelegramAdapterEventConsumer
-import com.kvsinyuk.telegram.service.streams.TelegramAdapterProducer
-import com.kvsinyuk.telegram.service.streams.TelegramCmdProducer
+import com.kvsinyuk.plannercoreapi.model.kafka.event.CoreEvent
+import com.kvsinyuk.telegram.service.streams.`in`.KafkaCoreEventProcessor
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.messaging.Message
+import java.util.function.Consumer
 
 @Configuration
-class StreamBindingConfig {
-
-    @Bean("telegram-data-cmd")
-    fun telegramCommandProducer(): TelegramAdapterProducer =
-        TelegramCmdProducer()
-
-    @Bean("core-data-message")
-    fun coreMessageConsumer(consumer: TelegramAdapterEventConsumer) =
-        CoreDataConsumer(consumer)
+class StreamBindingConfig(
+    private val processors: List<KafkaCoreEventProcessor>
+) {
 
     @Bean
-    fun myEventConsumer(): TelegramAdapterEventConsumer {
-        return object : TelegramAdapterEventConsumer {
-            override fun consume(event: TelegramUser) {
-                println("Received $event")
-            }
-        }
+    fun coreDataMessage() = Consumer { event: Message<CoreEvent> ->
+        processors
+            .find { it.canApply(event) }
+            ?.process(event.payload)
     }
-
-
 }
