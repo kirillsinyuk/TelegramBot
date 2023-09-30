@@ -1,6 +1,7 @@
 package com.kvsinyuk.telegram.adapter.`in`
 
-import com.kvsinyuk.telegram.service.CommandSelectorService
+import com.kvsinyuk.telegram.adapter.`in`.handlers.TelegramCommandHandler
+import com.kvsinyuk.telegram.adapter.mapper.TelegramUpdateMessageMapper
 import com.pengrad.telegrambot.TelegramBot
 import com.pengrad.telegrambot.UpdatesListener
 import com.pengrad.telegrambot.model.Update
@@ -11,7 +12,8 @@ import org.springframework.stereotype.Service
 @Service
 class BotUpdatesListener(
     private val bot: TelegramBot,
-    private val commandSelectorService: CommandSelectorService
+    private val telegramCommandHandler: TelegramCommandHandler,
+    private val telegramUpdateMessageMapper: TelegramUpdateMessageMapper
 ): UpdatesListener {
 
     @PostConstruct
@@ -21,8 +23,9 @@ class BotUpdatesListener(
 
     override fun process(updates: MutableList<Update>?): Int {
         updates?.forEach {
-            logger.info("Processing update $it")
-            commandSelectorService.processMessage(it.message())
+            val update = telegramUpdateMessageMapper.toMessage(it)
+            logger.debug("Processing update $update")
+            telegramCommandHandler.processMessage(update)
         }
         return UpdatesListener.CONFIRMED_UPDATES_ALL
     }

@@ -1,4 +1,4 @@
-package com.kvsinyuk.telegram.service
+package com.kvsinyuk.telegram.application.service
 
 import com.pengrad.telegrambot.TelegramBot
 import com.pengrad.telegrambot.model.request.Keyboard

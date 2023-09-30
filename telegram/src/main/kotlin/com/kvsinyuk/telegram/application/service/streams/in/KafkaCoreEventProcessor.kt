@@ -1,4 +1,4 @@
-package com.kvsinyuk.telegram.service.streams.`in`
+package com.kvsinyuk.telegram.application.service.streams.`in`
 
 import com.kvsinyuk.plannercoreapi.model.kafka.CommandType
 import com.kvsinyuk.plannercoreapi.model.kafka.event.CoreEvent

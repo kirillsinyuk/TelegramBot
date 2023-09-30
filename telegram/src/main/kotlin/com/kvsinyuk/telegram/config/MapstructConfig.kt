@@ -16,4 +16,4 @@ import org.mapstruct.ReportingPolicy
     injectionStrategy = InjectionStrategy.CONSTRUCTOR,
     unmappedTargetPolicy = ReportingPolicy.ERROR
 )
-interface MapperConfiguration
+interface MapstructConfig

@@ -1,9 +1,9 @@
-package com.kvsinyuk.telegram.service.streams.`in`
+package com.kvsinyuk.telegram.application.service.streams.`in`
 
 import com.kvsinyuk.plannercoreapi.model.kafka.CommandType.CREATE_USER
 import com.kvsinyuk.plannercoreapi.model.kafka.event.CoreEvent
-import com.kvsinyuk.telegram.service.MessageService
-import com.kvsinyuk.telegram.service.UserService
+import com.kvsinyuk.telegram.application.service.MessageService
+import com.kvsinyuk.telegram.application.service.UserService
 import mu.KLogging
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
