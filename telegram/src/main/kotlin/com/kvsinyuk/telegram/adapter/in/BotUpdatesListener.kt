@@ -1,5 +1,6 @@
-package com.kvsinyuk.telegram.service
+package com.kvsinyuk.telegram.adapter.`in`
 
+import com.kvsinyuk.telegram.service.CommandSelectorService
 import com.pengrad.telegrambot.TelegramBot
 import com.pengrad.telegrambot.UpdatesListener
 import com.pengrad.telegrambot.model.Update

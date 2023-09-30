@@ -1,6 +1,6 @@
 package com.kvsinyuk.telegram.repository
 
-import com.kvsinyuk.telegram.model.TelegramUser
+import com.kvsinyuk.telegram.adapter.out.jpa.model.TelegramUser
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository

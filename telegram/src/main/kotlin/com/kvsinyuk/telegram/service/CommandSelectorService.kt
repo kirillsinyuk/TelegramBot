@@ -12,8 +12,7 @@ class CommandSelectorService(
 
     fun processMessage(message: Message) {
         userService.createUserIfNotExist(message)
-        processors
-            .firstOrNull { it.canApply(message) }
+        processors.firstOrNull { it.canApply(message) }
             ?.process(message)
     }
 }

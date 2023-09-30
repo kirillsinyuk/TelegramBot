@@ -4,6 +4,7 @@ import com.kvsinyuk.plannercoreapi.model.kafka.CommandType.CREATE_USER
 import com.kvsinyuk.plannercoreapi.model.kafka.event.CoreEvent
 import com.kvsinyuk.telegram.service.MessageService
 import com.kvsinyuk.telegram.service.UserService
+import mu.KLogging
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -15,7 +16,7 @@ class CreateUserProcessor(
 
     @Transactional
     override fun process(event: CoreEvent) {
-        println("Received $event")
+        logger.info { "Received $event" }
         event.createUserCmd?.id
             ?.also { userService.setUserId(event.requestData.userId, event.requestData.chatId, it) }
 
@@ -23,4 +24,6 @@ class CreateUserProcessor(
     }
 
     override fun getType() = CREATE_USER
+
+    companion object: KLogging()
 }

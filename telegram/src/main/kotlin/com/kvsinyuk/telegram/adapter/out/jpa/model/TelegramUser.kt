@@ -1,4 +1,4 @@
-package com.kvsinyuk.telegram.model
+package com.kvsinyuk.telegram.adapter.out.jpa.model
 
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue

@@ -5,6 +5,8 @@ spring:
     consumer:
       auto-offset-reset: earliest
   cloud:
+    function:
+      definition: telegramDataCmd
     stream:
       kafka:
         binder:
@@ -12,14 +14,15 @@ spring:
           brokers: "localhost:29092"
           producer-properties:
             key.serializer: "org.apache.kafka.common.serialization.StringSerializer"
+      function:
+        bindings:
+          telegramDataCmd-out-0: coreDataMessage
       bindings:
-        telegramDataCmd-in-0:
+        telegramDataCmd:
           destination: telegram.data.command
           group: "${spring.application.name}"
-        core-data-message-out-0:
+        coreDataMessage:
           destination: core.data.message
-    function:
-      definition: "telegramDataCmd"
   datasource:
     url: jdbc:postgresql://localhost:5432/planner
     username: postgres

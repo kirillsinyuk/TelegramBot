@@ -4,15 +4,15 @@ import com.kvsinyuk.plannercoreapi.model.kafka.cmd.TelegramAdapterDataCmd
 import com.pengrad.telegrambot.model.Message
 import com.kvsinyuk.telegram.mapper.UserMapper
 import com.kvsinyuk.telegram.repository.TelegramUserRepository
-import com.kvsinyuk.telegram.service.streams.out.TelegramAdapterProducer
-import com.kvsinyuk.plannercoreapi.model.kafka.CommandType.CREATE_USER
+import com.kvsinyuk.telegram.adapter.out.kafka.KafkaAdapter
+import com.kvsinyuk.telegram.adapter.out.kafka.OutBinding.TELEGRAM_DATA_CMD
 import com.kvsinyuk.telegram.utils.getChatId
 import com.kvsinyuk.telegram.utils.getUserId
 import org.springframework.stereotype.Service
 
 @Service
 class UserService(
-    private val telegramAdapterProducer: TelegramAdapterProducer,
+    private val kafkaAdapter: KafkaAdapter,
     private val telegramUserRepository: TelegramUserRepository,
     private val userMapper: UserMapper
 ) {
@@ -33,7 +33,7 @@ class UserService(
             requestData = userMapper.messageToRequestData(message),
             createUserCmd = userMapper.messageToCreateUserCmd(message)
         )
-        telegramAdapterProducer.produce(cmd, CREATE_USER)
+        kafkaAdapter.send(TELEGRAM_DATA_CMD, cmd)
     }
 
 }

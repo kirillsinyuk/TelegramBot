@@ -3,7 +3,8 @@ package com.kvsinyuk.telegram.mapper
 import com.kvsinyuk.plannercoreapi.model.kafka.cmd.CreateUserCmd
 import com.kvsinyuk.plannercoreapi.model.kafka.cmd.RequestData
 import com.pengrad.telegrambot.model.Message
-import com.kvsinyuk.telegram.model.TelegramUser
+import com.kvsinyuk.telegram.adapter.out.jpa.model.TelegramUser
+import com.kvsinyuk.telegram.config.MapperConfiguration
 import org.mapstruct.Mapper
 import org.mapstruct.Mapping
 import org.mapstruct.MappingConstants.ComponentModel

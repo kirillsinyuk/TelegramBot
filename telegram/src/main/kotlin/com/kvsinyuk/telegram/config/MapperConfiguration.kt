@@ -1,4 +1,4 @@
-package com.kvsinyuk.telegram.mapper
+package com.kvsinyuk.telegram.config
 
 import org.mapstruct.CollectionMappingStrategy
 import org.mapstruct.InjectionStrategy
@@ -6,12 +6,14 @@ import org.mapstruct.MapperConfig
 import org.mapstruct.MappingConstants.ComponentModel
 import org.mapstruct.NullValueCheckStrategy
 import org.mapstruct.NullValuePropertyMappingStrategy
+import org.mapstruct.ReportingPolicy
 
 @MapperConfig(
     componentModel = ComponentModel.SPRING,
     collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED,
     nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
     nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
-    injectionStrategy = InjectionStrategy.CONSTRUCTOR
+    injectionStrategy = InjectionStrategy.CONSTRUCTOR,
+    unmappedTargetPolicy = ReportingPolicy.ERROR
 )
 interface MapperConfiguration
