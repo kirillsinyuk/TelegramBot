@@ -29,8 +29,8 @@ dependencies {
     // spring
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.cloud:spring-cloud-stream:4.0.0")
-    implementation("org.springframework.cloud:spring-cloud-starter-stream-kafka:4.0.0")
+    implementation("org.springframework.cloud:spring-cloud-stream:4.0.1")
+    implementation("org.springframework.cloud:spring-cloud-starter-stream-kafka:4.0.1")
 
     kapt("org.mapstruct:mapstruct-processor:$mapstructVersion")
     implementation("org.mapstruct:mapstruct:$mapstructVersion")

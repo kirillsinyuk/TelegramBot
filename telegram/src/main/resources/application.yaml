@@ -9,21 +9,22 @@ spring:
     consumer:
       auto-offset-reset: earliest
   cloud:
+    function:
+      definition: coreDataMessage
     stream:
       kafka:
         binder:
           minPartitionCount: 3
           brokers: "localhost:29092"
-          producer-properties:
-            key.serializer: "org.apache.kafka.common.serialization.StringSerializer"
+      function:
+        bindings:
+          telegramDataCmd-out-0: telegramDataCmd
       bindings:
-        coreDataMessage-in-0:
+        coreDataMessage:
           destination: core.data.message
-          group: "${spring.application.name}"
-        telegramDataCmd-out-0:
+          group: ${spring.application.name}
+        telegramDataCmd:
           destination: telegram.data.command
-    function:
-      definition: "coreDataMessage"
   datasource:
     url: jdbc:postgresql://localhost:5432/telegram
     username: postgres
