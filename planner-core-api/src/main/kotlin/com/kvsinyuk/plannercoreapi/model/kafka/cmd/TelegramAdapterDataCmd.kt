@@ -1,6 +1,7 @@
 package com.kvsinyuk.plannercoreapi.model.kafka.cmd
 
 import java.math.BigDecimal
+import java.util.UUID
 
 data class TelegramAdapterDataCmd(
     val requestData: RequestData,
@@ -11,7 +12,7 @@ data class TelegramAdapterDataCmd(
 
 data class RequestData(
     val chatId: Long,
-    val userId: Long
+    val userId: UUID
 )
 
 data class CreateUserCmd(
@@ -25,7 +26,7 @@ data class CreateCategoryCmd(
 
 data class AddProductCmd(
     val price: BigDecimal,
-    val categoryId: Long,
+    val categoryId: UUID,
     val description: String? = null
 )
 

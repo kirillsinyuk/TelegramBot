@@ -3,10 +3,10 @@ package com.kvsinyuk.core.mapper
 import com.kvsinyuk.core.model.Category
 import com.kvsinyuk.core.model.User
 import com.kvsinyuk.core.model.Product
-import com.planner.dto.request.CreateProductRequestDto
-import com.planner.dto.response.CreateProductResponseDto
-import com.planner.dto.response.GetProductsResponseDto
-import com.planner.dto.response.ProductResponseDto
+import com.kvsinyuk.plannercoreapi.model.request.CreateProductRequestDto
+import com.kvsinyuk.plannercoreapi.model.response.CreateProductResponseDto
+import com.kvsinyuk.plannercoreapi.model.response.GetProductsResponseDto
+import com.kvsinyuk.plannercoreapi.model.response.ProductResponseDto
 import org.mapstruct.Mapper
 import org.mapstruct.Mapping
 import org.mapstruct.MappingConstants

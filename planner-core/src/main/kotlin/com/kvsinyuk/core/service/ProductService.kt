@@ -7,11 +7,13 @@ import com.kvsinyuk.core.repository.isAfter
 import com.kvsinyuk.core.repository.isBefore
 import com.kvsinyuk.core.repository.isNotDeleted
 import com.kvsinyuk.core.model.Product
-import com.planner.dto.request.CreateProductRequestDto
-import com.planner.dto.request.GetProductsRequestDto
+import com.kvsinyuk.plannercoreapi.model.request.CreateProductRequestDto
+import com.kvsinyuk.plannercoreapi.model.request.GetProductsRequestDto
 import org.springframework.data.jpa.domain.Specification.where
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.util.*
+import kotlin.collections.HashSet
 
 @Service
 class ProductService(
@@ -30,11 +32,11 @@ class ProductService(
         return productRepository.save(product)
     }
 
-    fun deleteProduct(id: Long) {
+    fun deleteProduct(id: UUID) {
         productRepository.deleteProductById(id)
     }
 
-    fun getProducts(userId: Long, request: GetProductsRequestDto): List<Product> {
+    fun getProducts(userId: UUID, request: GetProductsRequestDto): List<Product> {
         val categories = categoryService.getUserCategories(userId)
             .mapTo(HashSet()) { it.id }
 
@@ -46,7 +48,7 @@ class ProductService(
         )
     }
 
-    fun getProductsByCategories(userId: Long, request: GetProductsRequestDto) =
+    fun getProductsByCategories(userId: UUID, request: GetProductsRequestDto) =
         getProducts(userId, request)
             .groupBy(Product::category)
 }

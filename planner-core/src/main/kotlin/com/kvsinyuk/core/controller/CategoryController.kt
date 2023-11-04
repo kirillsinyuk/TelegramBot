@@ -3,13 +3,14 @@ package com.kvsinyuk.core.controller
 import com.kvsinyuk.core.mapper.CategoryMapper
 import com.kvsinyuk.core.service.CategoryService
 import com.kvsinyuk.core.service.CreateCategoryService
-import com.planner.dto.request.CreateCategoryRequestDto
+import com.kvsinyuk.plannercoreapi.model.request.CreateCategoryRequestDto
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.util.*
 
 @RestController
 @RequestMapping("/categories")
@@ -25,7 +26,7 @@ class CategoryController(
             .let { categoryMapper.toCategoryCreateResponse(it) }
 
     @DeleteMapping("/{id}")
-    fun deleteCategory(@PathVariable id: Long) {
+    fun deleteCategory(@PathVariable id: UUID) {
         categoryService.deleteCategoryById(id)
     }
 }

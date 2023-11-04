@@ -2,13 +2,14 @@ package com.kvsinyuk.core.controller
 
 import com.kvsinyuk.core.mapper.ProductMapper
 import com.kvsinyuk.core.service.ProductService
-import com.planner.dto.request.CreateProductRequestDto
+import com.kvsinyuk.plannercoreapi.model.request.CreateProductRequestDto
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.util.*
 
 @RestController
 @RequestMapping("/products")
@@ -23,7 +24,7 @@ class ProductController(
             .let { productMapper.toCreateProductResponseDto(it) }
 
     @DeleteMapping("/{id}")
-    fun deleteProduct(@PathVariable id: Long) {
+    fun deleteProduct(@PathVariable id: UUID) {
         productService.deleteProduct(id)
     }
 

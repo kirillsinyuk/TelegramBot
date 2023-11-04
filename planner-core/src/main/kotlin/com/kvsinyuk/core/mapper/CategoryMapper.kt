@@ -1,9 +1,9 @@
 package com.kvsinyuk.core.mapper
 
 import com.kvsinyuk.core.model.Category
-import com.planner.dto.response.CategoryResponseDto
-import com.planner.dto.response.CreateCategoryResponseDto
-import com.planner.dto.response.GetCategoriesResponseDto
+import com.kvsinyuk.plannercoreapi.model.response.CategoryResponseDto
+import com.kvsinyuk.plannercoreapi.model.response.CreateCategoryResponseDto
+import com.kvsinyuk.plannercoreapi.model.response.GetCategoriesResponseDto
 import org.mapstruct.Mapper
 import org.mapstruct.MappingConstants
 

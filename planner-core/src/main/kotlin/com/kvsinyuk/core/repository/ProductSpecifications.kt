@@ -4,6 +4,7 @@ import com.kvsinyuk.core.model.Category_
 import com.kvsinyuk.core.model.Product_
 import org.springframework.data.jpa.domain.Specification
 import java.time.Instant
+import java.util.*
 
 fun isAfter(date: Instant?) =
     Specification { root, _, cb ->
@@ -18,5 +19,5 @@ fun isBefore(date: Instant?) =
 fun isNotDeleted() =
     Specification { root, _, cb -> cb.equal(root.get(Product_.deleted), false) }
 
-fun inCategories(categoryIds: Set<Long>) =
+fun inCategories(categoryIds: Set<UUID>) =
     Specification { root, _, _ -> root.get(Product_.category).get(Category_.id).`in`(categoryIds) }

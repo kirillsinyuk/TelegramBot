@@ -1,4 +1,4 @@
-package com.planner.dto.request
+package com.kvsinyuk.plannercoreapi.model.request
 
 import java.util.Date
 
