@@ -6,6 +6,8 @@ import com.kvsinyuk.core.model.User
 import com.kvsinyuk.core.model.enumeration.CommonCategories
 import com.kvsinyuk.core.repository.CategoryRepository
 import org.springframework.stereotype.Service
+import java.util.*
+import kotlin.collections.HashSet
 
 @Service
 class CategoryService(
@@ -21,14 +23,14 @@ class CategoryService(
         return categoryRepository.save(category)
     }
 
-    fun getUserCategories(userId: Long) =
+    fun getUserCategories(userId: UUID) =
         categoryRepository.getCategoriesByUserId(userId)
 
-    fun getCategoryById(id: Long) =
-        categoryRepository.getById(id)
-            ?: throw NotFoundException("Category not found")
+    fun getCategoryById(id: UUID) =
+        categoryRepository.findById(id)
+            .orElseThrow { NotFoundException("Category not found") }
 
-    fun deleteCategoryById(id: Long) {
+    fun deleteCategoryById(id: UUID) {
         categoryRepository.deleteById(id)
     }
 

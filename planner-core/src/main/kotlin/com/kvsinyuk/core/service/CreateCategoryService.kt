@@ -1,7 +1,7 @@
 package com.kvsinyuk.core.service
 
 import com.kvsinyuk.core.model.Category
-import com.planner.dto.request.CreateCategoryRequestDto
+import com.kvsinyuk.plannercoreapi.model.request.CreateCategoryRequestDto
 import org.springframework.stereotype.Service
 
 @Service

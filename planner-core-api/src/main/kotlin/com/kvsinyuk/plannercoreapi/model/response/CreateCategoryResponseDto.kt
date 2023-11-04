@@ -1,4 +1,4 @@
-package com.planner.dto.response
+package com.kvsinyuk.plannercoreapi.model.response
 
 data class CreateCategoryResponseDto(
     val name: String

@@ -1,6 +1,7 @@
 package com.kvsinyuk.plannercoreapi.model.kafka.event
 
 import java.math.BigDecimal
+import java.util.UUID
 
 data class CoreEvent(
     val requestData: RequestData,
@@ -11,23 +12,23 @@ data class CoreEvent(
 
 data class RequestData(
     val chatId: Long,
-    val userId: Long
+    val userId: UUID
 )
 
 data class CreateUserCmd(
-    val id: Long,
+    val id: UUID,
     val firstName: String?,
     val lastName: String?
 )
 
 data class CreateCategoryCmd(
-    val id: Long,
+    val id: UUID,
     val name: String
 )
 
 data class AddProductCmd(
     val price: BigDecimal,
-    val categoryId: Long,
+    val categoryId: UUID,
     val description: String? = null
 )
 

@@ -1,10 +1,12 @@
-package com.planner.dto.response
+package com.kvsinyuk.plannercoreapi.model.response
+
+import java.util.UUID
 
 data class GetCategoriesResponseDto(
     val categories: Set<CategoryResponseDto>
 )
 
 data class CategoryResponseDto(
-    val id: Long,
+    val id: UUID,
     val name: String
 )
