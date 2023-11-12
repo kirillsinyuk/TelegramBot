@@ -1,7 +1,3 @@
-bot:
-  name: budget_planner_bot
-  token: 991064577:AAHtI9JsNg8mgR5IRNiveJMLxN9JpZMw4v8
-
 spring:
   application:
     name: "telegram"
@@ -15,7 +11,7 @@ spring:
       kafka:
         binder:
           minPartitionCount: 3
-          brokers: "localhost:29092"
+          brokers: localhost:9092
       function:
         bindings:
           telegramDataCmd-out-0: telegramDataCmd
@@ -25,16 +21,9 @@ spring:
           group: ${spring.application.name}
         telegramDataCmd:
           destination: telegram.data.command
-  datasource:
-    url: jdbc:postgresql://localhost:5432/telegram
-    username: postgres
-    password: mysecretpassword
 
 management:
   endpoints:
     web:
       exposure:
         include: health,info,prometheus
-
-server:
-  port: 8081

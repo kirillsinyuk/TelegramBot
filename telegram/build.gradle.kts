@@ -35,10 +35,6 @@ dependencies {
     kapt("org.mapstruct:mapstruct-processor:$mapstructVersion")
     implementation("org.mapstruct:mapstruct:$mapstructVersion")
 
-    // metrics
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("io.micrometer:micrometer-registry-prometheus")
-
     // kotlin
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -48,8 +44,6 @@ dependencies {
     // database
     implementation("org.liquibase:liquibase-core")
     runtimeOnly("org.postgresql:postgresql")
-
-    // implementation("org.jfree:jfreechart:1.5.3")
 
     // test
     testImplementation("org.springframework.boot:spring-boot-starter-test")

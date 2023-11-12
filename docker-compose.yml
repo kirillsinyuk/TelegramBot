@@ -7,7 +7,7 @@ services:
   kafka:
     image: bitnami/kafka:latest
     ports:
-      - "9092:9092"
+      - 9092:9092
     environment:
       - KAFKA_ENABLE_KRAFT=yes
       - KAFKA_CFG_PROCESS_ROLES=broker,controller
@@ -37,6 +37,7 @@ services:
   postgres:
     image: postgres:latest
     environment:
-      POSTGRES_PASSWORD: 'mysecretpassword'
+      POSTGRES_DB: planner
+      POSTGRES_PASSWORD: mysecretpassword
     ports:
       - 5432:5432

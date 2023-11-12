@@ -7,5 +7,5 @@ import org.springframework.context.annotation.Configuration
 @ConfigurationProperties(prefix = "security")
 class JwtTokenProperties{
 
-    var token: String = ""
+    lateinit var token: String
 }
