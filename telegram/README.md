@@ -1,2 +1,1 @@
 ## Adapter service for Telegram
-

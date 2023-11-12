@@ -1,6 +1,6 @@
 spring:
   application:
-    name: "telegram"
+    name: telegram
   kafka:
     consumer:
       auto-offset-reset: earliest
@@ -11,7 +11,6 @@ spring:
       kafka:
         binder:
           minPartitionCount: 3
-          brokers: localhost:9092
       function:
         bindings:
           telegramDataCmd-out-0: telegramDataCmd

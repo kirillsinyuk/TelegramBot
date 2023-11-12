@@ -1,4 +1,10 @@
 spring:
+  cloud:
+    stream:
+      kafka:
+        binder:
+          minPartitionCount: 1
+          brokers: localhost:29092
   datasource:
     url: jdbc:postgresql://localhost:5432/planner
     username: postgres
