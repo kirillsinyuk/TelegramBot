@@ -5,6 +5,12 @@ spring:
     consumer:
       auto-offset-reset: earliest
   cloud:
+    stream:
+      kafka:
+        binder:
+          minPartitionCount: 3
+          producer-properties:
+            key.serializer: org.apache.kafka.common.serialization.StringSerializer
     function:
       definition: telegramDataCmd
       function:

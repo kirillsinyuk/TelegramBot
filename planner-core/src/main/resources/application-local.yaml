@@ -3,10 +3,8 @@ spring:
     stream:
       kafka:
         binder:
-          minPartitionCount: 3
-          brokers: kafka:9092
-          producer-properties:
-            key.serializer: org.apache.kafka.common.serialization.StringSerializer
+          minPartitionCount: 1
+          brokers: localhost:29092
   datasource:
     url: jdbc:postgresql://localhost:5432/planner
     username: postgres
