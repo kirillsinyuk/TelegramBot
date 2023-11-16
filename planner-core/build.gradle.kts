@@ -53,7 +53,12 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql")
 
     // test
+    testImplementation("org.testcontainers:testcontainers")
+    testImplementation("org.testcontainers:postgresql:1.19.2")
+    testImplementation("org.testcontainers:junit-jupiter:1.19.2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.cloud:spring-cloud-stream-test-support:4.0.0")
+    testImplementation("org.springframework.cloud:spring-cloud-contract-wiremock:4.0.0")
 }
 
 tasks.withType<Test> {
