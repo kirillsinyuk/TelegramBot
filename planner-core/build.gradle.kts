@@ -64,3 +64,7 @@ dependencies {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+springBoot {
+    mainClass.set("com.kvsinyuk.core.MainKt")
+}

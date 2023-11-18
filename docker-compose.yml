@@ -42,3 +42,18 @@ services:
       POSTGRES_PASSWORD: mysecretpassword
     ports:
       - 5432:5432
+
+  core:
+    build:
+      context: planner-core
+      dockerfile: Dockerfile
+    environment:
+      - DB_URL=jdbc:postgresql://postgres:5432/planner
+      - DB_USER=postgres
+      - DB_PASS=mysecretpassword
+      - BROKER_URL=kafka:9092
+    ports:
+      - 8080:8080
+    depends_on:
+      - kafka
+      - postgres
