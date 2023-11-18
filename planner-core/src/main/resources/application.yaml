@@ -1,4 +1,8 @@
 spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASS}
   application:
     name: core
   kafka:
@@ -8,7 +12,8 @@ spring:
     stream:
       kafka:
         binder:
-          minPartitionCount: 3
+          brokers: ${BROKER_URL}
+          minPartitionCount: 1
           producer-properties:
             key.serializer: org.apache.kafka.common.serialization.StringSerializer
     function:
