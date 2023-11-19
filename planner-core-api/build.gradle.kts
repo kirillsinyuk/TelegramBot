@@ -1,13 +1,10 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    `maven-publish`
-    kotlin("jvm") version "1.7.22"
+    java
+    id("com.google.protobuf") version "0.9.4"
 }
 
 group = "com.kvsinyuk"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
     mavenCentral()
@@ -15,25 +12,15 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    compileOnly("com.google.protobuf:protobuf-java:3.25.0")
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "17"
-    }
-}
-
-tasks.withType<Test> {
-    useJUnitPlatform()
-}
-
-publishing {
-    publications {
-        create<MavenPublication>("planner-core-api") {
-            from(components["java"])
+protobuf {
+    protoc {
+        if (osdetector.os == "osx") {
+            artifact = "com.google.protobuf:protoc:3.14.0:osx-x86_64"
+        } else {
+            artifact = "com.google.protobuf:protoc:3.14.0"
         }
     }
 }

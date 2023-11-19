@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package com.kvsinyuk.v1.http;
+
+import "com/kvsinyuk/v1/model/product.proto";
+
+option java_package = "com.kvsinyuk.v1.http";
+option java_outer_classname = "ProductApiProto";
+
+message CreateProductRequest {
+  string category_id = 1;
+  string user_id = 2;
+  string price = 3;
+  string description = 4;
+}
+
+message CreateProductResponse {
+  model.Product product = 1;
+}
+
+message GetProductsRequest {
+  string from_date = 1;
+  string to_date = 2;
+}
+
+message GetProductsResponse {
+  repeated model.Product products = 1;
+}
