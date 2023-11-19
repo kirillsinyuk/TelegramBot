@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package com.kvsinyuk.v1.model;
+
+option java_package = "com.kvsinyuk.v1.model";
+
+message Product {
+  string id = 1;
+  string price = 2;
+  string description = 3;
+}

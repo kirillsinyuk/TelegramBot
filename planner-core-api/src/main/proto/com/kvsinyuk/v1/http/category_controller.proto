@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package com.kvsinyuk.v1.http;
+
+import "com/kvsinyuk/v1/model/category.proto";
+
+option java_package = "com.kvsinyuk.v1.http";
+option java_outer_classname = "CategoryApiProto";
+
+message CreateCategoryRequest {
+  string name = 1;
+  string user_id = 2;
+}
+
+message CreateCategoryResponse {
+  model.Category category = 1;
+}
+
+message GetCategoriesResponse {
+  repeated model.Category categories = 1;
+}
