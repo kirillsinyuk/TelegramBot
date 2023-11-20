@@ -3,7 +3,7 @@ package com.kvsinyuk.core.controller
 import com.kvsinyuk.core.mapper.UserMapper
 import com.kvsinyuk.core.service.CreateUserService
 import com.kvsinyuk.core.service.UserService
-import com.kvsinyuk.plannercoreapi.model.request.CreateUserRequestDto
+import com.kvsinyuk.v1.http.UserApiProto.CreateUserRequest
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -21,7 +21,7 @@ class UserController(
 ) {
 
     @PostMapping
-    fun createUser(@RequestBody request: CreateUserRequestDto) =
+    fun createUser(@RequestBody request: CreateUserRequest) =
         userCreateService.createUser(request)
             .let { userMapper.toCreateUserResponse(it) }
 

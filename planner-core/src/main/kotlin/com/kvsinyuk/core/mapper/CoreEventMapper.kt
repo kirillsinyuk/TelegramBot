@@ -1,17 +1,21 @@
 package com.kvsinyuk.core.mapper
 
 import com.kvsinyuk.core.model.User
-import com.kvsinyuk.plannercoreapi.model.kafka.cmd.TelegramAdapterDataCmd
-import com.kvsinyuk.plannercoreapi.model.kafka.event.CoreEvent
+import com.kvsinyuk.v1.kafka.TelegramAdapterDataCmdProto.TelegramAdapterDataCmd
+import com.kvsinyuk.v1.kafka.TelegramAdapterDataEventProto.TelegramAdapterDataEvent
 import org.mapstruct.Mapper
-import org.mapstruct.Mapping
-import org.mapstruct.MappingConstants
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
-interface CoreEventMapper: MapperConfiguration {
+@Mapper(
+    uses = [RequestDataMapper::class],
+    config = MapperConfiguration::class
+)
+abstract class CoreEventMapper {
 
-    @Mapping(source = "user.id", target = "createUserCmd.id")
-    @Mapping(source = "user.firstName", target = "createUserCmd.firstName")
-    @Mapping(source = "user.lastName", target = "createUserCmd.lastName")
-    fun toUserCreateEvent(event: TelegramAdapterDataCmd, user: User): CoreEvent
+    abstract fun toUserCreatedProto(user: User): TelegramAdapterDataEvent.UserCreated
+
+    fun toUserCreatedEventProto(event: TelegramAdapterDataCmd, user: User): TelegramAdapterDataEvent =
+        TelegramAdapterDataEvent.newBuilder()
+            .setRequestData(event.requestData)
+            .setUserCreated(toUserCreatedProto(user))
+            .build()
 }

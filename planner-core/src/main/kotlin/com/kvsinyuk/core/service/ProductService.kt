@@ -7,11 +7,11 @@ import com.kvsinyuk.core.repository.isAfter
 import com.kvsinyuk.core.repository.isBefore
 import com.kvsinyuk.core.repository.isNotDeleted
 import com.kvsinyuk.core.model.Product
-import com.kvsinyuk.plannercoreapi.model.request.CreateProductRequestDto
-import com.kvsinyuk.plannercoreapi.model.request.GetProductsRequestDto
+import com.kvsinyuk.v1.http.ProductApiProto
 import org.springframework.data.jpa.domain.Specification.where
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.Instant
 import java.util.*
 import kotlin.collections.HashSet
 
@@ -24,9 +24,9 @@ class ProductService(
 ) {
 
     @Transactional
-    fun addProduct(request: CreateProductRequestDto): Product {
-        val user = userService.getUserById(request.userId)
-        val category = categoryService.getCategoryById(request.categoryId)
+    fun addProduct(request: ProductApiProto.CreateProductRequest): Product {
+        val user = userService.getUserById(UUID.fromString(request.userId))
+        val category = categoryService.getCategoryById(UUID.fromString(request.categoryId))
         val product = productMapper.toProduct(request, category, user)
 
         return productRepository.save(product)
@@ -36,19 +36,19 @@ class ProductService(
         productRepository.deleteProductById(id)
     }
 
-    fun getProducts(userId: UUID, request: GetProductsRequestDto): List<Product> {
+    fun getProducts(userId: UUID, request: ProductApiProto.GetProductsRequest): List<Product> {
         val categories = categoryService.getUserCategories(userId)
             .mapTo(HashSet()) { it.id }
 
         return productRepository.findAll(
-            where(isAfter(request.from?.toInstant()))
-                .and(isBefore( request.to?.toInstant()))
+            where(isAfter(Instant.ofEpochSecond(request.fromDate.seconds)))
+                .and(isBefore(Instant.ofEpochSecond(request.toDate.seconds)))
                 .and(inCategories(categories))
                 .and(isNotDeleted())
         )
     }
 
-    fun getProductsByCategories(userId: UUID, request: GetProductsRequestDto) =
+    fun getProductsByCategories(userId: UUID, request: ProductApiProto.GetProductsRequest) =
         getProducts(userId, request)
             .groupBy(Product::category)
 }

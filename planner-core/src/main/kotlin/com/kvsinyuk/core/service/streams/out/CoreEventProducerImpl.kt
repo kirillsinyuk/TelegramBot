@@ -1,7 +1,6 @@
 package com.kvsinyuk.core.service.streams.out
 
-import com.kvsinyuk.plannercoreapi.model.kafka.CommandType
-import com.kvsinyuk.plannercoreapi.model.kafka.event.CoreEvent
+import com.kvsinyuk.v1.kafka.TelegramAdapterDataEventProto.TelegramAdapterDataEvent
 import org.springframework.cloud.stream.function.StreamBridge
 import org.springframework.kafka.support.KafkaHeaders
 import org.springframework.messaging.support.MessageBuilder
@@ -12,11 +11,10 @@ class CoreEventProducerImpl(
     private val streamBridge: StreamBridge
 ) : CoreEventProducer {
 
-    override fun produce(cmd: CoreEvent, type: CommandType) {
+    override fun produce(event: TelegramAdapterDataEvent) {
         val message = MessageBuilder
-            .withPayload(cmd)
-            .setHeader(KafkaHeaders.KEY, getKey(cmd.requestData.chatId))
-            .setHeader("type", type.toString())
+            .withPayload(event)
+            .setHeader(KafkaHeaders.KEY, getKey(event.requestData.chatId))
             .build()
         streamBridge.send("core-data-message-out-0", message)
     }

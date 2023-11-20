@@ -1,9 +1,8 @@
 package com.kvsinyuk.core.service.streams.out
 
-import com.kvsinyuk.plannercoreapi.model.kafka.CommandType
-import com.kvsinyuk.plannercoreapi.model.kafka.event.CoreEvent
+import com.kvsinyuk.v1.kafka.TelegramAdapterDataEventProto.TelegramAdapterDataEvent
 
 interface CoreEventProducer {
 
-    fun produce(cmd: CoreEvent, type: CommandType)
+    fun produce(event: TelegramAdapterDataEvent)
 }

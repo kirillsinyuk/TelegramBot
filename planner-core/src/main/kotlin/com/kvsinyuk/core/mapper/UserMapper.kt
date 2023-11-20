@@ -1,21 +1,20 @@
 package com.kvsinyuk.core.mapper
 
 import com.kvsinyuk.core.model.User
-import com.kvsinyuk.plannercoreapi.model.kafka.cmd.CreateUserCmd
-import com.kvsinyuk.plannercoreapi.model.request.CreateUserRequestDto
-import com.kvsinyuk.plannercoreapi.model.response.CreateUserResponseDto
-import com.kvsinyuk.plannercoreapi.model.response.GetUserResponseDto
+import com.kvsinyuk.v1.http.UserApiProto.CreateUserRequest
+import com.kvsinyuk.v1.http.UserApiProto.CreateUserResponse
+import com.kvsinyuk.v1.http.UserApiProto.GetUserResponse
+import com.kvsinyuk.v1.kafka.TelegramAdapterDataCmdProto.TelegramAdapterDataCmd.CreateUser
 import org.mapstruct.Mapper
-import org.mapstruct.MappingConstants
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
-interface UserMapper: MapperConfiguration {
+@Mapper(config = MapperConfiguration::class)
+abstract class UserMapper {
 
-    fun toUser(createUserRequestDto: CreateUserRequestDto): User
+    abstract fun toUser(createUserRequest: CreateUserRequest): User
 
-    fun toUser(createUserRequestDto: CreateUserCmd): User
+    abstract fun toUser(createUserRequest: CreateUser): User
 
-    fun toCreateUserResponse(user: User): CreateUserResponseDto
+    abstract fun toCreateUserResponse(user: User): CreateUserResponse
 
-    fun toGetUserResponse(user: User): GetUserResponseDto
+    abstract fun toGetUserResponse(user: User): GetUserResponse
 }

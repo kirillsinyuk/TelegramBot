@@ -3,7 +3,7 @@ package com.kvsinyuk.core.controller
 import com.kvsinyuk.core.mapper.CategoryMapper
 import com.kvsinyuk.core.service.CategoryService
 import com.kvsinyuk.core.service.CreateCategoryService
-import com.kvsinyuk.plannercoreapi.model.request.CreateCategoryRequestDto
+import com.kvsinyuk.v1.http.CategoryApiProto.CreateCategoryRequest
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -21,7 +21,7 @@ class CategoryController(
 ) {
 
     @PostMapping
-    fun createCategory(@RequestBody request: CreateCategoryRequestDto) =
+    fun createCategory(@RequestBody request: CreateCategoryRequest) =
         createCategoryService.createCategory(request)
             .let { categoryMapper.toCategoryCreateResponse(it) }
 
