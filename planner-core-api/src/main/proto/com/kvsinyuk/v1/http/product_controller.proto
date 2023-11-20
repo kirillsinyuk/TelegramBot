@@ -3,6 +3,8 @@ syntax = "proto3";
 package com.kvsinyuk.v1.http;
 
 import "com/kvsinyuk/v1/model/product.proto";
+import "google/protobuf/timestamp.proto";
+import "google/type/money.proto";
 
 option java_package = "com.kvsinyuk.v1.http";
 option java_outer_classname = "ProductApiProto";
@@ -10,7 +12,7 @@ option java_outer_classname = "ProductApiProto";
 message CreateProductRequest {
   string category_id = 1;
   string user_id = 2;
-  string price = 3;
+  google.type.Money price = 3;
   string description = 4;
 }
 
@@ -19,8 +21,8 @@ message CreateProductResponse {
 }
 
 message GetProductsRequest {
-  string from_date = 1;
-  string to_date = 2;
+  google.protobuf.Timestamp from_date = 1;
+  google.protobuf.Timestamp to_date = 2;
 }
 
 message GetProductsResponse {

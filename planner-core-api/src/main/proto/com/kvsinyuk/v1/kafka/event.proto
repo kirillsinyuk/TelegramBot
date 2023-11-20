@@ -4,6 +4,7 @@ package com.kvsinyuk.v1.kafka;
 
 import "com/kvsinyuk/v1/kafka/request_data.proto";
 import "com/kvsinyuk/v1/model/category.proto";
+import "google/type/money.proto";
 
 option java_package = "com.kvsinyuk.v1.kafka";
 option java_outer_classname = "TelegramAdapterDataEventProto";
@@ -30,7 +31,7 @@ message TelegramAdapterDataEvent {
   }
 
   message ProductAdded {
-    string price = 1;
+    google.type.Money price = 1;
     string category_id = 2;
     string description = 3;
   }
