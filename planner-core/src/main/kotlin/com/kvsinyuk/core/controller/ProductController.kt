@@ -2,7 +2,7 @@ package com.kvsinyuk.core.controller
 
 import com.kvsinyuk.core.mapper.ProductMapper
 import com.kvsinyuk.core.service.ProductService
-import com.kvsinyuk.plannercoreapi.model.request.CreateProductRequestDto
+import com.kvsinyuk.v1.http.ProductApiProto.CreateProductRequest
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -19,9 +19,9 @@ class ProductController(
 ) {
 
     @PostMapping
-    fun addProduct(@RequestBody request: CreateProductRequestDto) =
+    fun addProduct(@RequestBody request: CreateProductRequest) =
         productService.addProduct(request)
-            .let { productMapper.toCreateProductResponseDto(it) }
+            .let { productMapper.toCreateProductResponse(it) }
 
     @DeleteMapping("/{id}")
     fun deleteProduct(@PathVariable id: UUID) {

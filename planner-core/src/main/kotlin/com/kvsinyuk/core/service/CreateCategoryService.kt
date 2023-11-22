@@ -1,8 +1,9 @@
 package com.kvsinyuk.core.service
 
 import com.kvsinyuk.core.model.Category
-import com.kvsinyuk.plannercoreapi.model.request.CreateCategoryRequestDto
+import com.kvsinyuk.v1.http.CategoryApiProto
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
 class CreateCategoryService(
@@ -10,8 +11,8 @@ class CreateCategoryService(
     private val userService: UserService
 ) {
 
-    fun createCategory(request: CreateCategoryRequestDto): Category {
-        val user = userService.getUserById(request.userId)
+    fun createCategory(request: CategoryApiProto.CreateCategoryRequest): Category {
+        val user = userService.getUserById(UUID.fromString(request.userId))
         return categoryService.createCategory(user, request.name)
     }
 }

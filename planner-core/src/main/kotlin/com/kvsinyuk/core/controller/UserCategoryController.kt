@@ -1,7 +1,6 @@
 package com.kvsinyuk.core.controller
 
 import com.kvsinyuk.core.mapper.CategoryMapper
-import com.kvsinyuk.core.mapper.toGetCategoryResponseDto
 import com.kvsinyuk.core.service.CategoryService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -19,5 +18,5 @@ class UserCategoryController(
     @GetMapping("/{userId}/categories")
     fun getUserCategories(@PathVariable userId: UUID) =
         categoryService.getUserCategories(userId)
-            .let { categoryMapper.toGetCategoryResponseDto(it) }
+            .let { categoryMapper.toGetCategoryResponse(it) }
 }

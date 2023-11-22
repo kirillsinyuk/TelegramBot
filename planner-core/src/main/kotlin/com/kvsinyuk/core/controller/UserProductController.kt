@@ -1,9 +1,8 @@
 package com.kvsinyuk.core.controller
 
 import com.kvsinyuk.core.mapper.ProductMapper
-import com.kvsinyuk.core.mapper.toGetProductsResponseDto
 import com.kvsinyuk.core.service.ProductService
-import com.kvsinyuk.plannercoreapi.model.request.GetProductsRequestDto
+import com.kvsinyuk.v1.http.ProductApiProto.GetProductsRequest
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -18,16 +17,12 @@ class UserProductController(
 ) {
 
     @GetMapping("/{userId}/products")
-    fun getProductsByUser(
-        @PathVariable userId: UUID,
-        request: GetProductsRequestDto
-    ) = productService.getProducts(userId, request)
-        .let { productMapper.toGetProductsResponseDto(it) }
+    fun getProductsByUser(@PathVariable userId: UUID, request: GetProductsRequest) =
+        productService.getProducts(userId, request)
+            .let { productMapper.toGetProductsResponse(it) }
 
     @GetMapping("/{userId}/products/byCategories")
-    fun getGroupedProductsByUser(
-        @PathVariable userId: UUID,
-        request: GetProductsRequestDto
-    ) = productService.getProductsByCategories(userId, request)
-        .let { productMapper.toGetProductsResponseDto(it) }
+    fun getGroupedProductsByUser(@PathVariable userId: UUID, request: GetProductsRequest) =
+        productService.getProductsByCategories(userId, request)
+            .let { productMapper.toGetProductsResponse(it) }
 }

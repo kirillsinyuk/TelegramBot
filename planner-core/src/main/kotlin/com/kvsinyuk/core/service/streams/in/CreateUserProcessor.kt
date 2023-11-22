@@ -4,8 +4,8 @@ import com.kvsinyuk.core.mapper.CoreEventMapper
 import com.kvsinyuk.core.mapper.UserMapper
 import com.kvsinyuk.core.service.UserService
 import com.kvsinyuk.core.service.streams.out.CoreEventProducer
-import com.kvsinyuk.plannercoreapi.model.kafka.cmd.TelegramAdapterDataCmd
-import com.kvsinyuk.plannercoreapi.model.kafka.CommandType.CREATE_USER
+import com.kvsinyuk.v1.kafka.TelegramAdapterDataCmdProto.TelegramAdapterDataCmd
+import mu.KLogging
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -17,19 +17,22 @@ class CreateUserProcessor(
     private val eventProducer: CoreEventProducer
 ): KafkaProcessor {
 
+    override fun canApply(event: TelegramAdapterDataCmd) =
+        event.hasCreateUser()
+
     @Transactional
     override fun process(event: TelegramAdapterDataCmd) {
-        println("Received $event")
+        logger.info { "Received $event" }
 
-        val user = event.createUserCmd
+        val user = event.createUser
             ?.let { userMapper.toUser(it) }
             ?.let { userService.createUser(it) }
 
-        user?.let { coreEventMapper.toUserCreateEvent(event, it) }
-            ?.also { eventProducer.produce(it,getType()) }
+        user?.let { coreEventMapper.toUserCreatedEventProto(event, it) }
+            ?.also { eventProducer.produce(it) }
 
-        println("Created user $user")
+        logger.info {"Created user $user" }
     }
 
-    override fun getType() = CREATE_USER
+    companion object: KLogging()
 }

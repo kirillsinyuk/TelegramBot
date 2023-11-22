@@ -1,22 +1,22 @@
 package com.kvsinyuk.core.mapper
 
 import com.kvsinyuk.core.model.Category
-import com.kvsinyuk.plannercoreapi.model.response.CategoryResponseDto
-import com.kvsinyuk.plannercoreapi.model.response.CreateCategoryResponseDto
-import com.kvsinyuk.plannercoreapi.model.response.GetCategoriesResponseDto
+import com.kvsinyuk.v1.http.CategoryApiProto.CreateCategoryResponse
+import com.kvsinyuk.v1.http.CategoryApiProto.GetCategoriesResponse
+import com.kvsinyuk.v1.model.CategoryOuterClass
 import org.mapstruct.Mapper
-import org.mapstruct.MappingConstants
 
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
-interface CategoryMapper: MapperConfiguration {
+@Mapper(config = MapperConfiguration::class)
+abstract class CategoryMapper {
 
-    fun toCategoryCreateResponse(category: Category): CreateCategoryResponseDto
+    abstract fun toCategoryCreateResponse(category: Category): CreateCategoryResponse
 
-    fun toCategoryResponseDto(category: Set<Category>): Set<CategoryResponseDto>
+    abstract fun toCategoryResponse(category: Category): CategoryOuterClass.Category
+
+    fun toGetCategoryResponse(categories: Set<Category>) =
+        GetCategoriesResponse.newBuilder()
+            .addAllCategories(categories.map { toCategoryResponse(it) })
+            .build()
+
 }
-
-fun CategoryMapper.toGetCategoryResponseDto(categories: Set<Category>) =
-    GetCategoriesResponseDto(
-        categories = toCategoryResponseDto(categories)
-    )

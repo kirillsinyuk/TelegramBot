@@ -1,7 +1,7 @@
 package com.kvsinyuk.core.service
 
 import com.kvsinyuk.core.mapper.UserMapper
-import com.kvsinyuk.plannercoreapi.model.request.CreateUserRequestDto
+import com.kvsinyuk.v1.http.UserApiProto.CreateUserRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -13,7 +13,7 @@ class CreateUserService(
 ) {
 
     @Transactional
-    fun createUser(request: CreateUserRequestDto) =
+    fun createUser(request: CreateUserRequest) =
         userMapper.toUser(request)
             .let { userService.createUser(it) }
             .also{ categoryService.createDefaultCategories(it) }

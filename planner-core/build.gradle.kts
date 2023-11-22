@@ -29,9 +29,12 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-stream:4.0.0")
     implementation("org.springframework.cloud:spring-cloud-starter-stream-kafka:4.0.0")
 
+
     kapt("org.hibernate:hibernate-jpamodelgen:6.1.7.Final")
     kapt("org.mapstruct:mapstruct-processor:$mapstructVersion")
     implementation("org.mapstruct:mapstruct:$mapstructVersion")
+    implementation("com.google.protobuf:protobuf-java:3.25.0")
+    implementation("com.google.api.grpc:proto-google-common-protos:2.28.0")
 
     // JWT
     implementation("io.jsonwebtoken:jjwt-api:$jjwtVersion")
