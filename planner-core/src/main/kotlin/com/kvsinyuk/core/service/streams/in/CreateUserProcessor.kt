@@ -15,7 +15,7 @@ class CreateUserProcessor(
     private val coreEventMapper: CoreEventMapper,
     private val userService: UserService,
     private val eventProducer: CoreEventProducer
-): KafkaProcessor {
+): TelegramCommandHandler {
 
     override fun canApply(event: TelegramAdapterDataCmd) =
         event.hasCreateUser()

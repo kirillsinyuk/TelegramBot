@@ -35,6 +35,10 @@ dependencies {
     kapt("org.mapstruct:mapstruct-processor:$mapstructVersion")
     implementation("org.mapstruct:mapstruct:$mapstructVersion")
 
+    implementation("com.google.protobuf:protobuf-java-util:3.25.0")
+    implementation("com.google.protobuf:protobuf-java:3.25.0")
+    implementation("com.google.api.grpc:proto-google-common-protos:2.28.0")
+
     // kotlin
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")

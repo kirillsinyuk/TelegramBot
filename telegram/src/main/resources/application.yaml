@@ -1,4 +1,8 @@
 spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASS}
   application:
     name: telegram
   kafka:
@@ -6,19 +10,20 @@ spring:
       auto-offset-reset: earliest
   cloud:
     function:
-      definition: coreDataMessage
+      definition: coreDataEvent
     stream:
       kafka:
         binder:
-          minPartitionCount: 3
-      function:
-        bindings:
-          telegramDataCmd-out-0: telegramDataCmd
+          brokers: ${BROKER_URL}
+          producer-properties:
+            key.serializer: org.apache.kafka.common.serialization.StringSerializer
+      default:
+        content-type: message/protobuf-json
       bindings:
-        coreDataMessage:
-          destination: core.data.message
+        coreDataEvent-in-0:
+          destination: core.data.event
           group: ${spring.application.name}
-        telegramDataCmd:
+        telegramDataCmd-out-0:
           destination: telegram.data.command
 
 management:

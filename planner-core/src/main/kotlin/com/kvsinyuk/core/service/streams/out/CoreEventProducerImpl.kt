@@ -16,7 +16,7 @@ class CoreEventProducerImpl(
             .withPayload(event)
             .setHeader(KafkaHeaders.KEY, getKey(event.requestData.chatId))
             .build()
-        streamBridge.send("core-data-message-out-0", message)
+        streamBridge.send("coreDataEvent-out-0", message)
     }
 
     private fun getKey(chatId: Long) = "key-$chatId"

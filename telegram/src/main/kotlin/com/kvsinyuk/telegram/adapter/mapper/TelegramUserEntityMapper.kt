@@ -8,7 +8,13 @@ import org.mapstruct.Mapper
 @Mapper(config = MapstructConfig::class)
 abstract class TelegramUserEntityMapper {
 
-    abstract fun toEntity(user: TelegramUser): TelegramUserEntity
+    fun toEntity(userId: Long, chatId: Long): TelegramUserEntity {
+        return TelegramUserEntity()
+            .apply {
+                this.userId = userId
+                this.chatId = chatId
+            }
+    }
 
     abstract fun fromEntity(entity: TelegramUserEntity): TelegramUser
 }

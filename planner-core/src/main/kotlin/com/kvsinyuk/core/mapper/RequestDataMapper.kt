@@ -1,5 +1,6 @@
 package com.kvsinyuk.core.mapper
 
+import com.kvsinyuk.core.config.MapperConfiguration
 import com.kvsinyuk.v1.kafka.RequestDataOuterClass
 import org.mapstruct.Mapper
 

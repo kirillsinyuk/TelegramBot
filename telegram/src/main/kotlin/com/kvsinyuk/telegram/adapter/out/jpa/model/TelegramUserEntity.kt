@@ -16,6 +16,4 @@ class TelegramUserEntity {
     var userId: Long = 0
 
     var chatId: Long = 0
-
-    var coreUserId: Long? = null
 }
