@@ -9,24 +9,22 @@ spring:
     consumer:
       auto-offset-reset: earliest
   cloud:
+    function:
+      definition: telegramDataCmd
     stream:
       kafka:
         binder:
           brokers: ${BROKER_URL}
-          minPartitionCount: 1
           producer-properties:
             key.serializer: org.apache.kafka.common.serialization.StringSerializer
-    function:
-      definition: telegramDataCmd
-      function:
-        bindings:
-          telegramDataCmd-out-0: coreDataMessage
+      default:
+        content-type: message/protobuf-json
       bindings:
-        telegramDataCmd:
+        telegramDataCmd-in-0:
           destination: telegram.data.command
           group: ${spring.application.name}
-        coreDataMessage:
-          destination: core.data.message
+        coreDataEvent-out-0:
+          destination: core.data.event
 
 management:
   endpoints:

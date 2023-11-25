@@ -6,5 +6,5 @@ option java_package = "com.kvsinyuk.v1.kafka";
 
 message RequestData {
   int64 chat_id = 1;
-  string user_id = 2;
+  int64 user_id = 2;
 }

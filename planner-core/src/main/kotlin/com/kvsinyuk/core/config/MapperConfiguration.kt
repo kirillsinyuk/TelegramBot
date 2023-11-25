@@ -1,4 +1,4 @@
-package com.kvsinyuk.core.mapper
+package com.kvsinyuk.core.config
 
 import org.mapstruct.CollectionMappingStrategy
 import org.mapstruct.InjectionStrategy

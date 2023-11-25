@@ -4,5 +4,10 @@ import com.kvsinyuk.telegram.domain.TelegramUser
 
 interface CreateTelegramUserUseCase {
 
-    fun createUser(user: TelegramUser): TelegramUser
+    fun createUser(command: CreateUserCommand): TelegramUser
+
+    data class CreateUserCommand(
+        var userId: Long,
+        var chatId: Long
+    )
 }

@@ -27,5 +27,5 @@ class KafkaAdapter(
         }
     }
 
-    companion object: KLogging()
+    companion object : KLogging()
 }

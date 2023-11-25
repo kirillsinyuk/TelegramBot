@@ -1,5 +1,6 @@
 package com.kvsinyuk.core.mapper
 
+import com.kvsinyuk.core.config.MapperConfiguration
 import com.kvsinyuk.core.model.Category
 import com.kvsinyuk.v1.http.CategoryApiProto.CreateCategoryResponse
 import com.kvsinyuk.v1.http.CategoryApiProto.GetCategoriesResponse

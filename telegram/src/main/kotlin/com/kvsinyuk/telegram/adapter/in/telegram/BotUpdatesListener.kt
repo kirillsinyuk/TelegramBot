@@ -1,20 +1,20 @@
-package com.kvsinyuk.telegram.adapter.`in`
+package com.kvsinyuk.telegram.adapter.`in`.telegram
 
-import com.kvsinyuk.telegram.adapter.`in`.handlers.TelegramCommandHandler
 import com.kvsinyuk.telegram.adapter.mapper.TelegramUpdateMessageMapper
+import com.kvsinyuk.telegram.adapter.`in`.telegram.handlers.TelegramUpdateHandler
 import com.pengrad.telegrambot.TelegramBot
 import com.pengrad.telegrambot.UpdatesListener
 import com.pengrad.telegrambot.model.Update
 import jakarta.annotation.PostConstruct
 import mu.KLogging
-import org.springframework.stereotype.Service
+import org.springframework.stereotype.Component
 
-@Service
+@Component
 class BotUpdatesListener(
     private val bot: TelegramBot,
-    private val telegramCommandHandler: TelegramCommandHandler,
+    private val telegramUpdateHandlers: List<TelegramUpdateHandler>,
     private val telegramUpdateMessageMapper: TelegramUpdateMessageMapper
-): UpdatesListener {
+) : UpdatesListener {
 
     @PostConstruct
     fun init() {
@@ -25,10 +25,11 @@ class BotUpdatesListener(
         updates?.forEach {
             val update = telegramUpdateMessageMapper.toMessage(it)
             logger.debug("Processing update $update")
-            telegramCommandHandler.processMessage(update)
+            telegramUpdateHandlers.filter { it.canApply(update) }
+                .forEach { it.process(update) }
         }
         return UpdatesListener.CONFIRMED_UPDATES_ALL
     }
 
-    companion object: KLogging()
+    companion object : KLogging()
 }

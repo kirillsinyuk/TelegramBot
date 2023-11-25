@@ -1,5 +1,6 @@
 package com.kvsinyuk.core.mapper
 
+import com.kvsinyuk.core.config.MapperConfiguration
 import com.kvsinyuk.core.model.User
 import com.kvsinyuk.v1.http.UserApiProto.CreateUserRequest
 import com.kvsinyuk.v1.http.UserApiProto.CreateUserResponse
