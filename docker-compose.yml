@@ -51,17 +51,32 @@ services:
     ports:
       - 5433:5432
 
-  core:
-    build:
-      context: planner-core
-      dockerfile: Dockerfile
-    environment:
-      - DB_URL=jdbc:postgresql://postgres-core:5432/planner
-      - DB_USER=postgres
-      - DB_PASS=mysecretpassword
-      - BROKER_URL=kafka:9092
-    ports:
-      - 8080:8080
-    depends_on:
-      - kafka
-      - postgres-core
+#  core:
+#    build:
+#      context: planner-core
+#      dockerfile: Dockerfile
+#    environment:
+#      - DB_URL=jdbc:postgresql://postgres-core:5432/planner
+#      - DB_USER=postgres
+#      - DB_PASS=mysecretpassword
+#      - BROKER_URL=kafka:9092
+#    ports:
+#      - 8080:8080
+#    depends_on:
+#      - kafka
+#      - postgres-core
+#
+#  telegram:
+#    build:
+#      context: telegram
+#      dockerfile: Dockerfile
+#    environment:
+#      - DB_URL=jdbc:postgresql://postgres-telegram:5432/telegram
+#      - DB_USER=postgres
+#      - DB_PASS=mysecretpassword
+#      - BROKER_URL=kafka:9092
+#    ports:
+#      - 8081:8080
+#    depends_on:
+#      - kafka
+#      - postgres-telegram
